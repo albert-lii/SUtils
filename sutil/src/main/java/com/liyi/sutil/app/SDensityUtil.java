@@ -1,4 +1,4 @@
-package com.liyi.sutil;
+package com.liyi.sutil.app;
 
 import android.content.Context;
 import android.util.TypedValue;
@@ -6,7 +6,7 @@ import android.util.TypedValue;
 public class SDensityUtil {
 
     private SDensityUtil() {
-        /* cannot be instantiated */
+        /** cannot be instantiated */
         throw new UnsupportedOperationException("SDensityUtil cannot be instantiated");
     }
 

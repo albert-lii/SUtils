@@ -1,4 +1,4 @@
-package com.liyi.sutil;
+package com.liyi.sutil.app;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
 public class SScreenUtil {
 
     private SScreenUtil() {
-        /* cannot be instantiated */
+        /** cannot be instantiated */
         throw new UnsupportedOperationException("SScreenUtil cannot be instantiated");
     }
 
