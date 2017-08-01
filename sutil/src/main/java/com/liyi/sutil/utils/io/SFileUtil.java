@@ -103,149 +103,10 @@ public class SFileUtil {
     }
 
     /**
-     * Delete the file
-     *
-     * @param path
+     * Save string data
      */
-    public boolean delete(@NonNull String path) {
-        try {
-            File file = new File(path);
-            if (file.exists()) {
-                if (file.isFile()) {
-                    return deleteFile(path);
-                } else {
-                    return deleteDir(path);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            SLogUtil.e(TAG, "Failed to delete file ========> " + e.getMessage());
-        }
-        return false;
-    }
-
-    /**
-     * Get the specified file size
-     *
-     * @param path
-     * @return
-     */
-    public long getFileSize(@NonNull String path) {
-        long size = 0;
-        try {
-            File file = new File(path);
-            if (file.exists()) {
-                if (file.isFile()) {
-                    size += getSingleFileSize(file);
-                } else {
-                    size += getFileDirSize(file);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            SLogUtil.e(TAG, "Failed to get the specified file size ========> " + e.getMessage());
-        }
-        return size;
-    }
-
-
-    /**
-     * Delete single file
-     *
-     * @param path
-     * @return
-     */
-    public boolean deleteFile(@NonNull String path) {
-        File file = new File(path);
-        if (file.exists() && file.isFile()) {
-            return file.delete();
-        }
-        return false;
-    }
-
-    /**
-     * Delete file directory
-     *
-     * @param dir
-     * @return
-     */
-    public boolean deleteDir(@NonNull String dir) {
-        // If dir does not end with a file delimiter, the file delimiter is automatically added
-        if (!dir.endsWith(File.separator)) {
-            dir = dir + File.separator;
-        }
-        File fileDir = new File(dir);
-        if (!fileDir.exists() || !fileDir.isDirectory()) {
-            return false;
-        }
-        boolean isSuccess = true;
-        File[] files = fileDir.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].isFile()) {
-                isSuccess = deleteFile(files[i].getAbsolutePath());
-                if (!isSuccess) {
-                    break;
-                }
-            } else if (files[i].isDirectory()) {
-                isSuccess = deleteDir(files[i].getAbsolutePath());
-                if (!isSuccess) {
-                    break;
-                }
-            }
-        }
-        if (!isSuccess) {
-            return false;
-        }
-        return fileDir.delete();
-    }
-
-    /**
-     * Get the specified file size
-     *
-     * @param file
-     * @return
-     * @throws Exception
-     */
-    public long getSingleFileSize(File file) {
-        long size = 0;
-        try {
-            if (file.exists()) {
-                FileInputStream fis = new FileInputStream(file);
-                size = fis.available();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return size;
-    }
-
-    /**
-     * Get the specified folder size
-     *
-     * @param dir
-     * @return
-     * @throws Exception
-     */
-    public long getFileDirSize(File dir) {
-        long size = 0;
-        File flist[] = dir.listFiles();
-        for (int i = 0; i < flist.length; i++) {
-            if (flist[i].isDirectory()) {
-                size = size + getFileDirSize(flist[i]);
-            } else {
-                size = size + getSingleFileSize(flist[i]);
-            }
-        }
-        return size;
-    }
-
-    /**
-     * 保存string数据
-     */
-    public static void put(String dir, String key, String value) throws IOException {
-        // new File()并未创建文件，只是获取这个路径下的文件对象，但是FileOutputStream会在该文件不存在时，自动创建一个文件
-        File file = new File(dir, key);
-        // 不用将字符转化为字节数组，高效写入字符
+    public static void put(String folder, String key, String value) throws IOException {
+        File file = new File(folder, key);
         BufferedWriter out = null;
         try {
             out = new BufferedWriter(new FileWriter(file), 1024);
@@ -255,9 +116,7 @@ public class SFileUtil {
         } finally {
             if (out != null) {
                 try {
-                    // 真正的将流强制写入文件中
                     out.flush();
-                    // 关闭输出流
                     out.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -267,20 +126,20 @@ public class SFileUtil {
     }
 
     /**
-     * 读取string数据
+     * Read string data
      *
      * @return
      */
-    public static String getAsString(String dir, String key) {
-        File file = new File(dir, key);
-        if (!file.exists())
+    public static String getAsString(String folder, String key) {
+        File file = new File(folder, key);
+        if (!file.exists()) {
             return null;
+        }
         BufferedReader in = null;
         try {
             in = new BufferedReader(new FileReader(file));
             String readString = "";
             String currentLine;
-            // 一行一行读
             while ((currentLine = in.readLine()) != null) {
                 readString += currentLine;
             }
@@ -473,6 +332,266 @@ public class SFileUtil {
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
+
+ /*--------------------------------------------------------------------------------------------*/
+
+    /**
+     * Copy a single file to the specified path
+     *
+     * @param oldPath
+     * @param newPath
+     */
+    public void copyFile(String oldPath, String newPath) {
+        int bytesum = 0;
+        int byteread = 0;
+        File oldfile = new File(oldPath);
+        if (oldfile.exists()) {
+            try {
+                FileInputStream fis = new FileInputStream(oldPath);
+                FileOutputStream fos = new FileOutputStream(newPath);
+                byte[] buffer = new byte[1024];
+                while ((byteread = fis.read(buffer)) != -1) {
+                    bytesum += byteread;
+                    fos.write(buffer, 0, byteread);
+                }
+                fos.close();
+                fis.close();
+                SLogUtil.d(TAG, "拷贝文件成功,文件总大小为：" + bytesum + "字节");
+            } catch (IOException e) {
+                SLogUtil.e(TAG, "拷贝文件出错：" + e.toString());
+                e.printStackTrace();
+            }
+        } else {
+            SLogUtil.e(TAG, "拷贝文件出错：源文件不存在！");
+        }
+    }
+
+    /**
+     * 复制整个文件夹内容
+     *
+     * @param srcPath String 原文件路径
+     * @param desPath String 复制后路径
+     */
+    public static void copyFolder(String srcPath, String desPath) {
+
+        try {
+            (new File(desPath)).mkdirs(); // 如果文件夹不存在 则建立新文件夹
+            File a = new File(srcPath);
+            String[] file = a.list();
+            File temp = null;
+            for (int i = 0; i < file.length; i++) {
+                if (srcPath.endsWith(File.separator)) {
+                    temp = new File(srcPath + file[i]);
+                } else {
+                    temp = new File(srcPath + File.separator + file[i]);
+                }
+
+                if (temp.isFile()) {
+                    FileInputStream input = new FileInputStream(temp);
+                    FileOutputStream output = new FileOutputStream(desPath
+                            + "/" + (temp.getName()).toString());
+                    byte[] b = new byte[1024 * 5];
+                    int len;
+                    while ((len = input.read(b)) != -1) {
+                        output.write(b, 0, len);
+                    }
+                    output.flush();
+                    output.close();
+                    input.close();
+                }
+                if (temp.isDirectory()) {// 如果是子文件夹
+                    copyFolder(srcPath + "/" + file[i], desPath + "/" + file[i]);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
+    /**
+     * TODO<获取指定目录下文件的个数>
+     *
+     * @return int
+     */
+    public static int getFileCount(String dirPath) {
+        int count = 0;
+
+        // 如果dirPath不以文件分隔符结尾，自动添加文件分隔符
+        if (!dirPath.endsWith(File.separator)) {
+            dirPath = dirPath + File.separator;
+        }
+        File dirFile = new File(dirPath);
+
+        if (!dirFile.exists() || !dirFile.isDirectory()) {
+            return count;
+        }
+
+        // 获取该目录下所有的子项文件(文件、子目录)
+        File[] files = dirFile.listFiles();
+        // 遍历删除文件夹下的所有文件(包括子目录)
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isFile()) {
+                // 删除子文件
+                count += 1;
+            }
+        }
+
+        return count;
+    }
+    /*--------------------------------------------------------------------------------------------*/
+
+
+    /**
+     * Delete the file-----------------------------------------------------------------------------/
+     */
+    /**
+     * Delete the file
+     *
+     * @param path
+     */
+    public boolean delete(@NonNull String path) {
+        try {
+            File file = new File(path);
+            if (file.exists()) {
+                if (file.isFile()) {
+                    return deleteFile(path);
+                } else {
+                    return deleteDir(path);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            SLogUtil.e(TAG, "Failed to delete file ========> " + e.getMessage());
+        }
+        return false;
+    }
+
+    /**
+     * Delete single file
+     *
+     * @param path
+     * @return
+     */
+    public boolean deleteFile(@NonNull String path) {
+        File file = new File(path);
+        if (file.exists() && file.isFile()) {
+            return file.delete();
+        }
+        return false;
+    }
+
+    /**
+     * Delete file directory
+     *
+     * @param dir
+     * @return
+     */
+    public boolean deleteDir(@NonNull String dir) {
+        // If dir does not end with a file delimiter, the file delimiter is automatically added
+        if (!dir.endsWith(File.separator)) {
+            dir = dir + File.separator;
+        }
+        File fileDir = new File(dir);
+        if (!fileDir.exists() || !fileDir.isDirectory()) {
+            return false;
+        }
+        boolean isSuccess = true;
+        File[] files = fileDir.listFiles();
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isFile()) {
+                isSuccess = deleteFile(files[i].getAbsolutePath());
+                if (!isSuccess) {
+                    break;
+                }
+            } else if (files[i].isDirectory()) {
+                isSuccess = deleteDir(files[i].getAbsolutePath());
+                if (!isSuccess) {
+                    break;
+                }
+            }
+        }
+        if (!isSuccess) {
+            return false;
+        }
+        return fileDir.delete();
+    }
+    /*--------------------------------------------------------------------------------------------*/
+
+
+    /**
+     * Get the size of file------------------------------------------------------------------------/
+     */
+    /**
+     * Get the specified file size
+     *
+     * @param path
+     * @return
+     */
+    public long getFileSize(@NonNull String path) {
+        long size = 0;
+        try {
+            File file = new File(path);
+            if (file.exists()) {
+                if (file.isFile()) {
+                    size += getSingleFileSize(file);
+                } else {
+                    size += getFileDirSize(file);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            SLogUtil.e(TAG, "Failed to get the specified file size ========> " + e.getMessage());
+        }
+        return size;
+    }
+
+    /**
+     * Get the specified file size
+     *
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    public long getSingleFileSize(File file) {
+        long size = 0;
+        try {
+            if (file.exists()) {
+                FileInputStream fis = new FileInputStream(file);
+                size = fis.available();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return size;
+    }
+
+    /**
+     * Get the specified folder size
+     *
+     * @param dir
+     * @return
+     * @throws Exception
+     */
+    public long getFileDirSize(File dir) {
+        long size = 0;
+        File flist[] = dir.listFiles();
+        for (int i = 0; i < flist.length; i++) {
+            if (flist[i].isDirectory()) {
+                size = size + getFileDirSize(flist[i]);
+            } else {
+                size = size + getSingleFileSize(flist[i]);
+            }
+        }
+        return size;
+    }
+    /*--------------------------------------------------------------------------------------------*/
+
+
+    /**
+     * Get the real path of the file---------------------------------------------------------------/
+     */
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
      * Framework Documents, as well as the _data field for the MediaStore and
