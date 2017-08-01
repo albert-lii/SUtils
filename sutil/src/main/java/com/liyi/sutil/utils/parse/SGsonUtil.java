@@ -1,4 +1,4 @@
-package com.liyi.sutil.parse;
+package com.liyi.sutil.utils.parse;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -84,7 +84,7 @@ public class SGsonUtil {
      * @param obj
      * @return
      */
-    public static String parse2String(Object obj) {
+    public static String obj2String(Object obj) {
         checkGson();
         return mGson.toJson(obj);
     }

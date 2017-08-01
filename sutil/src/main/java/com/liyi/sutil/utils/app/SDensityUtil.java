@@ -1,14 +1,9 @@
-package com.liyi.sutil.app;
+package com.liyi.sutil.utils.app;
 
 import android.content.Context;
 import android.util.TypedValue;
 
 public class SDensityUtil {
-
-    private SDensityUtil() {
-        /** cannot be instantiated */
-        throw new UnsupportedOperationException("SDensityUtil cannot be instantiated");
-    }
 
     /**
      * Convert dp to px

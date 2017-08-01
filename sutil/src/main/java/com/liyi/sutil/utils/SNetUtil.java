@@ -1,17 +1,15 @@
-package com.liyi.sutil;
+package com.liyi.sutil.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
+import com.liyi.sutil.SConstants;
+import com.liyi.sutil.utils.prompt.SLogUtil;
+
 public class SNetUtil {
-
-    private SNetUtil() {
-        /** cannot be instantiated */
-        throw new UnsupportedOperationException("SNetUtil cannot be instantiated");
-    }
-
+    private static final String TAG = SNetUtil.class.getClass().getSimpleName();
     /**
      * Determine if the network is connected
      *
@@ -60,12 +58,13 @@ public class SNetUtil {
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
-            String type = networkInfo.getTypeName();
-            if (type.equalsIgnoreCase("WIFI")) {
+            int type = networkInfo.getType();
+            if (type == ConnectivityManager.TYPE_WIFI) {
                 return SConstants.NETTYPE_WIFI;
-            } else if (type.equalsIgnoreCase("MOBILE")) {
+            } else if (type == ConnectivityManager.TYPE_MOBILE) {
                 NetworkInfo mobileInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
                 if (mobileInfo != null) {
+                    SLogUtil.i(TAG,"Network Type ========> "+mobileInfo.getSubtypeName());
                     switch (mobileInfo.getType()) {
                         // Mobile phone network
                         case ConnectivityManager.TYPE_MOBILE:
@@ -89,7 +88,14 @@ public class SNetUtil {
                                 case TelephonyManager.NETWORK_TYPE_LTE:
                                     return SConstants.NETTYPE_4G;
                                 default:
-                                    return SConstants.NETTYPE_4G;
+                                    //  中国移动 联通 电信 三种3G制式
+                                    if (mobileInfo.getSubtypeName().equalsIgnoreCase("TD-SCDMA")
+                                            || mobileInfo.getSubtypeName().equalsIgnoreCase("WCDMA")
+                                            || mobileInfo.getSubtypeName().equalsIgnoreCase("CDMA2000")) {
+                                        return SConstants.NETTYPE_3G;
+                                    } else {
+                                        return SConstants.NETTYPE_4G;
+                                    }
                             }
                     }
                 }

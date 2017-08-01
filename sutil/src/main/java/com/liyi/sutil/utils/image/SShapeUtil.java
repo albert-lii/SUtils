@@ -1,13 +1,8 @@
-package com.liyi.sutil.image;
+package com.liyi.sutil.utils.image;
 
 import android.graphics.drawable.GradientDrawable;
 
 public class SShapeUtil {
-
-    private SShapeUtil() {
-        /** cannot be instantiated */
-        throw new UnsupportedOperationException("SShapeUtil cannot be instantiated");
-    }
 
     /**
      * @param fillColor

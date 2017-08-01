@@ -1,4 +1,4 @@
-package com.liyi.sutil.app;
+package com.liyi.sutil.utils.app;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,11 +13,6 @@ import android.view.WindowManager;
 import java.lang.reflect.Method;
 
 public class SScreenUtil {
-
-    private SScreenUtil() {
-        /** cannot be instantiated */
-        throw new UnsupportedOperationException("SScreenUtil cannot be instantiated");
-    }
 
     /**
      * Get screen width and height

@@ -1,4 +1,4 @@
-package com.liyi.sutil.app;
+package com.liyi.sutil.utils.app;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.telephony.TelephonyManager;
 
 import com.liyi.sutil.SConstants;
-import com.liyi.sutil.prompt.SLogUtil;
+import com.liyi.sutil.utils.prompt.SLogUtil;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -15,12 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class SAppUtil {
-    private static final String TAG = SAppUtil.class.getClass().getSimpleName();
-
-    private SAppUtil() {
-        /** cannot be instantiated */
-        throw new UnsupportedOperationException("SAppUtil cannot be instantiated");
-    }
+    private static final String TAG = SAppUtil.class.getSimpleName();
 
     /**
      * Get the unique ID of the phone, the device string number
