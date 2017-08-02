@@ -1,4 +1,4 @@
-package com.liyi.sutil.utils.parse;
+package com.liyi.sutil.utils.io;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

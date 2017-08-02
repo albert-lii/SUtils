@@ -28,23 +28,24 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.RandomAccessFile;
 import java.io.Serializable;
 
 public class SFileUtil {
     private final String TAG = SFileUtil.class.getSimpleName();
 
     private SFileUtil() {
-
     }
 
-    public static SFileUtil getInstance() {
+    public static SFileUtil get() {
         return SFileUtilHolder.INSTANCE;
     }
 
     private static class SFileUtilHolder {
         private static final SFileUtil INSTANCE = new SFileUtil();
     }
+
+
+    /*--------------------------------------------------------------------------------------------*/
 
     /**
      * Does it have an external sd card
@@ -101,12 +102,23 @@ public class SFileUtil {
         }
         return isSuccess;
     }
+    /*--------------------------------------------------------------------------------------------*/
+
 
     /**
-     * Save string data
+     * IO operations-------------------------------------------------------------------------------/
      */
-    public static void put(String folder, String key, String value) throws IOException {
-        File file = new File(folder, key);
+    /**
+     * Save string data
+     *
+     * @param dir
+     * @param key
+     * @param value
+     * @param append True represents append, false means double write
+     * @throws IOException
+     */
+    public static void put(String dir, String key, String value, boolean append) throws IOException {
+        File file = new File(dir, key);
         BufferedWriter out = null;
         try {
             out = new BufferedWriter(new FileWriter(file), 1024);
@@ -159,7 +171,7 @@ public class SFileUtil {
     }
 
     /**
-     * 保存byte数据
+     * Save the byte array data
      */
     public static void put(String dir, String key, byte[] value) {
         File file = new File(dir, key);
@@ -184,44 +196,48 @@ public class SFileUtil {
     }
 
     /**
-     * 读取byte[]数据
+     * Read the byte array data
      *
      * @return
      */
     public static byte[] getAsBinary(String dir, String key) {
         File file = new File(dir, key);
-        // 随机读取类，可从指定位置读写文件内容
-        RandomAccessFile RAFile = null;
-        if (!file.exists())
+        if (!file.exists()) {
             return null;
+        }
+        byte[] byteArray = null;
+        FileInputStream fis = null;
+        ByteArrayOutputStream baos = null;
         try {
-            // "r"表示只读方式打开文件，"rw"表示读写方式
-            RAFile = new RandomAccessFile(file, "r");
-            byte[] byteArray = new byte[(int) RAFile.length()];
-            RAFile.read(byteArray);
-            return byteArray;
-
-//            FileInputStream in = null;
-//            in=new FileInputStream(file);
-//            byte[] byteArray=new byte[in.available()];
-//            // 将文件中内容读取到字节数据中
-//            in.read(byteArray);
+            fis = new FileInputStream(file);
+            baos = new ByteArrayOutputStream(1024);
+            byte[] b = new byte[1024];
+            int n;
+            while ((n = fis.read(b)) != -1) {
+                baos.write(b, 0, n);
+            }
+            byteArray = baos.toByteArray();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
         } finally {
-            if (RAFile != null) {
-                try {
-                    RAFile.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            try {
+                if (fis != null) {
+                    fis.close();
                 }
+                if (baos != null) {
+                    baos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
+        return byteArray;
     }
 
     /**
-     * 保存序列化对象(注：只有序列化对象才可以被保存)
+     * Save the serialized object
      */
     public static void put(String dir, String key, Serializable value) {
         ByteArrayOutputStream baos = null;
@@ -235,9 +251,15 @@ public class SFileUtil {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+            if (baos != null) {
+                try {
+                    baos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             if (oos != null) {
                 try {
-                    oos.flush();
                     oos.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -247,7 +269,7 @@ public class SFileUtil {
     }
 
     /**
-     * 读取Serializable数据
+     * Read the Serializable data
      *
      * @return
      */
@@ -285,56 +307,47 @@ public class SFileUtil {
     }
 
     /**
-     * 保存bitmap
+     * Save the bitmap data
      */
-    public static void put(String dir, String key, Bitmap value) {
+    public void put(String dir, String key, Bitmap value) {
         put(dir, key, bitmap2Byte(value));
     }
 
     /**
-     * 获取bitmap
+     * Read the bitmap data
      *
+     * @param dir
+     * @param key
      * @return
      */
-    public static Bitmap getAsBitmap(String dir, String key) {
+    private Bitmap getAsBitmap(String dir, String key) {
         if (getAsBinary(dir, key) == null) {
             return null;
         }
         return byte2Bitmap(getAsBinary(dir, key));
     }
 
-    /**
-     * 将bitmap转化为byte数组
-     *
-     * @param bmp
-     * @return
-     */
-    public static byte[] bitmap2Byte(Bitmap bmp) {
+    private byte[] bitmap2Byte(Bitmap bmp) {
         if (bmp == null) {
             return null;
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        // 质量压缩法，将bitmap压缩为jpeg格式，100表示不被压缩
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         return baos.toByteArray();
     }
 
-    /**
-     * 将byte转化为bitmap
-     *
-     * @param bytes
-     * @return
-     */
     public static Bitmap byte2Bitmap(byte[] bytes) {
         if (bytes.length == 0) {
             return null;
         }
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
+    /*--------------------------------------------------------------------------------------------*/
 
 
- /*--------------------------------------------------------------------------------------------*/
-
+    /**
+     * Copy File-----------------------------------------------------------------------------------/
+     */
     /**
      * Copy a single file to the specified path
      *
@@ -345,52 +358,70 @@ public class SFileUtil {
         int bytesum = 0;
         int byteread = 0;
         File oldfile = new File(oldPath);
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
         if (oldfile.exists()) {
             try {
-                FileInputStream fis = new FileInputStream(oldPath);
-                FileOutputStream fos = new FileOutputStream(newPath);
+                fis = new FileInputStream(oldPath);
+                fos = new FileOutputStream(newPath);
                 byte[] buffer = new byte[1024];
                 while ((byteread = fis.read(buffer)) != -1) {
                     bytesum += byteread;
                     fos.write(buffer, 0, byteread);
                 }
-                fos.close();
-                fis.close();
-                SLogUtil.d(TAG, "拷贝文件成功,文件总大小为：" + bytesum + "字节");
+                SLogUtil.d(TAG, "Copy file success, the total size of the file is ========> " + bytesum + " byte");
             } catch (IOException e) {
-                SLogUtil.e(TAG, "拷贝文件出错：" + e.toString());
+                SLogUtil.e(TAG, "Copy file error ========> " + e.toString());
                 e.printStackTrace();
+            } finally {
+                if (fis != null) {
+                    try {
+                        fis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (fos != null) {
+                    try {
+                        fos.flush();
+                        fos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         } else {
-            SLogUtil.e(TAG, "拷贝文件出错：源文件不存在！");
+            SLogUtil.e(TAG, "Copy file error ========> source file does not exist!");
         }
     }
 
     /**
-     * 复制整个文件夹内容
+     * Copy the entire folder contents
      *
-     * @param srcPath String 原文件路径
-     * @param desPath String 复制后路径
+     * @param oldPath
+     * @param newPath
      */
-    public static void copyFolder(String srcPath, String desPath) {
-
+    public static void copyDir(String oldPath, String newPath) {
         try {
-            (new File(desPath)).mkdirs(); // 如果文件夹不存在 则建立新文件夹
-            File a = new File(srcPath);
-            String[] file = a.list();
+            (new File(newPath)).mkdirs();
+            File oldDir = new File(oldPath);
+            String[] fileNameList = oldDir.list();
             File temp = null;
-            for (int i = 0; i < file.length; i++) {
-                if (srcPath.endsWith(File.separator)) {
-                    temp = new File(srcPath + file[i]);
+            for (int i = 0; i < fileNameList.length; i++) {
+                if (oldPath.endsWith(File.separator)) {
+                    temp = new File(oldPath + fileNameList[i]);
                 } else {
-                    temp = new File(srcPath + File.separator + file[i]);
+                    temp = new File(oldPath + File.separator + fileNameList[i]);
                 }
-
                 if (temp.isFile()) {
                     FileInputStream input = new FileInputStream(temp);
-                    FileOutputStream output = new FileOutputStream(desPath
-                            + "/" + (temp.getName()).toString());
-                    byte[] b = new byte[1024 * 5];
+                    FileOutputStream output = null;
+                    if (newPath.endsWith(File.separator)) {
+                        output = new FileOutputStream(newPath + (temp.getName()).toString());
+                    } else {
+                        output = new FileOutputStream(newPath + File.separator + (temp.getName()).toString());
+                    }
+                    byte[] b = new byte[1024];
                     int len;
                     while ((len = input.read(b)) != -1) {
                         output.write(b, 0, len);
@@ -398,46 +429,52 @@ public class SFileUtil {
                     output.flush();
                     output.close();
                     input.close();
-                }
-                if (temp.isDirectory()) {// 如果是子文件夹
-                    copyFolder(srcPath + "/" + file[i], desPath + "/" + file[i]);
+                } else {
+                    String op = null, np = null;
+                    if (oldPath.endsWith(File.separator)) {
+                        op = oldPath + fileNameList[i];
+                    } else {
+                        op = oldPath + File.separator + fileNameList[i];
+                    }
+                    if (newPath.endsWith(File.separator)) {
+                        np = newPath + fileNameList[i];
+                    } else {
+                        np = newPath + File.separator + fileNameList[i];
+                    }
+                    copyDir(op, np);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-
         }
-
     }
 
     /**
-     * TODO<获取指定目录下文件的个数>
+     * Get the number of files in the specified directory
      *
-     * @return int
+     * @param dir
+     * @param isAll True means to get the number of files, otherwise you only get the number of files at that level
+     * @return
      */
-    public static int getFileCount(String dirPath) {
+    public static int getFileCount(String dir, boolean isAll) {
         int count = 0;
-
-        // 如果dirPath不以文件分隔符结尾，自动添加文件分隔符
-        if (!dirPath.endsWith(File.separator)) {
-            dirPath = dirPath + File.separator;
+        if (!dir.endsWith(File.separator)) {
+            dir = dir + File.separator;
         }
-        File dirFile = new File(dirPath);
-
+        File dirFile = new File(dir);
         if (!dirFile.exists() || !dirFile.isDirectory()) {
             return count;
         }
-
-        // 获取该目录下所有的子项文件(文件、子目录)
         File[] files = dirFile.listFiles();
-        // 遍历删除文件夹下的所有文件(包括子目录)
         for (int i = 0; i < files.length; i++) {
             if (files[i].isFile()) {
-                // 删除子文件
                 count += 1;
+            } else {
+                if (isAll) {
+                    getFileCount(files[i].getAbsolutePath(), true);
+                }
             }
         }
-
         return count;
     }
     /*--------------------------------------------------------------------------------------------*/
