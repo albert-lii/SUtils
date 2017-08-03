@@ -46,6 +46,7 @@ public class SFileUtil {
 
 
     /*--------------------------------------------------------------------------------------------*/
+
     /**
      * Does it have an external sd card
      */
@@ -113,10 +114,9 @@ public class SFileUtil {
      * @param dir
      * @param key
      * @param value
-     * @param append True represents append, false means double write
      * @throws IOException
      */
-    public static void put(String dir, String key, String value, boolean append) throws IOException {
+    public void put(String dir, String key, String value) {
         File file = new File(dir, key);
         BufferedWriter out = null;
         try {
@@ -141,7 +141,7 @@ public class SFileUtil {
      *
      * @return
      */
-    public static String getAsString(String folder, String key) {
+    public String getAsString(String folder, String key) {
         File file = new File(folder, key);
         if (!file.exists()) {
             return null;
@@ -172,7 +172,7 @@ public class SFileUtil {
     /**
      * Save the byte array data
      */
-    public static void put(String dir, String key, byte[] value) {
+    public void put(String dir, String key, byte[] value) {
         File file = new File(dir, key);
         FileOutputStream out = null;
         try {
@@ -199,7 +199,7 @@ public class SFileUtil {
      *
      * @return
      */
-    public static byte[] getAsBinary(String dir, String key) {
+    public byte[] getAsBinary(String dir, String key) {
         File file = new File(dir, key);
         if (!file.exists()) {
             return null;
@@ -238,7 +238,7 @@ public class SFileUtil {
     /**
      * Save the serialized object
      */
-    public static void put(String dir, String key, Serializable value) {
+    public void put(String dir, String key, Serializable value) {
         ByteArrayOutputStream baos = null;
         ObjectOutputStream oos = null;
         try {
@@ -272,7 +272,7 @@ public class SFileUtil {
      *
      * @return
      */
-    public static Object getAsObject(String dir, String key) {
+    public Object getAsObject(String dir, String key) {
         ByteArrayInputStream bais = null;
         ObjectInputStream ois = null;
         try {
@@ -319,7 +319,7 @@ public class SFileUtil {
      * @param key
      * @return
      */
-    private Bitmap getAsBitmap(String dir, String key) {
+    public Bitmap getAsBitmap(String dir, String key) {
         if (getAsBinary(dir, key) == null) {
             return null;
         }
@@ -335,7 +335,7 @@ public class SFileUtil {
         return baos.toByteArray();
     }
 
-    public static Bitmap byte2Bitmap(byte[] bytes) {
+    private Bitmap byte2Bitmap(byte[] bytes) {
         if (bytes.length == 0) {
             return null;
         }
@@ -400,7 +400,7 @@ public class SFileUtil {
      * @param oldPath
      * @param newPath
      */
-    public static void copyDir(String oldPath, String newPath) {
+    public void copyDir(String oldPath, String newPath) {
         try {
             (new File(newPath)).mkdirs();
             File oldDir = new File(oldPath);
@@ -455,7 +455,7 @@ public class SFileUtil {
      * @param isAll True means to get the number of files, otherwise you only get the number of files at that level
      * @return
      */
-    public static int getFileCount(String dir, boolean isAll) {
+    public int getFileCount(String dir, boolean isAll) {
         int count = 0;
         if (!dir.endsWith(File.separator)) {
             dir = dir + File.separator;
@@ -640,7 +640,7 @@ public class SFileUtil {
      * @param uri     The Uri to query.l
      */
     @TargetApi(19)
-    public static String getRealPath(final Context context, final Uri uri) {
+    public String getRealPath(final Context context, final Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         // DocumentProvider
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
@@ -698,7 +698,7 @@ public class SFileUtil {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is ExternalStorageProvider.
      */
-    public static boolean isExternalStorageDocument(Uri uri) {
+    public boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
 
@@ -706,7 +706,7 @@ public class SFileUtil {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is DownloadsProvider.
      */
-    public static boolean isDownloadsDocument(Uri uri) {
+    public boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
 
@@ -714,7 +714,7 @@ public class SFileUtil {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is MediaProvider.
      */
-    public static boolean isMediaDocument(Uri uri) {
+    public boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
@@ -722,7 +722,7 @@ public class SFileUtil {
      * @param uri The Uri to check.
      * @return Whether the Uri authority is Google Photos.
      */
-    public static boolean isGooglePhotosUri(Uri uri) {
+    public boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
@@ -736,7 +736,7 @@ public class SFileUtil {
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */
-    public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+    public String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
         Cursor cursor = null;
         final String column = "_data";
         final String[] projection = {column};

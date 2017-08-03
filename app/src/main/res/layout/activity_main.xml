@@ -1,18 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.liyi.sample.MainActivity">
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editT_serializable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="序列化对象" />
+
+        <Button
+            android:id="@+id/btn_save_serializable"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="保存" />
+
+        <Button
+            android:id="@+id/btn_get_serializable"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="提取" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editT_string"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="字符串" />
+
+        <Button
+            android:id="@+id/btn_save_string"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="保存" />
+
+        <Button
+            android:id="@+id/btn_get_string"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="提取" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_reflect_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_reflect1"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="反射1" />
+
+        <Button
+            android:id="@+id/btn_reflect2"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="反射1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_getUrl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="获取文件URL" />
+    </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_test_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</android.support.constraint.ConstraintLayout>
+        android:textSize="14sp" />
+</LinearLayout>
