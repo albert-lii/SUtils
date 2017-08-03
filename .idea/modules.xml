@@ -3,8 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://F:\Worksapce-android\github\sutil-android\app\app.iml" filepath="F:\Worksapce-android\github\sutil-android\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/sutil/sutil.iml" filepath="$PROJECT_DIR$/sutil/sutil.iml" />
+      <module fileurl="file://F:\Worksapce-android\github\sutil-android\sutil\sutil.iml" filepath="F:\Worksapce-android\github\sutil-android\sutil\sutil.iml" />
       <module fileurl="file://$PROJECT_DIR$/sutil-android.iml" filepath="$PROJECT_DIR$/sutil-android.iml" />
+      <module fileurl="file://F:\Worksapce-android\github\sutil-android\sutil-android.iml" filepath="F:\Worksapce-android\github\sutil-android\sutil-android.iml" />
     </modules>
   </component>
 </project>

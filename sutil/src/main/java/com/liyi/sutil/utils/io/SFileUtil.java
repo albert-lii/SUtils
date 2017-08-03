@@ -116,7 +116,7 @@ public class SFileUtil {
      * @param value
      * @throws IOException
      */
-    public void put(String dir, String key, String value) throws IOException {
+    public void put(String dir, String key, String value){
         File file = new File(dir, key);
         BufferedWriter out = null;
         try {

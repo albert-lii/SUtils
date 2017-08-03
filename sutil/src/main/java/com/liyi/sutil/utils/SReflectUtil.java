@@ -1,8 +1,10 @@
 package com.liyi.sutil.utils;
 
 import android.annotation.SuppressLint;
+import android.provider.SyncStateContract;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 public class SReflectUtil {
     /**
@@ -13,9 +15,9 @@ public class SReflectUtil {
      * @param value Modified field values
      */
     @SuppressLint("WrongConstant")
-    public static void modifyVal(Class<?> clz, String key, Object value) {
+    public static void modifyValNoFinal(Class<?> clz, String key, Object value) {
         try {
-            Field field = clz.getField(key);
+            Field field = clz.getDeclaredField(key);
             // Set the access permission of the field to true, which removes the impact of the private modifier
             field.setAccessible(true);
 //            // Remove the effects of the final modifier and set the fields to be modifiable
@@ -38,7 +40,7 @@ public class SReflectUtil {
      * @param replaceStr
      */
     @SuppressLint("WrongConstant")
-    public static void modifyVals(Class<?> clz, String oldStr, String replaceStr) {
+    public static void modifyValsNoFinal(Class<?> clz, String oldStr, String replaceStr) {
         try {
             /** Gets all the properties of the entity class and returns the Field array */
             Field[] fields = clz.getFields();
