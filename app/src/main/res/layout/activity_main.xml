@@ -80,7 +80,7 @@
             android:id="@+id/btn_reflect2"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:text="反射1" />
+            android:text="反射2" />
     </LinearLayout>
 
     <LinearLayout
