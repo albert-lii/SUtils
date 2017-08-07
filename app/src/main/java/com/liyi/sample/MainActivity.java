@@ -8,9 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.liyi.sutil.utils.SReflectUtil;
-import com.liyi.sutil.utils.io.SFileUtil;
-import com.liyi.sutil.utils.prompt.SToastUtil;
+import com.liyi.sutils.utils.SReflectUtil;
+import com.liyi.sutils.utils.io.SFileUtil;
+import com.liyi.sutils.utils.prompt.SToastUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText editT_saveSer, editT_saveStr;
