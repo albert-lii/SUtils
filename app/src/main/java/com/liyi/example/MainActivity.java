@@ -1,6 +1,7 @@
-package com.liyi.sample;
+package com.liyi.example;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.liyi.sample.R;
 import com.liyi.sutils.utils.SReflectUtil;
 import com.liyi.sutils.utils.io.SFileUtil;
 import com.liyi.sutils.utils.prompt.SToastUtil;
@@ -80,5 +82,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 SReflectUtil.modifyValsNoFinal(TConstants.class, "TEST2", "DAY");
                 break;
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

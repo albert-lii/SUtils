@@ -3,6 +3,7 @@ package com.liyi.sutils.utils.image;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.support.annotation.NonNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -20,7 +21,7 @@ public class SCompressUtil {
      * @param options Compress the quality of the image（Here, 100 is not compressed）
      * @return
      */
-    public static Bitmap comprsQltyByoptions(Bitmap bmp, int options) {
+    public static Bitmap comprsQltyByoptions(@NonNull Bitmap bmp, int options) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);
         ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());
@@ -35,7 +36,7 @@ public class SCompressUtil {
      * @param size Is less than or equal to the specified image size
      * @return
      */
-    public static Bitmap comprsQltyBySize(Bitmap bmp, int size) {
+    public static Bitmap comprsQltyBySize(@NonNull Bitmap bmp, int size) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         // Here, 100 is not compressed, and the compressed data is stored in the baos
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -62,7 +63,7 @@ public class SCompressUtil {
      * @param hs     High compression ratio
      * @return
      */
-    public static Bitmap comprsScale(Bitmap bitmap, float ws, float hs) {
+    public static Bitmap comprsScale(@NonNull Bitmap bitmap, float ws, float hs) {
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
         Matrix matrix = new Matrix();

@@ -1,4 +1,4 @@
-package com.liyi.sample;
+package com.liyi.example;
 
 import java.io.Serializable;
 

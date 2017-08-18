@@ -20,7 +20,7 @@ public class STimeUtil {
      * @param dateType
      * @return
      */
-    public static String getTimeStr(long timeStamp, String dateType) {
+    public static String getTimeStr(long timeStamp,@NonNull String dateType) {
         if (TextUtils.isEmpty(dateType)) {
             dateType = DATE_TYPE;
         }

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Sutils.iml" filepath="$PROJECT_DIR$/Sutils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SUtils.iml" filepath="$PROJECT_DIR$/SUtils.iml" />
+      <module fileurl="file://E:\Android-Github\Sutils\Sutils.iml" filepath="E:\Android-Github\Sutils\Sutils.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://E:\Android-Github\sutil-android\sutil-android\app\app.iml" filepath="E:\Android-Github\sutil-android\sutil-android\app\app.iml" />
       <module fileurl="file://F:\Worksapce-android\github\sutil-android\app\app.iml" filepath="F:\Worksapce-android\github\sutil-android\app\app.iml" />

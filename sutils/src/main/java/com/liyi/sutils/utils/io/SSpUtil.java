@@ -2,6 +2,7 @@ package com.liyi.sutils.utils.io;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,11 +24,11 @@ public class SSpUtil {
         mEditor = mSp.edit();
     }
 
-    public static SSpUtil get(Context context) {
+    public static SSpUtil get(@NonNull Context context) {
         return get(context, DEF_FILENAME, DEF_MODE);
     }
 
-    public static SSpUtil get(Context context, String fileName, int mode) {
+    public static SSpUtil get(@NonNull Context context, @NonNull String fileName, @NonNull int mode) {
         if (mInstanceMap == null) {
             mInstanceMap = new HashMap<String, SSpUtil>();
         }

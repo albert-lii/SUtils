@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.os.Build;
+import android.support.annotation.NonNull;
 
 import com.liyi.sutils.utils.prompt.SLogUtil;
 
@@ -24,7 +25,7 @@ public class SImageUtil {
      *
      * @return
      */
-    public static Bitmap drawable2Bitmap(Context context, int resId) {
+    public static Bitmap drawable2Bitmap(@NonNull Context context,int resId) {
         return BitmapFactory.decodeResource(context.getResources(), resId);
     }
 
@@ -34,7 +35,7 @@ public class SImageUtil {
      * @param drawable
      * @return
      */
-    private static Bitmap drawable2Bitmap(Drawable drawable) {
+    private static Bitmap drawable2Bitmap(@NonNull Drawable drawable) {
         if (drawable == null) {
             return null;
         }
@@ -54,7 +55,7 @@ public class SImageUtil {
      * @param bm
      * @return
      */
-    public static Drawable bitmap2Drawable(Bitmap bm) {
+    public static Drawable bitmap2Drawable(@NonNull Bitmap bm) {
         if (bm == null) {
             return null;
         }
@@ -67,7 +68,7 @@ public class SImageUtil {
      * @param bm
      * @return
      */
-    public static byte[] bitmap2Byte(Bitmap bm) {
+    public static byte[] bitmap2Byte(@NonNull Bitmap bm) {
         if (bm == null) {
             return null;
         }
@@ -97,7 +98,7 @@ public class SImageUtil {
      * @param degree Rotation Angle
      * @return The rotated image
      */
-    public static Bitmap rotateBitmap(Bitmap bm, float degree) {
+    public static Bitmap rotateBitmap(@NonNull Bitmap bm, float degree) {
         Bitmap newbmp = null;
         // The rotation matrix is generated according to the rotation Angle
         Matrix matrix = new Matrix();
@@ -123,7 +124,7 @@ public class SImageUtil {
      * @param path Image absolute path
      * @return The rotation Angle of the picture
      */
-    public static int getBitmapDegree(String path) {
+    public static int getBitmapDegree(@NonNull String path) {
         int degree = 0;
         try {
             // Read the image from the specified path and get its EXIF information
@@ -153,7 +154,7 @@ public class SImageUtil {
      * @param bitmap
      * @return
      */
-    public static int getBitmapSize(Bitmap bitmap) {
+    public static int getBitmapSize(@NonNull Bitmap bitmap) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // The API version is greater than or equal to 19
             return bitmap.getAllocationByteCount();

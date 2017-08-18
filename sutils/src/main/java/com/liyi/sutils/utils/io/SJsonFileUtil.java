@@ -2,6 +2,7 @@ package com.liyi.sutils.utils.io;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.support.annotation.NonNull;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -17,7 +18,7 @@ public class SJsonFileUtil {
      * @param path    The path to the json file in the assets folder
      * @return
      */
-    public static String getJsonFromAssets(Context context, String path) {
+    public static String getJsonFromAssets(@NonNull Context context, @NonNull String path) {
         StringBuilder stringBuilder = new StringBuilder();
         try {
             AssetManager assetManager = context.getAssets();
@@ -38,7 +39,7 @@ public class SJsonFileUtil {
      * @param path The path to the json file
      * @return
      */
-    private String getJson(String path) {
+    private String getJson(@NonNull String path) {
         StringBuilder stringBuilder = new StringBuilder();
         try {
             FileInputStream f = new FileInputStream(path);

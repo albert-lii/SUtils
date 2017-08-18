@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,7 +21,7 @@ public class SScreenUtil {
      * @param context
      * @return
      */
-    public static Point getScreenSize(Context context) {
+    public static Point getScreenSize(@NonNull Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
@@ -33,7 +34,7 @@ public class SScreenUtil {
      * @param context
      * @return
      */
-    public static float getScreenRate(Context context) {
+    public static float getScreenRate(@NonNull Context context) {
         Point P = getScreenSize(context);
         float H = P.y;
         float W = P.x;
@@ -45,7 +46,7 @@ public class SScreenUtil {
      *
      * @return
      */
-    public static int getStatusBarHeight(Context context) {
+    public static int getStatusBarHeight(@NonNull Context context) {
         int result = 0;
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
@@ -60,7 +61,7 @@ public class SScreenUtil {
      * @param context
      * @return
      */
-    public static boolean isHasNavigationBar(Context context) {
+    public static boolean isHasNavigationBar(@NonNull Context context) {
         boolean hasNavigationBar = false;
         Resources rs = context.getResources();
         int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
@@ -88,7 +89,7 @@ public class SScreenUtil {
      * @param activity
      * @return
      */
-    public static Bitmap screenShot(Activity activity) {
+    public static Bitmap screenShot(@NonNull Activity activity) {
         View view = activity.getWindow().getDecorView();
         view.setDrawingCacheEnabled(true);
         view.buildDrawingCache();
@@ -105,7 +106,7 @@ public class SScreenUtil {
      * @param activity
      * @return
      */
-    public static Bitmap screenShotNoStatusBar(Activity activity) {
+    public static Bitmap screenShotNoStatusBar(@NonNull Activity activity) {
         View view = activity.getWindow().getDecorView();
         view.setDrawingCacheEnabled(true);
         view.buildDrawingCache();

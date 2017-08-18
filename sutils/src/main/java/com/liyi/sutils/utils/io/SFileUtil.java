@@ -116,7 +116,7 @@ public class SFileUtil {
      * @param value
      * @throws IOException
      */
-    public void put(String dir, String key, String value){
+    public void put(@NonNull String dir, String key, String value) {
         File file = new File(dir, key);
         BufferedWriter out = null;
         try {
@@ -141,8 +141,8 @@ public class SFileUtil {
      *
      * @return
      */
-    public String getAsString(String folder, String key) {
-        File file = new File(folder, key);
+    public String getAsString(@NonNull String dir, String key) {
+        File file = new File(dir, key);
         if (!file.exists()) {
             return null;
         }
@@ -172,7 +172,7 @@ public class SFileUtil {
     /**
      * Save the byte array data
      */
-    public void put(String dir, String key, byte[] value) {
+    public void put(@NonNull String dir, String key, byte[] value) {
         File file = new File(dir, key);
         FileOutputStream out = null;
         try {
@@ -199,7 +199,7 @@ public class SFileUtil {
      *
      * @return
      */
-    public byte[] getAsBinary(String dir, String key) {
+    public byte[] getAsBinary(@NonNull String dir, String key) {
         File file = new File(dir, key);
         if (!file.exists()) {
             return null;
@@ -238,7 +238,7 @@ public class SFileUtil {
     /**
      * Save the serialized object
      */
-    public void put(String dir, String key, Serializable value) {
+    public void put(@NonNull String dir, String key, Serializable value) {
         ByteArrayOutputStream baos = null;
         ObjectOutputStream oos = null;
         try {
@@ -272,7 +272,7 @@ public class SFileUtil {
      *
      * @return
      */
-    public Object getAsObject(String dir, String key) {
+    public Object getAsObject(@NonNull String dir, String key) {
         ByteArrayInputStream bais = null;
         ObjectInputStream ois = null;
         try {
@@ -308,7 +308,7 @@ public class SFileUtil {
     /**
      * Save the bitmap data
      */
-    public void put(String dir, String key, Bitmap value) {
+    public void put(@NonNull String dir, String key, Bitmap value) {
         put(dir, key, bitmap2Byte(value));
     }
 
@@ -319,14 +319,14 @@ public class SFileUtil {
      * @param key
      * @return
      */
-    public Bitmap getAsBitmap(String dir, String key) {
+    public Bitmap getAsBitmap(@NonNull String dir, String key) {
         if (getAsBinary(dir, key) == null) {
             return null;
         }
         return byte2Bitmap(getAsBinary(dir, key));
     }
 
-    private byte[] bitmap2Byte(Bitmap bmp) {
+    private byte[] bitmap2Byte(@NonNull Bitmap bmp) {
         if (bmp == null) {
             return null;
         }
@@ -353,7 +353,7 @@ public class SFileUtil {
      * @param oldPath
      * @param newPath
      */
-    public void copyFile(String oldPath, String newPath) {
+    public void copyFile(@NonNull String oldPath, @NonNull String newPath) {
         int bytesum = 0;
         int byteread = 0;
         File oldfile = new File(oldPath);
@@ -400,7 +400,7 @@ public class SFileUtil {
      * @param oldPath
      * @param newPath
      */
-    public void copyDir(String oldPath, String newPath) {
+    public void copyDir(@NonNull String oldPath, @NonNull String newPath) {
         try {
             (new File(newPath)).mkdirs();
             File oldDir = new File(oldPath);
@@ -455,7 +455,7 @@ public class SFileUtil {
      * @param isAll True means to get the number of files, otherwise you only get the number of files at that level
      * @return
      */
-    public int getFileCount(String dir, boolean isAll) {
+    public int getFileCount(@NonNull String dir, boolean isAll) {
         int count = 0;
         if (!dir.endsWith(File.separator)) {
             dir = dir + File.separator;
@@ -590,7 +590,7 @@ public class SFileUtil {
      * @return
      * @throws Exception
      */
-    public long getSingleFileSize(File file) {
+    public long getSingleFileSize(@NonNull File file) {
         long size = 0;
         try {
             if (file.exists()) {
@@ -610,7 +610,7 @@ public class SFileUtil {
      * @return
      * @throws Exception
      */
-    public long getFileDirSize(File dir) {
+    public long getFileDirSize(@NonNull File dir) {
         long size = 0;
         File flist[] = dir.listFiles();
         for (int i = 0; i < flist.length; i++) {
@@ -640,7 +640,7 @@ public class SFileUtil {
      * @param uri     The Uri to query.l
      */
     @TargetApi(19)
-    public String getRealPath(final Context context, final Uri uri) {
+    public String getRealPath(@NonNull final Context context, @NonNull final Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         // DocumentProvider
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
@@ -736,7 +736,7 @@ public class SFileUtil {
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */
-    public String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+    public String getDataColumn(@NonNull Context context, Uri uri, String selection, String[] selectionArgs) {
         Cursor cursor = null;
         final String column = "_data";
         final String[] projection = {column};

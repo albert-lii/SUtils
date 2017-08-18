@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 
 import com.liyi.sutils.SConstants;
@@ -23,7 +24,7 @@ public class SAppUtil {
      * @param context
      * @return
      */
-    public static String getDeviceID(Context context) {
+    public static String getDeviceID(@NonNull Context context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return telephonyManager.getDeviceId();
     }
@@ -34,7 +35,7 @@ public class SAppUtil {
      * @param context
      * @return
      */
-    public static String getAppName(Context context) {
+    public static String getAppName(@NonNull Context context) {
         try {
             PackageManager packageManager = context.getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
@@ -52,7 +53,7 @@ public class SAppUtil {
      * @param context
      * @return version name
      */
-    public static String getVersionName(Context context) {
+    public static String getVersionName(@NonNull Context context) {
         try {
             PackageManager packageManager = context.getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
@@ -69,7 +70,7 @@ public class SAppUtil {
      * @param context
      * @return version code
      */
-    public static int getVersionCode(Context context) {
+    public static int getVersionCode(@NonNull Context context) {
         try {
             PackageManager packageManager = context.getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
@@ -87,7 +88,7 @@ public class SAppUtil {
      * @param packageName
      * @return
      */
-    public static boolean isAppAlive(Context context, String packageName) {
+    public static boolean isAppAlive(@NonNull Context context,@NonNull String packageName) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> processInfos = activityManager.getRunningAppProcesses();
         for (int i = 0; i < processInfos.size(); i++) {
@@ -107,7 +108,7 @@ public class SAppUtil {
      * @param packageName
      * @return
      */
-    public int getAppSatus(Context context, String packageName) {
+    public int getAppSatus(@NonNull Context context,@NonNull String packageName) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfos = am.getRunningTasks(20);
         // Determines whether the application is on the top of the stack
@@ -132,7 +133,7 @@ public class SAppUtil {
      *
      * @return
      */
-    public static boolean isServiceAlive(Context context, String serviceName) {
+    public static boolean isServiceAlive(@NonNull Context context, @NonNull String serviceName) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningServiceInfo> serviceInfos = activityManager.getRunningServices(30);
         if (serviceInfos == null || serviceInfos.size() < 1)
@@ -153,7 +154,7 @@ public class SAppUtil {
      * @param context
      * @return SHA1
      */
-    public static String getSHA1(Context context) {
+    public static String getSHA1(@NonNull Context context) {
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES);
             byte[] cert = info.signatures[0].toByteArray();

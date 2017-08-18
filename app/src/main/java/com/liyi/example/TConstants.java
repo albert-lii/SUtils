@@ -1,4 +1,4 @@
-package com.liyi.sample;
+package com.liyi.example;
 
 /**
  * Created by albertlii on 2017/8/3.

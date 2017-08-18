@@ -3,6 +3,7 @@ package com.liyi.sutils.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 
 import com.liyi.sutils.SConstants;
@@ -16,7 +17,7 @@ public class SNetUtil {
      * @param context
      * @return If true, the network is connected or the network is not connected
      */
-    public static boolean isConnected(Context context) {
+    public static boolean isConnected(@NonNull Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm != null) {
             NetworkInfo info = cm.getActiveNetworkInfo();
@@ -35,7 +36,7 @@ public class SNetUtil {
      * @param context
      * @return If true, the wifi is connected or the wifi is not connected.
      */
-    public static boolean isWifiConnected(Context context) {
+    public static boolean isWifiConnected(@NonNull Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm == null) {
             return false;
@@ -53,7 +54,7 @@ public class SNetUtil {
      * and if return NETTYPE_3G, it's 4g;
      * and if return NETTYPE_NONE, that means there's no network at the moment.
      */
-    public static int getNetWorkType(Context context) {
+    public static int getNetWorkType(@NonNull Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
 
