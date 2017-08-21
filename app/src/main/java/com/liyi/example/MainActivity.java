@@ -1,5 +1,7 @@
 package com.liyi.example;
 
+import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.liyi.sample.R;
 import com.liyi.sutils.utils.SReflectUtil;
+import com.liyi.sutils.utils.app.SStatusBarUtil;
 import com.liyi.sutils.utils.io.SFileUtil;
 import com.liyi.sutils.utils.prompt.SToastUtil;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener {
     private EditText editT_saveSer, editT_saveStr;
     private Button btn_saveSer, btn_getSer, btn_saveStr, btn_getStr, btn_reflect1, btn_reflect2;
 
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SStatusBarUtil.setupStatusBar(this, Color.parseColor("#ffffff"));
         editT_saveSer = (EditText) findViewById(R.id.editT_serializable);
         btn_saveSer = (Button) findViewById(R.id.btn_save_serializable);
         btn_getSer = (Button) findViewById(R.id.btn_get_serializable);
@@ -74,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_reflect1:
                 SReflectUtil.modifyValNoFinal(TConstants.class, "TEST1", "HAPPY");
-                System.out.println(">>> "+ TConstants.TEST1);
+                System.out.println(">>> " + TConstants.TEST1);
                 tv_reflect.setText(TConstants.TEST1);
                 break;
             case R.id.btn_reflect2:
