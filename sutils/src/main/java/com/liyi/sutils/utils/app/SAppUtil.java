@@ -1,11 +1,17 @@
 package com.liyi.sutils.utils.app;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.liyi.sutils.SConstants;
 import com.liyi.sutils.utils.prompt.SLogUtil;
@@ -88,7 +94,7 @@ public class SAppUtil {
      * @param packageName
      * @return
      */
-    public static boolean isAppAlive(@NonNull Context context,@NonNull String packageName) {
+    public static boolean isAppAlive(@NonNull Context context, @NonNull String packageName) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> processInfos = activityManager.getRunningAppProcesses();
         for (int i = 0; i < processInfos.size(); i++) {
@@ -108,7 +114,7 @@ public class SAppUtil {
      * @param packageName
      * @return
      */
-    public int getAppSatus(@NonNull Context context,@NonNull String packageName) {
+    public int getAppSatus(@NonNull Context context, @NonNull String packageName) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfos = am.getRunningTasks(20);
         // Determines whether the application is on the top of the stack

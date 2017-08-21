@@ -56,6 +56,26 @@ public class SScreenUtil {
     }
 
     /**
+     * Get the height of the bottom navigation bar
+     *
+     * @param context
+     * @return
+     */
+    public static int getNavBarHeight(@NonNull Context context) {
+        int result = 0;
+        int resourceId = 0;
+        // Determines whether the bottom navigation bar is displayed
+        int rid = context.getResources().getIdentifier("config_showNavigationBar", "bool", "android");
+        if (rid != 0) {
+            resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                result = context.getResources().getDimensionPixelSize(resourceId);
+            }
+        }
+        return result;
+    }
+
+    /**
      * Determine whether there is a NavigationBar (bottom navigation bar)
      *
      * @param context
