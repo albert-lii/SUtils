@@ -2,6 +2,7 @@ package com.liyi.sutils.utils.image;
 
 import android.graphics.drawable.GradientDrawable;
 
+
 public class SShapeUtil {
 
     public static GradientDrawable getRectShape(int fillColor, int radius) {

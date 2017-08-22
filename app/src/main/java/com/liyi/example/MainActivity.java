@@ -1,22 +1,22 @@
 package com.liyi.example;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.liyi.sutils.utils.SReflectUtil;
-import com.liyi.sutils.utils.app.SStatusBarUtil;
+import com.liyi.sutils.utils.app.SSystemBarUtil;
 import com.liyi.sutils.utils.io.SFileUtil;
 import com.liyi.sutils.utils.prompt.SToastUtil;
 
 public class MainActivity extends Activity implements View.OnClickListener {
+    private LinearLayout linLay_title;
     private EditText editT_saveSer, editT_saveStr;
     private Button btn_saveSer, btn_getSer, btn_saveStr, btn_getStr, btn_reflect1, btn_reflect2;
 
@@ -26,7 +26,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SStatusBarUtil.setupStatusBar(this, Color.parseColor("#ffffff"));
+        SSystemBarUtil.setupStatusBar(this);
         editT_saveSer = (EditText) findViewById(R.id.editT_serializable);
         btn_saveSer = (Button) findViewById(R.id.btn_save_serializable);
         btn_getSer = (Button) findViewById(R.id.btn_get_serializable);

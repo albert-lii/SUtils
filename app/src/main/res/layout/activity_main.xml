@@ -2,8 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="#ac8"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linLay_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="#0F73CB"
+        android:gravity="center"
+        android:minHeight="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标题" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
