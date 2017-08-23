@@ -81,7 +81,7 @@ public class SScreenUtil {
      * @param context
      * @return
      */
-    public static boolean isHasNavigationBar(@NonNull Context context) {
+    public static boolean hasNavigationBar(@NonNull Context context) {
         boolean hasNavigationBar = false;
         Resources rs = context.getResources();
         int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");

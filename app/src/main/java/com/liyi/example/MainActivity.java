@@ -1,13 +1,13 @@
 package com.liyi.example;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.liyi.sutils.utils.SReflectUtil;
@@ -16,17 +16,25 @@ import com.liyi.sutils.utils.io.SFileUtil;
 import com.liyi.sutils.utils.prompt.SToastUtil;
 
 public class MainActivity extends Activity implements View.OnClickListener {
-    private LinearLayout linLay_title;
+    private Button btn_navbar, btn_statusbar;
     private EditText editT_saveSer, editT_saveStr;
     private Button btn_saveSer, btn_getSer, btn_saveStr, btn_getStr, btn_reflect1, btn_reflect2;
-
     private TextView tv_content, tv_reflect;
+
+    private boolean isShowStatus = true;
+    private boolean isShowNav = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SSystemBarUtil.setupStatusBar(this);
+        SSystemBarUtil.setupStatusBar(this, Color.RED);
+        SSystemBarUtil.setupNavBar(this, Color.TRANSPARENT);
+        SSystemBarUtil.setDisplayOption(this, true, false);
+        SSystemBarUtil.setStatusBarAlpha(this, 0.5f);
+
+        btn_statusbar = (Button) findViewById(R.id.btn_statusbar);
+        btn_navbar = (Button) findViewById(R.id.btn_navbar);
         editT_saveSer = (EditText) findViewById(R.id.editT_serializable);
         btn_saveSer = (Button) findViewById(R.id.btn_save_serializable);
         btn_getSer = (Button) findViewById(R.id.btn_get_serializable);
@@ -39,6 +47,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         btn_reflect2 = (Button) findViewById(R.id.btn_reflect2);
         tv_reflect = (TextView) findViewById(R.id.tv_reflect_content);
 
+        btn_statusbar.setOnClickListener(this);
+        btn_navbar.setOnClickListener(this);
         btn_saveSer.setOnClickListener(this);
         btn_getSer.setOnClickListener(this);
         btn_saveStr.setOnClickListener(this);
@@ -50,6 +60,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btn_statusbar:
+                isShowStatus = !isShowStatus;
+                SSystemBarUtil.showStatusBar(this, isShowStatus);
+                break;
+            case R.id.btn_navbar:
+                isShowNav = !isShowNav;
+                SSystemBarUtil.showNavBar(this, isShowNav);
+                break;
             case R.id.btn_save_serializable:
                 String contentSer = editT_saveSer.getText().toString();
                 if (TextUtils.isEmpty(contentSer)) {
