@@ -1,5 +1,7 @@
 package com.liyi.sutils;
 
+import android.graphics.Color;
+
 public final class SConstants {
     /**
      * Network type
@@ -16,4 +18,16 @@ public final class SConstants {
     public static final int APPSTATE_FORE = 1;
     public static final int APPSTATE_BACK = 2;
     public static final int APPSTATE_DEAD = 3;
+
+    /**
+     * The parameters of the SSystemBarUtil
+     */
+    public static final String TAG_STATUS_BAR = "StatusBar";
+    public static final String TAG_NAVIGATION_BAR = "NavigationBar";
+    // Invalid color value
+    public static final int SYSTEMBAR_INVALID_VAL = -1;
+    // The default status bar color
+    public static final int DEFAULT_STATUS_COLOR = 0x10000000;
+    // The default navigation bar color
+    public static final int DEFAULT_NAVIGATION_COLOR = Color.TRANSPARENT;
 }
