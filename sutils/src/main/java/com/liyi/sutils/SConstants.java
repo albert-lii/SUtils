@@ -12,12 +12,14 @@ public final class SConstants {
     public static final int NETTYPE_4G = 4;
     public static final int NETTYPE_NONE = -1;
 
+
     /**
      * The running state of the app
      */
     public static final int APPSTATE_FORE = 1;
     public static final int APPSTATE_BACK = 2;
     public static final int APPSTATE_DEAD = 3;
+
 
     /**
      * The parameters of the SSystemBarUtil
@@ -30,4 +32,14 @@ public final class SConstants {
     public static final int DEFAULT_STATUS_COLOR = 0x10000000;
     // The default navigation bar color
     public static final int DEFAULT_NAVIGATION_COLOR = Color.TRANSPARENT;
+
+
+    /**
+     * The parameters of the SGlideUtil
+     */
+    public static final int GLIDE_INVALID_VAL = -1;
+    public static final int AS_DRAWABLE = 1;
+    public static final int AS_BITMAP = 2;
+    public static final int AS_GIF = 3;
+    public static final int AS_FILE = 4;
 }
