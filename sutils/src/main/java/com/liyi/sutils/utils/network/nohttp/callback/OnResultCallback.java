@@ -46,7 +46,7 @@ public class OnResultCallback<T> implements OnResponseListener<T> {
     @Override
     public void onStart(int what) {
         if (mLoadListener != null) {
-            mLoadListener.onLoading(what, SConstants.LOAD_START, true);
+            mLoadListener.showLoading(what, SConstants.LOAD_START);
         }
     }
 
@@ -64,15 +64,15 @@ public class OnResultCallback<T> implements OnResponseListener<T> {
                 mNetStateListener.onSucceed(what, response.get());
             }
         } else {
+            if (mNetStateListener != null) {
+                mNetStateListener.onFailed(what, response);
+            }
             if (mShowTipsListener != null) {
                 mShowTipsListener.onShowTips(what, SConstants.TIP_SUCCESS, response);
             }
             String msg = String.format("http request success2fail ---> <what> is %s, <requestCode> is %s, <response> is %s",
                     String.valueOf(what), String.valueOf(reapondCode), response.get().toString());
             SLogUtil.e(TAG, msg);
-            if (mNetStateListener != null) {
-                mNetStateListener.onFailed(what, response);
-            }
         }
     }
 
@@ -94,7 +94,7 @@ public class OnResultCallback<T> implements OnResponseListener<T> {
     @Override
     public void onFinish(int what) {
         if (mLoadListener != null) {
-            mLoadListener.onLoading(what, SConstants.LOAD_FINISH, true);
+            mLoadListener.showLoading(what, SConstants.LOAD_FINISH);
         }
     }
 }
