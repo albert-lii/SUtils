@@ -1,5 +1,6 @@
 package com.liyi.sutils.utils.network.nohttp.callback;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.liyi.sutils.SConstants;
@@ -19,9 +20,17 @@ public class OnResultCallback<T> implements OnResponseListener<T> {
     private OnShowTipsListener mShowTipsListener;
     private OnNetStateListener mNetStateListener;
 
-    public OnResultCallback(OnNetStateListener listener) {
+    public OnResultCallback(OnNetStateListener netStateListener) {
         super();
-        this.mNetStateListener = listener;
+        this.mNetStateListener = netStateListener;
+    }
+
+    public OnResultCallback(OnNetStateListener netStateListener, Context context) {
+        super();
+        this.mNetStateListener = netStateListener;
+        if (context != null) {
+            mShowTipsListener = new ShowTipsObj(context);
+        }
     }
 
     public OnResultCallback setOnLoadListener(OnLoadListener loadListener) {
