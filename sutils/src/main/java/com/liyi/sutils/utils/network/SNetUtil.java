@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils;
+package com.liyi.sutils.utils.network;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

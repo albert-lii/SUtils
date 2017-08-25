@@ -2,6 +2,7 @@ package com.liyi.sutils.utils.app;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.View;
@@ -9,10 +10,17 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import com.liyi.sutils.SConstants;
-
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class SSystemBarUtil {
+    private static final String TAG_STATUS_BAR = "StatusBar";
+    private static final String TAG_NAVIGATION_BAR = "NavigationBar";
+    // 无效的颜色值
+    private static final int INVALID_VAL = -1;
+    // 默认的状态栏颜色
+    private static final int DEFAULT_STATUS_COLOR = 0x10000000;
+    // 默认的底部导航栏颜色
+    private static final int DEFAULT_NAVIGATION_COLOR = Color.TRANSPARENT;
+
     /**
      * 设置状态栏和底部导航栏的显示方式
      */
@@ -30,8 +38,8 @@ public class SSystemBarUtil {
     public static void setupStatusBar(Activity activity, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             int statusHeight = SScreenUtil.getStatusBarHeight(activity);
-            int statusColor = SConstants.DEFAULT_STATUS_COLOR;
-            if (color != SConstants.SYSTEMBAR_INVALID_VAL) {
+            int statusColor = DEFAULT_STATUS_COLOR;
+            if (color != INVALID_VAL) {
                 statusColor = color;
             }
             // 设置状态栏透明
@@ -55,7 +63,7 @@ public class SSystemBarUtil {
         params.gravity = Gravity.TOP;
         statusBarView.setLayoutParams(params);
         statusBarView.setBackgroundColor(statusColor);
-        statusBarView.setTag(SConstants.TAG_STATUS_BAR);
+        statusBarView.setTag(TAG_STATUS_BAR);
         return statusBarView;
     }
 
@@ -63,7 +71,7 @@ public class SSystemBarUtil {
      * 移除已经存在的 statusBarView
      */
     private static void removeStatusBarView(ViewGroup decorView) {
-        View statusBarView = decorView.findViewWithTag(SConstants.TAG_STATUS_BAR);
+        View statusBarView = decorView.findViewWithTag(TAG_STATUS_BAR);
         if (statusBarView != null) {
             decorView.removeView(statusBarView);
         }
@@ -75,7 +83,7 @@ public class SSystemBarUtil {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static void setStatusBarAlpha(Activity activity, float alpha) {
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-        View statusView = decorView.findViewWithTag(SConstants.TAG_STATUS_BAR);
+        View statusView = decorView.findViewWithTag(TAG_STATUS_BAR);
         if (statusView != null) {
             statusView.setAlpha(alpha);
         }
@@ -88,7 +96,7 @@ public class SSystemBarUtil {
     public static void showStatusBar(Activity activity, boolean isShow) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-            View statusView = decorView.findViewWithTag(SConstants.TAG_STATUS_BAR);
+            View statusView = decorView.findViewWithTag(TAG_STATUS_BAR);
             if (isShow) {
                 if (statusView != null) {
                     statusView.setVisibility(View.VISIBLE);
@@ -111,8 +119,8 @@ public class SSystemBarUtil {
             if (SScreenUtil.hasNavigationBar(activity)) {
                 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
                 int navHeight = SScreenUtil.getNavBarHeight(activity);
-                int navColor = SConstants.DEFAULT_NAVIGATION_COLOR;
-                if (color != SConstants.SYSTEMBAR_INVALID_VAL) {
+                int navColor = DEFAULT_NAVIGATION_COLOR;
+                if (color != INVALID_VAL) {
                     navColor = color;
                 }
                 ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
@@ -132,7 +140,7 @@ public class SSystemBarUtil {
         params.gravity = Gravity.BOTTOM;
         navBarView.setLayoutParams(params);
         navBarView.setBackgroundColor(navColor);
-        navBarView.setTag(SConstants.TAG_NAVIGATION_BAR);
+        navBarView.setTag(TAG_NAVIGATION_BAR);
         return navBarView;
     }
 
@@ -140,7 +148,7 @@ public class SSystemBarUtil {
      * 移除已经存在的 navBarView
      */
     private static void removeNavBarView(ViewGroup decorView) {
-        View navBarView = decorView.findViewWithTag(SConstants.TAG_NAVIGATION_BAR);
+        View navBarView = decorView.findViewWithTag(TAG_NAVIGATION_BAR);
         if (navBarView != null) {
             decorView.removeView(navBarView);
         }
@@ -153,7 +161,7 @@ public class SSystemBarUtil {
     public static void setNavBarAlpha(Activity activity, float alpha) {
         if (SScreenUtil.hasNavigationBar(activity)) {
             ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-            View navBarView = decorView.findViewWithTag(SConstants.TAG_NAVIGATION_BAR);
+            View navBarView = decorView.findViewWithTag(TAG_NAVIGATION_BAR);
             if (navBarView != null) {
                 navBarView.setAlpha(alpha);
             }

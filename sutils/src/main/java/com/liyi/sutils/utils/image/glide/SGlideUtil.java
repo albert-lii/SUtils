@@ -64,27 +64,29 @@ public class SGlideUtil {
             return manager.asFile();
         } else if (type == SConstants.AS_BITMAP) {
             return manager.asBitmap();
-        } else if (type == SConstants.AS_BITMAP) {
+        } else if (type == SConstants.AS_GIF) {
             return manager.asGif();
-        } else {
+        } else if (type == SConstants.AS_DRAWABLE) {
             return manager.asDrawable();
+        } else {
+            return null;
         }
     }
 
     public RequestManager getRequestManager(@NonNull Object target) {
         RequestManager manager = null;
         if (target instanceof Activity) {
-            manager = GlideApp.with((Activity) target);
+            manager = Glide.with((Activity) target);
         } else if (target instanceof FragmentActivity) {
-            manager = GlideApp.with((FragmentActivity) target);
+            manager = Glide.with((FragmentActivity) target);
         } else if (target instanceof android.app.Fragment) {
-            manager = GlideApp.with((android.app.Fragment) target);
+            manager = Glide.with((android.app.Fragment) target);
         } else if (target instanceof android.support.v4.app.Fragment) {
-            manager = GlideApp.with((android.support.v4.app.Fragment) target);
+            manager = Glide.with((android.support.v4.app.Fragment) target);
         } else if (target instanceof Context) {
-            manager = GlideApp.with((Activity) target);
+            manager = Glide.with((Activity) target);
         } else if (target instanceof View) {
-            manager = GlideApp.with((View) target);
+            manager = Glide.with((View) target);
         }
         if (manager == null) {
             SLogUtil.e(TAG, "Glide中引入的上下文对象格式错误");
