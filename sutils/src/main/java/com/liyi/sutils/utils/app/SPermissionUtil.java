@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -118,6 +119,7 @@ public class SPermissionUtil {
         return new SPermissionUtil(fragment.getActivity());
     }
 
+    @RequiresApi(Build.VERSION_CODES.HONEYCOMB)
     public static SPermissionUtil with(@NonNull android.app.Fragment fragment) {
         return new SPermissionUtil(fragment.getActivity());
     }

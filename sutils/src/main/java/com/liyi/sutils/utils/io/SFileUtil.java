@@ -111,13 +111,12 @@ public class SFileUtil {
     /**
      * Save string data
      *
-     * @param dir
      * @param key
      * @param value
      * @throws IOException
      */
-    public void put(@NonNull String dir, String key, String value) {
-        File file = new File(dir, key);
+    public void put(String key, String value) {
+        File file = new File(key);
         BufferedWriter out = null;
         try {
             out = new BufferedWriter(new FileWriter(file), 1024);
@@ -141,8 +140,8 @@ public class SFileUtil {
      *
      * @return
      */
-    public String getAsString(@NonNull String dir, String key) {
-        File file = new File(dir, key);
+    public String getAsString(String key) {
+        File file = new File(key);
         if (!file.exists()) {
             return null;
         }
@@ -172,8 +171,8 @@ public class SFileUtil {
     /**
      * Save the byte array data
      */
-    public void put(@NonNull String dir, String key, byte[] value) {
-        File file = new File(dir, key);
+    public void put(String key, byte[] value) {
+        File file = new File(key);
         FileOutputStream out = null;
         try {
             out = new FileOutputStream(file);
@@ -199,8 +198,8 @@ public class SFileUtil {
      *
      * @return
      */
-    public byte[] getAsBinary(@NonNull String dir, String key) {
-        File file = new File(dir, key);
+    public byte[] getAsBinary(String key) {
+        File file = new File(key);
         if (!file.exists()) {
             return null;
         }
@@ -238,7 +237,7 @@ public class SFileUtil {
     /**
      * Save the serialized object
      */
-    public void put(@NonNull String dir, String key, Serializable value) {
+    public void put(String key, Serializable value) {
         ByteArrayOutputStream baos = null;
         ObjectOutputStream oos = null;
         try {
@@ -246,7 +245,7 @@ public class SFileUtil {
             oos = new ObjectOutputStream(baos);
             oos.writeObject(value);
             byte[] data = baos.toByteArray();
-            put(dir, key, data);
+            put(key, data);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -272,11 +271,11 @@ public class SFileUtil {
      *
      * @return
      */
-    public Object getAsObject(@NonNull String dir, String key) {
+    public Object getAsObject(String key) {
         ByteArrayInputStream bais = null;
         ObjectInputStream ois = null;
         try {
-            byte[] data = getAsBinary(dir, key);
+            byte[] data = getAsBinary(key);
             bais = new ByteArrayInputStream(data);
             ois = new ObjectInputStream(bais);
             Object obj = ois.readObject();
@@ -308,22 +307,21 @@ public class SFileUtil {
     /**
      * Save the bitmap data
      */
-    public void put(@NonNull String dir, String key, Bitmap value) {
-        put(dir, key, bitmap2Byte(value));
+    public void put(String key, Bitmap value) {
+        put(key, bitmap2Byte(value));
     }
 
     /**
      * Read the bitmap data
      *
-     * @param dir
      * @param key
      * @return
      */
-    public Bitmap getAsBitmap(@NonNull String dir, String key) {
-        if (getAsBinary(dir, key) == null) {
+    public Bitmap getAsBitmap(String key) {
+        if (getAsBinary(key) == null) {
             return null;
         }
-        return byte2Bitmap(getAsBinary(dir, key));
+        return byte2Bitmap(getAsBinary(key));
     }
 
     private byte[] bitmap2Byte(@NonNull Bitmap bmp) {

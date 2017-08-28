@@ -24,16 +24,6 @@ import java.util.Locale;
 public class SAppUtil {
     private static final String TAG = SAppUtil.class.getSimpleName();
 
-    /**
-     * Get the unique ID of the phone, the device string number
-     *
-     * @param context
-     * @return
-     */
-    public static String getDeviceID(@NonNull Context context) {
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        return telephonyManager.getDeviceId();
-    }
 
     /**
      * Get the application name

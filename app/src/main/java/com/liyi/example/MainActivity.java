@@ -15,6 +15,8 @@ import com.liyi.sutils.utils.app.SSystemBarUtil;
 import com.liyi.sutils.utils.io.SFileUtil;
 import com.liyi.sutils.utils.prompt.SToastUtil;
 
+import java.io.File;
+
 public class MainActivity extends Activity implements View.OnClickListener {
     private Button btn_navbar, btn_statusbar;
     private EditText editT_saveSer, editT_saveStr;
@@ -75,10 +77,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     return;
                 }
                 TestBean bean = new TestBean(contentSer);
-                SFileUtil.get().put(SFileUtil.get().getSDCardPath(), "key1", bean);
+                SFileUtil.get().put(SFileUtil.get().getSDCardPath() + File.separator + "key1", bean);
                 break;
             case R.id.btn_get_serializable:
-                TestBean bean1 = (TestBean) SFileUtil.get().getAsObject(SFileUtil.get().getSDCardPath(), "key1");
+                TestBean bean1 = (TestBean) SFileUtil.get().getAsObject(SFileUtil.get().getSDCardPath() + File.separator + "key1");
                 tv_content.setText(bean1.getMsg());
                 break;
             case R.id.btn_save_string:
@@ -87,10 +89,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     SToastUtil.show(this, "内容不能为空");
                     return;
                 }
-                SFileUtil.get().put(SFileUtil.get().getSDCardPath(), "key2", contentStr);
+                SFileUtil.get().put(SFileUtil.get().getSDCardPath() + File.separator + "key2", contentStr);
                 break;
             case R.id.btn_get_string:
-                String text = SFileUtil.get().getAsString(SFileUtil.get().getSDCardPath(), "key2");
+                String text = SFileUtil.get().getAsString(SFileUtil.get().getSDCardPath() + File.separator + "key2");
                 tv_content.setText(text);
                 break;
             case R.id.btn_reflect1:
