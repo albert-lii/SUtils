@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.liyi.sutils.utils.SReflectUtil;
+import com.liyi.sutils.utils.common.SReflectUtil;
 import com.liyi.sutils.utils.app.SSystemBarUtil;
 import com.liyi.sutils.utils.io.SFileUtil;
 import com.liyi.sutils.utils.prompt.SToastUtil;
