@@ -1,17 +1,10 @@
 package com.liyi.sutils.utils.app;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.telephony.TelephonyManager;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.liyi.sutils.SConstants;
 import com.liyi.sutils.utils.prompt.SLogUtil;
@@ -26,7 +19,7 @@ public class SAppUtil {
 
 
     /**
-     * Get the application name
+     * 获取应用程序名称
      *
      * @param context
      * @return
@@ -44,7 +37,7 @@ public class SAppUtil {
     }
 
     /**
-     * Get the application version name
+     * 获取应用版本名称
      *
      * @param context
      * @return version name
@@ -61,7 +54,7 @@ public class SAppUtil {
     }
 
     /**
-     * Get the application version code
+     * 获取应用版本code
      *
      * @param context
      * @return version code
@@ -78,7 +71,7 @@ public class SAppUtil {
     }
 
     /**
-     * Determine whether the application is alive or not
+     * 判断app是否存活
      *
      * @param context
      * @param packageName
@@ -98,11 +91,11 @@ public class SAppUtil {
     }
 
     /**
-     * Get the status of the application
+     * 获取app的状态
      *
      * @param context
      * @param packageName
-     * @return
+     * @return 运行在前台、运行在后台、app已被杀死
      */
     public int getAppSatus(@NonNull Context context, @NonNull String packageName) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -125,7 +118,7 @@ public class SAppUtil {
     }
 
     /**
-     * Determine whether the service is alive or not
+     * 判断服务是否存活
      *
      * @return
      */
@@ -145,7 +138,7 @@ public class SAppUtil {
     }
 
     /**
-     * Get SHA1 value
+     * 获取SHA1的值
      *
      * @param context
      * @return SHA1

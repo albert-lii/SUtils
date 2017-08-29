@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 public class SKeyboardUtil {
     /**
-     * Open soft keyboard
+     * 弹出虚拟软键盘
      */
     public static void openKeyboard(Context context, EditText et) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -19,7 +19,7 @@ public class SKeyboardUtil {
     }
 
     /**
-     * Open the soft keyboard and top the layout
+     * 弹出虚拟软键盘并把布局顶上去
      */
     public static void openKeyboardByTop(Context context, EditText et) {
         // The keyboard will top the layout
@@ -30,7 +30,7 @@ public class SKeyboardUtil {
     }
 
     /**
-     * Close soft keyboard
+     * 关闭软键盘
      */
     public static void closeKeyboard(Context context, EditText et) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -38,7 +38,7 @@ public class SKeyboardUtil {
     }
 
     /**
-     * Determine whether the current soft keyboard is open
+     * 判断软件盘是否弹出
      *
      * @param activity
      * @return

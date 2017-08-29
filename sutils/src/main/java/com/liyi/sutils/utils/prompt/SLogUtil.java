@@ -40,21 +40,21 @@ public class SLogUtil {
     }
 
     /**
-     * The output log contains information
+     * 输出log中包含的信息
      */
     public static String getLogInfo(StackTraceElement stackTraceElement) {
         StringBuilder logInfoStringBuilder = new StringBuilder();
-        // Get the thread ID
+        // 线程ID
         long threadID = Thread.currentThread().getId();
-        // Get the name of the thread
+        // 线程名称
         String threadName = Thread.currentThread().getName();
-        // Get a filename, such as XXX. Java
+        // 文件名，例如 XXX. Java
         String fileName = stackTraceElement.getFileName();
-        // Get the class name, the package name + class name
+        // 类名, package name + class name
         String className = stackTraceElement.getClassName();
-        // Get the method name
+        // 方法名
         String methodName = stackTraceElement.getMethodName();
-        // Get the number of log output rows
+        // 输出的log的行数
         int lineNumber = stackTraceElement.getLineNumber();
 
         logInfoStringBuilder.append("[ ");

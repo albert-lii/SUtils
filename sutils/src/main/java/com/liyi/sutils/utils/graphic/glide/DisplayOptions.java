@@ -1,12 +1,12 @@
-package com.liyi.sutils.utils.image.glide;
+package com.liyi.sutils.utils.graphic.glide;
 
 
 import android.content.Context;
 
 import com.bumptech.glide.request.RequestOptions;
-import com.liyi.sutils.utils.image.glide.transform.CircleTransform;
-import com.liyi.sutils.utils.image.glide.transform.RoundTransform;
-import com.liyi.sutils.utils.image.glide.transform.blur.BlurTransformation;
+import com.liyi.sutils.utils.graphic.glide.transform.CircleTransform;
+import com.liyi.sutils.utils.graphic.glide.transform.RoundTransform;
+import com.liyi.sutils.utils.graphic.glide.transform.blur.BlurTransformation;
 
 public class DisplayOptions {
     /**

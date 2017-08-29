@@ -2,9 +2,9 @@ package com.liyi.sutils;
 
 public final class SConstants {
     /**
-     * The parameters of the SNetUtil
+     * 与SNetUtil相关的参数
      * <p>
-     * Network type
+     * 网络的类型
      */
     public static final int NETTYPE_WIFI = 1;
     public static final int NETTYPE_2G = 2;
@@ -14,31 +14,40 @@ public final class SConstants {
 
 
     /**
-     * The parameters of the SAppUtil
+     * 与SAppUtil相关的参数
      * <p>
-     * The running state of the app
+     * app的状态
      */
+    // app运行在前台
     public static final int APPSTATE_FORE = 1;
+    // app运行在后台
     public static final int APPSTATE_BACK = 2;
+    // app已经被杀死
     public static final int APPSTATE_DEAD = 3;
 
 
     /**
-     * The parameters of the SGlideUtil
+     * 与glide相关的参数
      */
+    // 加载drawable（默认）
     public static final int AS_DRAWABLE = 1;
+    // 加载bitmap（可用于gif的静态显示）
     public static final int AS_BITMAP = 2;
+    // 加载gif
     public static final int AS_GIF = 3;
+    // 加载file
     public static final int AS_FILE = 4;
 
 
     /**
-     * The parameters of the SCallNetUtil
+     * 与nohttp相关的参数
      */
-    //
     public static final int LOAD_START = 1;
     public static final int LOAD_FINISH = 2;
+    // 网络请求返回数据为空
     public static final int TIP_EMPTY = 0;
+    // 网络请求在onSuccess()中请求失败（已经和服务器连接）
     public static final int TIP_SUCCESS = 1;
+    // 网络请求在onFail()中请求失败（未能连接上服务器）
     public static final int TIP_FAIL = 2;
 }

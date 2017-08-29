@@ -17,9 +17,6 @@ import android.support.v4.content.ContextCompat;
 
 import java.util.ArrayList;
 
-/**
- * The permission administration tool class
- */
 
 public class SPermissionUtil {
     private Activity mActivity;
@@ -37,7 +34,7 @@ public class SPermissionUtil {
     }
 
     /**
-     * Determine if you have certain permissions
+     * 判断用户是否已经拥有指定权限
      *
      * @param context
      * @param permissions
@@ -55,7 +52,7 @@ public class SPermissionUtil {
     }
 
     /**
-     * Gets a missing list of permissions
+     * 获取缺少的权限
      *
      * @param context
      * @param permissions
@@ -74,7 +71,7 @@ public class SPermissionUtil {
     }
 
     /**
-     * Whether or not a certain authority has been completely rejected
+     * 判断是否在自动弹出的权限弹框中勾选了总是拒绝授权
      */
     public static boolean hasAlwaysDeniedPermission(@NonNull Activity activity, @NonNull String... deniedPermissions) {
         if (isNeedRequest()) {
@@ -88,6 +85,9 @@ public class SPermissionUtil {
         return false;
     }
 
+    /**
+     * 显示提示框
+     */
     public static void showTipDialog(@NonNull final Context context) {
         if (isNeedRequest()) {
             new AlertDialog.Builder(context)
@@ -103,7 +103,7 @@ public class SPermissionUtil {
     }
 
     /**
-     * Start the current application Settings page
+     * 跳转到设置页面
      */
     public static void startAppSettings(Context context) {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -158,7 +158,8 @@ public class SPermissionUtil {
     }
 
     /**
-     * Handle the result of the request permission returned
+     * 处理请求授权后返回的结果
+     * 此方法需要放在onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)方法中执行
      */
     public static void handleRequestPermissionsResult(@NonNull Activity activity, int requestCode, @NonNull String[] permissions, int[] grantResults) {
         if (requestCode == mRequestCode) {
@@ -185,12 +186,12 @@ public class SPermissionUtil {
 
     public interface OnPermissionListener extends ActivityCompat.OnRequestPermissionsResultCallback {
         /**
-         * User agrees to authorize
+         * 用户同意授权
          */
         void onPermissionGranted(int requestCode, String[] grantPermissions);
 
         /**
-         * User reject authorization
+         * 用户拒绝授权
          */
         void onPermissionDenied(int requestCode, String[] deniedPermissions, boolean hasAlwaysDenied);
     }

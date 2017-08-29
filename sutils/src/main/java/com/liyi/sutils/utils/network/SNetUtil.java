@@ -11,11 +11,12 @@ import com.liyi.sutils.utils.prompt.SLogUtil;
 
 public class SNetUtil {
     private static final String TAG = SNetUtil.class.getClass().getSimpleName();
+
     /**
-     * Determine if the network is connected
+     * 判断网络是否连接
      *
      * @param context
-     * @return If true, the network is connected or the network is not connected
+     * @return true表示网络已连接，false表示未连接
      */
     public static boolean isConnected(@NonNull Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -31,10 +32,10 @@ public class SNetUtil {
     }
 
     /**
-     * Determine if wifi is connected
+     * 判断wifi是否连接
      *
      * @param context
-     * @return If true, the wifi is connected or the wifi is not connected.
+     * @return true表示已连接wifi，false表示未连接wifi
      */
     public static boolean isWifiConnected(@NonNull Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -45,14 +46,14 @@ public class SNetUtil {
     }
 
     /**
-     * Get the current network type
+     * 获取当前网络的类型
      *
      * @param context Context
-     * @return If return NETTYPE_WIFI,it's wifi;
-     * and if return NETTYPE_2G, it's 2g;
-     * and if return NETTYPE_4G, it's 3g;
-     * and if return NETTYPE_3G, it's 4g;
-     * and if return NETTYPE_NONE, that means there's no network at the moment.
+     * @return 返回 NETTYPE_WIFI，表示 wifi;
+     * 返回 NETTYPE_2G，表示 2g网;
+     * 返回 NETTYPE_4G，表示 3g网;
+     * 返回 NETTYPE_3G，表示 4g网;
+     * 返回 NETTYPE_NONE，表示当前未连接网络
      */
     public static int getNetWorkType(@NonNull Context context) {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -65,7 +66,7 @@ public class SNetUtil {
             } else if (type == ConnectivityManager.TYPE_MOBILE) {
                 NetworkInfo mobileInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
                 if (mobileInfo != null) {
-                    SLogUtil.i(TAG,"Network Type ========> "+mobileInfo.getSubtypeName());
+                    SLogUtil.i(TAG, "Network Type ========> " + mobileInfo.getSubtypeName());
                     switch (mobileInfo.getType()) {
                         // Mobile phone network
                         case ConnectivityManager.TYPE_MOBILE:

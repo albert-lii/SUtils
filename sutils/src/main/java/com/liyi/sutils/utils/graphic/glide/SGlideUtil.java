@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.image.glide;
+package com.liyi.sutils.utils.graphic.glide;
 
 
 import android.app.Activity;

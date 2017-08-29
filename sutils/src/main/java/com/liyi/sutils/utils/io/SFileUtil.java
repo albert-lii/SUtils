@@ -45,10 +45,8 @@ public class SFileUtil {
     }
 
 
-    /*--------------------------------------------------------------------------------------------*/
-
     /**
-     * Does it have an external sd card
+     * 判断是否有SD卡
      */
     public boolean isHasSDCard() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -58,7 +56,7 @@ public class SFileUtil {
     }
 
     /**
-     * Get the sd card path
+     * 获取SD卡路径
      *
      * @return
      */
@@ -67,7 +65,7 @@ public class SFileUtil {
     }
 
     /**
-     * Create folders (you must create folders before you can create files, otherwise you won't find paths)
+     * 创建文件夹 （你必须先创建文件夹，才能创建文件，否则会报“找不到路径”）
      *
      * @param path
      */
@@ -75,6 +73,7 @@ public class SFileUtil {
         boolean isSuccess;
         File file = new File(path);
         if (!file.exists()) {
+            // 如果文件夹已经存在执行此方法会返回false
             isSuccess = file.mkdirs();
         } else {
             isSuccess = true;
@@ -83,7 +82,7 @@ public class SFileUtil {
     }
 
     /**
-     * Create a file
+     * 创建文件
      *
      * @param path
      * @return
@@ -93,6 +92,7 @@ public class SFileUtil {
         File file = new File(path);
         if (!file.exists()) {
             try {
+                // 如果文件已经存在执行此方法会返回false
                 isSuccess = file.createNewFile();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -102,14 +102,14 @@ public class SFileUtil {
         }
         return isSuccess;
     }
-    /*--------------------------------------------------------------------------------------------*/
 
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////  IO 操作
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
-     * IO operations-------------------------------------------------------------------------------/
-     */
-    /**
-     * Save string data
+     * 保存String数据
      *
      * @param key
      * @param value
@@ -136,7 +136,7 @@ public class SFileUtil {
     }
 
     /**
-     * Read string data
+     * 读取String数据
      *
      * @return
      */
@@ -169,7 +169,7 @@ public class SFileUtil {
     }
 
     /**
-     * Save the byte array data
+     * 保存byte[]
      */
     public void put(String key, byte[] value) {
         File file = new File(key);
@@ -194,7 +194,7 @@ public class SFileUtil {
     }
 
     /**
-     * Read the byte array data
+     * 读取byte[]
      *
      * @return
      */
@@ -235,7 +235,7 @@ public class SFileUtil {
     }
 
     /**
-     * Save the serialized object
+     * 保存序列化对象
      */
     public void put(String key, Serializable value) {
         ByteArrayOutputStream baos = null;
@@ -267,7 +267,7 @@ public class SFileUtil {
     }
 
     /**
-     * Read the Serializable data
+     * 读取序列化对象
      *
      * @return
      */
@@ -305,14 +305,14 @@ public class SFileUtil {
     }
 
     /**
-     * Save the bitmap data
+     * 保存bitmap数据
      */
     public void put(String key, Bitmap value) {
         put(key, bitmap2Byte(value));
     }
 
     /**
-     * Read the bitmap data
+     * 读取bitmap数据
      *
      * @param key
      * @return
@@ -339,14 +339,14 @@ public class SFileUtil {
         }
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
-    /*--------------------------------------------------------------------------------------------*/
 
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////   拷贝文件以及文件夹到指定路径
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
-     * Copy File-----------------------------------------------------------------------------------/
-     */
-    /**
-     * Copy a single file to the specified path
+     * 拷贝文件到指定路径
      *
      * @param oldPath
      * @param newPath
@@ -393,7 +393,7 @@ public class SFileUtil {
     }
 
     /**
-     * Copy the entire folder contents
+     * 拷贝文件夹内容到指定位置
      *
      * @param oldPath
      * @param newPath
@@ -447,10 +447,10 @@ public class SFileUtil {
     }
 
     /**
-     * Get the number of files in the specified directory
+     * 获取指定文件夹中文件的数量
      *
      * @param dir
-     * @param isAll True means to get the number of files, otherwise you only get the number of files at that level
+     * @param isAll true代表获取所有的文件数量，false代表只获取第一级的文件数量
      * @return
      */
     public int getFileCount(@NonNull String dir, boolean isAll) {
@@ -474,14 +474,14 @@ public class SFileUtil {
         }
         return count;
     }
-    /*--------------------------------------------------------------------------------------------*/
 
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////   删除文件
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
-     * Delete the file-----------------------------------------------------------------------------/
-     */
-    /**
-     * Delete the file
+     * 删除文件或文件夹
      *
      * @param path
      */
@@ -503,7 +503,7 @@ public class SFileUtil {
     }
 
     /**
-     * Delete single file
+     * 删除单个文件
      *
      * @param path
      * @return
@@ -517,13 +517,13 @@ public class SFileUtil {
     }
 
     /**
-     * Delete file directory
+     * 删除文件夹
      *
      * @param dir
      * @return
      */
     public boolean deleteDir(@NonNull String dir) {
-        // If dir does not end with a file delimiter, the file delimiter is automatically added
+        // 如果文件夹路径不是以文件分隔符结尾，则在路径末尾自动添加文件分隔符
         if (!dir.endsWith(File.separator)) {
             dir = dir + File.separator;
         }
@@ -551,14 +551,14 @@ public class SFileUtil {
         }
         return fileDir.delete();
     }
-    /*--------------------------------------------------------------------------------------------*/
 
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////  获取文件或者文件夹的大小
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
-     * Get the size of file------------------------------------------------------------------------/
-     */
-    /**
-     * Get the specified file size
+     * 获取指定文件或者文件夹的大小
      *
      * @param path
      * @return
@@ -582,7 +582,7 @@ public class SFileUtil {
     }
 
     /**
-     * Get the specified file size
+     * 获取单个文件的大小
      *
      * @param file
      * @return
@@ -602,7 +602,7 @@ public class SFileUtil {
     }
 
     /**
-     * Get the specified folder size
+     * 获取指定文件夹的大小
      *
      * @param dir
      * @return
@@ -620,12 +620,12 @@ public class SFileUtil {
         }
         return size;
     }
-    /*--------------------------------------------------------------------------------------------*/
 
 
-    /**
-     * Get the real path of the file---------------------------------------------------------------/
-     */
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////  获取文件的真实路径
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access
      * Framework Documents, as well as the _data field for the MediaStore and

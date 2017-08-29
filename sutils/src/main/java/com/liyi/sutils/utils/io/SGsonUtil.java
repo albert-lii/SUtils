@@ -23,7 +23,7 @@ public class SGsonUtil {
     }
 
     /**
-     * Parse the json data into a bean
+     * 将json数据转化为bean
      *
      * @param jsonStr
      * @param cls
@@ -37,7 +37,7 @@ public class SGsonUtil {
     }
 
     /**
-     * Parse the json data into a list
+     * 将json数据转换为list
      *
      * @param jsonStr
      * @param type
@@ -51,7 +51,7 @@ public class SGsonUtil {
     }
 
     /**
-     * Parse the json data to map
+     * 将json数据转化为map
      *
      * @param jsonStr
      * @param <T>
@@ -65,7 +65,7 @@ public class SGsonUtil {
     }
 
     /**
-     * Parse the json data to a list with map
+     * 将json数据转化为map元素的list
      *
      * @param jsonStr
      * @param <T>
@@ -79,7 +79,7 @@ public class SGsonUtil {
     }
 
     /**
-     * Parse the object data to string
+     * 将对象转换成string数据
      *
      * @param obj
      * @return

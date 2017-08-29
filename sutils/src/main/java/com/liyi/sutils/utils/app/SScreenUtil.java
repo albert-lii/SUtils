@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 public class SScreenUtil {
 
     /**
-     * Get screen width and height
+     * 获取屏幕的宽和高
      *
      * @param context
      * @return
@@ -29,7 +29,7 @@ public class SScreenUtil {
     }
 
     /**
-     * Get the ratio of screen height to width
+     * 获取屏幕高和宽的比
      *
      * @param context
      * @return
@@ -42,7 +42,7 @@ public class SScreenUtil {
     }
 
     /**
-     * Get the height of the status bar
+     * 获取状态栏的高度
      *
      * @return
      */
@@ -56,7 +56,7 @@ public class SScreenUtil {
     }
 
     /**
-     * Get the height of the bottom navigation bar
+     * 获取底部导航栏的高度
      *
      * @param context
      * @return
@@ -76,7 +76,7 @@ public class SScreenUtil {
     }
 
     /**
-     * Determine whether there is a NavigationBar (bottom navigation bar)
+     * 判断是否有底部导航栏
      *
      * @param context
      * @return
@@ -104,10 +104,10 @@ public class SScreenUtil {
 
 
     /**
-     * Get the current screen capture, including the status bar
+     * 截屏
      *
      * @param activity
-     * @return
+     * @return 返回的bitmap包括状态栏
      */
     public static Bitmap screenShot(@NonNull Activity activity) {
         View view = activity.getWindow().getDecorView();
@@ -121,10 +121,10 @@ public class SScreenUtil {
     }
 
     /**
-     * Get the current screen capture, not including the status bar
+     * 截屏
      *
      * @param activity
-     * @return
+     * @return 返回的bitmap不包括状态栏
      */
     public static Bitmap screenShotNoStatusBar(@NonNull Activity activity) {
         View view = activity.getWindow().getDecorView();

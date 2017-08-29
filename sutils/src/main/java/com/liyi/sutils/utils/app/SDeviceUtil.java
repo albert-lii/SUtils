@@ -13,10 +13,7 @@ import java.util.Locale;
 
 public class SDeviceUtil {
     /**
-     * Get the unique ID of the phone, the device string number
-     *
-     * @param context
-     * @return
+     * 获取设备的唯一标识（即IMEI）
      */
     public static String getDeviceID(@NonNull Context context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -24,48 +21,46 @@ public class SDeviceUtil {
     }
 
     /**
-     * Gets the current phone system version number
-     *
-     * @return System version number
+     * 获取设备当前的系统版本号
      */
     public static String getSystemVersion() {
         return android.os.Build.VERSION.RELEASE;
     }
 
     /**
-     * Acquisition of equipment model
+     * 获取设备型号
      */
     public static String getDeviceModel() {
         return android.os.Build.MODEL;
     }
 
     /**
-     * Acquiring equipment manufacturer
+     * 获取设备厂商
      */
     public static String getDeviceBrand() {
         return android.os.Build.BRAND;
     }
 
     /**
-     * Gets the language of the current device system.
+     * 获取当前的系统语言
      *
-     * @return Returns the current system language.For example, the current setting is "Chinese - China", and the "zh-cn" is returned.
+     * @return 返回当前的系统语言。例如： 当前的语言设置是"Chinese - China"， 则返回 "zh-cn" .
      */
     public static String getSystemLanguage() {
         return Locale.getDefault().getLanguage();
     }
 
     /**
-     * Gets the list of languages on the current system (Locale list)
+     * 获取系统支持的语言列表
      *
-     * @return Language list
+     * @return 语言列表
      */
     public static Locale[] getSystemLanguageList() {
         return Locale.getAvailableLocales();
     }
 
     /**
-     * Determine whether the phone is root
+     * 判断设备是否root过
      */
     public static boolean isRoot() {
         String binPath = "/system/bin/su";

@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.image;
+package com.liyi.sutils.utils.graphic;
 
 import android.graphics.drawable.GradientDrawable;
 

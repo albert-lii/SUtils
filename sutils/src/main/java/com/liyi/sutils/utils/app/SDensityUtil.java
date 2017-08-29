@@ -7,7 +7,7 @@ import android.util.TypedValue;
 public class SDensityUtil {
 
     /**
-     * Convert dp to px
+     * dp 转 px
      *
      * @param context
      * @param dpVal
@@ -18,7 +18,7 @@ public class SDensityUtil {
     }
 
     /**
-     * Convert sp to px
+     * sp 转 px
      *
      * @param context
      * @param spVal
@@ -29,7 +29,7 @@ public class SDensityUtil {
     }
 
     /**
-     * Convert px to dp
+     * px 转 dp
      *
      * @param context
      * @param pxVal
@@ -41,7 +41,7 @@ public class SDensityUtil {
     }
 
     /**
-     * Convert px to dp
+     * px 转 sp
      *
      * @param context
      * @param pxVal

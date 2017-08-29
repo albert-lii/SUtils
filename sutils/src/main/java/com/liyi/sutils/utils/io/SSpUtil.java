@@ -41,7 +41,7 @@ public class SSpUtil {
     }
 
     /**
-     * Save the single data
+     * 保存单个数据
      *
      * @param key
      * @param object
@@ -64,7 +64,7 @@ public class SSpUtil {
     }
 
     /**
-     * Save multiple data
+     * 同时保存多条数据
      *
      * @param map
      */

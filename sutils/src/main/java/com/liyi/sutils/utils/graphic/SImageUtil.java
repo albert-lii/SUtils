@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.image;
+package com.liyi.sutils.utils.graphic;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -21,19 +21,14 @@ public class SImageUtil {
     private static final String TAG = SImageUtil.class.getSimpleName();
 
     /**
-     * Convert your drawbale to bitmap
-     *
-     * @return
+     * drawbale 转 bitmap
      */
-    public static Bitmap drawable2Bitmap(@NonNull Context context,int resId) {
+    public static Bitmap drawable2Bitmap(@NonNull Context context, int resId) {
         return BitmapFactory.decodeResource(context.getResources(), resId);
     }
 
     /**
-     * Convert your drawbale to bitmap
-     *
-     * @param drawable
-     * @return
+     * drawbale 转 bitmap
      */
     private static Bitmap drawable2Bitmap(@NonNull Drawable drawable) {
         if (drawable == null) {
@@ -50,10 +45,7 @@ public class SImageUtil {
     }
 
     /**
-     * Convert your bitmap to drawbale
-     *
-     * @param bm
-     * @return
+     * bitmap 转 drawbale
      */
     public static Drawable bitmap2Drawable(@NonNull Bitmap bm) {
         if (bm == null) {
@@ -63,26 +55,24 @@ public class SImageUtil {
     }
 
     /**
-     * Convert bitmap to byte array
+     * bitmap 转 byte array
      *
      * @param bm
+     * @param format 压缩的图片格式：JPEG、PNG、WEBP
      * @return
      */
-    public static byte[] bitmap2Byte(@NonNull Bitmap bm) {
+    public static byte[] bitmap2Byte(@NonNull Bitmap bm, Bitmap.CompressFormat format) {
         if (bm == null) {
             return null;
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         // Quality compression method, compressed bitmap into jpeg format, 100 indicates uncompressed
-        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bm.compress(format, 100, baos);
         return baos.toByteArray();
     }
 
     /**
-     * Convert byte array to bitmap
-     *
-     * @param b
-     * @return
+     * byte array 转 bitmap
      */
     public static Bitmap byte2Bitmap(byte[] b) {
         if (b == null || b.length == 0) {
@@ -92,19 +82,19 @@ public class SImageUtil {
     }
 
     /**
-     * Rotate the picture at some Angle
+     * 将图片旋转指定角度
      *
-     * @param bm     The picture that need to be rotated
-     * @param degree Rotation Angle
-     * @return The rotated image
+     * @param bm
+     * @param degree 旋转的角度
+     * @return 旋转后的图片
      */
     public static Bitmap rotateBitmap(@NonNull Bitmap bm, float degree) {
         Bitmap newbmp = null;
-        // The rotation matrix is generated according to the rotation Angle
+        // 根据旋转角生成旋转矩阵
         Matrix matrix = new Matrix();
         matrix.postRotate(degree);
         try {
-            // Rotate the original image according to the rotation matrix and get the new image
+            // 根据旋转矩阵来旋转原始图片，并且获取旋转后的图片
             newbmp = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
         } catch (OutOfMemoryError e) {
             SLogUtil.e(TAG, "rotateBitmap error");
@@ -119,7 +109,7 @@ public class SImageUtil {
     }
 
     /**
-     * Read the rotation Angle of the image
+     * 获取图片需要旋转的角度
      *
      * @param path Image absolute path
      * @return The rotation Angle of the picture
@@ -127,9 +117,9 @@ public class SImageUtil {
     public static int getBitmapDegree(@NonNull String path) {
         int degree = 0;
         try {
-            // Read the image from the specified path and get its EXIF information
+            // 从指定的路径读取图像并获取其EXIF信息
             ExifInterface exifInterface = new ExifInterface(path);
-            // Get the rotation information of the image
+            // 获取图像的旋转信息
             int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
             switch (orientation) {
                 case ExifInterface.ORIENTATION_ROTATE_90:
@@ -149,17 +139,17 @@ public class SImageUtil {
     }
 
     /**
-     * Get the memory size of the bitmap
+     * 获取位图的内存大小
      *
      * @param bitmap
      * @return
      */
     public static int getBitmapSize(@NonNull Bitmap bitmap) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // The API version is greater than or equal to 19
+            // SDK >= 19
             return bitmap.getAllocationByteCount();
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-            // The API version is greater than or equal to 12
+            // SDK >= 12
             return bitmap.getByteCount();
         } else {
             return bitmap.getRowBytes() * bitmap.getHeight();

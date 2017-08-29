@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.image;
+package com.liyi.sutils.utils.graphic;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,17 +8,14 @@ import android.support.annotation.NonNull;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-/**
- * Image compression utility class
- */
 
 public class SCompressUtil {
 
     /**
-     * Compress the quality of the image
+     * 质量压缩
      *
-     * @param bmp     Images that need to be compressed
-     * @param options Compress the quality of the image（Here, 100 is not compressed）
+     * @param bmp
+     * @param options 范围0-100，100表示不压缩
      * @return
      */
     public static Bitmap comprsQltyByoptions(@NonNull Bitmap bmp, int options) {
@@ -30,24 +27,22 @@ public class SCompressUtil {
     }
 
     /**
-     * Compress the image to the specified size
+     * 质量压缩，并且指定压缩后图片的大小
      *
-     * @param bmp  Images that need to be compressed
-     * @param size Is less than or equal to the specified image size
+     * @param bmp  I
+     * @param size 指定压缩后的大小（这里实际图片的大小可能小于或者等于指定的大小）
      * @return
      */
     public static Bitmap comprsQltyBySize(@NonNull Bitmap bmp, int size) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        // Here, 100 is not compressed, and the compressed data is stored in the baos
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         int options = 90;
-        // The loop determines if the image is larger than size kb after compression, greater than the continue compression
+        // 循环判断图片的大小是否大于指定的大小
         while (baos.toByteArray().length / 1024 > size) {
-            // Reset the baos to empty the baos
+            // 充值baos来达到清空baos中数据的目的
             baos.reset();
-            // Here, compress the options % and store the compressed data in the baos
             bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);
-            // Go down by 10 every time
+            // 每次图片的质量都减少10%
             options -= 10;
         }
         ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());
@@ -56,25 +51,25 @@ public class SCompressUtil {
     }
 
     /**
-     * Compress the images in proportion
+     * 按比例压缩
      *
      * @param bitmap
-     * @param ws     Width compression ratio
-     * @param hs     High compression ratio
+     * @param ws     宽的缩放比例
+     * @param hs     高的缩放比例
      * @return
      */
     public static Bitmap comprsScale(@NonNull Bitmap bitmap, float ws, float hs) {
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
         Matrix matrix = new Matrix();
-        // Scaling by using matrices does not cause memory overflows
+        // 用矩阵进行缩放，防止出现OOM
         matrix.postScale(ws, hs);
         Bitmap newbmp = Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, true);
         return newbmp;
     }
 
     /**
-     * Calculate the zoom ratio of the image
+     * 计算图片缩放的比例
      *
      * @param width
      * @param height
