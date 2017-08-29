@@ -6,7 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 
-import com.liyi.sutils.SConstants;
+import com.liyi.sutils.constants.SConstants;
 import com.liyi.sutils.utils.prompt.SLogUtil;
 
 import java.security.MessageDigest;

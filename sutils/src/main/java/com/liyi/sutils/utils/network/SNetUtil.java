@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 
-import com.liyi.sutils.SConstants;
+import com.liyi.sutils.constants.SConstants;
 import com.liyi.sutils.utils.prompt.SLogUtil;
 
 public class SNetUtil {

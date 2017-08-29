@@ -1,4 +1,6 @@
-package com.liyi.sutils;
+package com.liyi.sutils.constants;
+
+
 
 public final class SConstants {
     /**

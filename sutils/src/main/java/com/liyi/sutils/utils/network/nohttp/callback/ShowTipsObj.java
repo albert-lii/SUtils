@@ -3,7 +3,7 @@ package com.liyi.sutils.utils.network.nohttp.callback;
 import android.content.Context;
 
 import com.liyi.sutils.R;
-import com.liyi.sutils.SConstants;
+import com.liyi.sutils.constants.SConstants;
 import com.liyi.sutils.utils.prompt.SToastUtil;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.NotFoundCacheError;
