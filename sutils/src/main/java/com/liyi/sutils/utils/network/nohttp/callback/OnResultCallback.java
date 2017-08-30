@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.liyi.sutils.constants.SConstants;
-import com.liyi.sutils.utils.prompt.SLogUtil;
+import com.liyi.sutils.utils.log.SLogUtil;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Response;
 

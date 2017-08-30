@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.prompt;
+package com.liyi.sutils.utils.log;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -7,9 +7,13 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
+
+import com.liyi.sutils.utils.common.SToastUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -24,33 +28,38 @@ import java.util.Map;
  * UncaughtException处理类,当程序发生Uncaught异常的时候,有该类来接管程序,并记录发送错误报告.
  */
 
-public class CrashHandler implements Thread.UncaughtExceptionHandler {
-    private static final String TAG = CrashHandler.class.getClass().getSimpleName();
+public class SCrashHandler implements Thread.UncaughtExceptionHandler {
+    private static final String TAG = SCrashHandler.class.getClass().getSimpleName();
 
     // 异常文件的存储路径
-    private String mFolder;
+    private String mCrashPath;
+    // 日志文件名的前缀
+    private String mPreFix;
 
     // CrashHandler实例
-    private static CrashHandler mInstance;
+    private static SCrashHandler mInstance;
     private static Context mContext;
     // 系统默认的UncaughtException处理类
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     // 用来存储设备信息和异常信息
     private Map<String, String> mInfos = new HashMap<String, String>();
+    // 用日期来创建日志文件的存放文件夹
+    private DateFormat mFormatter1 = new SimpleDateFormat("yyyy-MM-dd");
     // 用于格式化日期,作为日志文件名的一部分
-    private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+    private DateFormat mFormatter2 = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
-    private CrashHandler(Config config) {
+    private SCrashHandler(Config config) {
         // 获取系统默认的UncaughtException处理器
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         // 设置该CrashHandler为程序的默认处理器
         Thread.setDefaultUncaughtExceptionHandler(this);
-        mFolder = config.mFolder;
+        mCrashPath = config.filePath;
+        mPreFix = config.preFix;
     }
 
     public static void initialize(@NonNull Context context) {
         mContext = context.getApplicationContext();
-        mInstance = new CrashHandler(null);
+        mInstance = new SCrashHandler(new Config(context));
     }
 
     /**
@@ -60,22 +69,43 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      */
     public static void initialize(@NonNull Context context, Config config) {
         mContext = context.getApplicationContext();
-        mInstance = new CrashHandler(config == null ? new Config() : config);
+        mInstance = new SCrashHandler(config == null ? new Config(context) : config);
     }
 
     public static final class Config {
         // crash文件存储路径
-        private String mFolder;
+        private String filePath;
+        // 日志文件名的前缀
+        private String preFix;
+        private Context context;
 
-        public Config() {
+        public Config(Context context) {
+            this.context = context.getApplicationContext();
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                mFolder = Environment.getExternalStorageDirectory().toString() + File.separator + "crash";
+                // 默认路径
+                filePath = Environment.getExternalStorageDirectory().toString() + File.separator
+                        + "SCrashHandler" + File.separator + this.context.getPackageName();
             }
+            preFix = "crash";
         }
 
         public Config setSdCardStore(String folder) {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                mFolder = Environment.getExternalStorageDirectory().toString() + File.separator + folder;
+                if (TextUtils.isEmpty(folder)) {
+                    filePath = Environment.getExternalStorageDirectory().toString() + File.separator
+                            + "SCrashHandler" + File.separator + context.getPackageName();
+                } else {
+                    filePath = Environment.getExternalStorageDirectory().toString() + File.separator + folder;
+                }
+            }
+            return this;
+        }
+
+        public Config setFilePreFix(String preFix) {
+            if (TextUtils.isEmpty(preFix)) {
+                this.preFix = "crash";
+            } else {
+                this.preFix = preFix;
             }
             return this;
         }
@@ -138,8 +168,10 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             PackageManager pm = ctx.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(ctx.getPackageName(), PackageManager.GET_ACTIVITIES);
             if (pi != null) {
+                String appName = pi.applicationInfo.loadLabel(pm).toString();
                 String versionName = pi.versionName == null ? "null" : pi.versionName;
                 String versionCode = pi.versionCode + "";
+                mInfos.put("appName", appName);
                 mInfos.put("versionName", versionName);
                 mInfos.put("versionCode", versionCode);
             }
@@ -147,8 +179,9 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
              * 获取手机型号，系统版本，以及SDK版本
              */
             mInfos.put("手机型号:", android.os.Build.MODEL);
-            mInfos.put("系统版本", "" + android.os.Build.VERSION.SDK);
+            mInfos.put("系统版本", android.os.Build.VERSION.SDK + "");
             mInfos.put("Android版本", android.os.Build.VERSION.RELEASE);
+            mInfos.put("手机厂商", android.os.Build.BRAND);
         } catch (PackageManager.NameNotFoundException e) {
             SLogUtil.e(TAG, "an error occured when collect package info ========> " + e);
         }
@@ -175,7 +208,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         for (Map.Entry<String, String> entry : mInfos.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            sb.append(key + "=" + value + "\n");
+            sb.append(key + " = " + value + "\n");
         }
         Writer writer = new StringWriter();
         PrintWriter printWriter = new PrintWriter(writer);
@@ -188,22 +221,35 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         printWriter.close();
         String result = writer.toString();
         sb.append(result);
+        FileOutputStream fos = null;
         try {
-            String time = formatter.format(new Date());
-            String fileName = "crash-" + time + ".log";
+            String time = mFormatter2.format(new Date());
+            // mPreFix默认是"scrash"
+            String fileName = mPreFix + "-" + time + ".log";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String path = mFolder;
+                if (!mCrashPath.endsWith(File.separator)) {
+                    mCrashPath = mCrashPath + File.separator;
+                }
+                String path = mCrashPath + mFormatter1;
                 File dir = new File(path);
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                FileOutputStream fos = new FileOutputStream(path + fileName);
+                fos = new FileOutputStream(path + File.separator + fileName);
                 fos.write(sb.toString().getBytes());
-                fos.close();
             }
             return fileName;
         } catch (Exception e) {
             SLogUtil.e(TAG, "an error occured while writing file ========> " + e);
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.flush();
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }

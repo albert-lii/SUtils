@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.liyi.sutils.utils.common.SReflectUtil;
 import com.liyi.sutils.utils.app.SSystemBarUtil;
 import com.liyi.sutils.utils.io.SFileUtil;
-import com.liyi.sutils.utils.prompt.SToastUtil;
+import com.liyi.sutils.utils.common.SToastUtil;
 
 import java.io.File;
 

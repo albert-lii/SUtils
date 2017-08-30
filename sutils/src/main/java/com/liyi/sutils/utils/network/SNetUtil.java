@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 
 import com.liyi.sutils.constants.SConstants;
-import com.liyi.sutils.utils.prompt.SLogUtil;
+import com.liyi.sutils.utils.log.SLogUtil;
 
 public class SNetUtil {
     private static final String TAG = SNetUtil.class.getClass().getSimpleName();

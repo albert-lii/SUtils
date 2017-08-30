@@ -12,7 +12,7 @@ import android.media.ExifInterface;
 import android.os.Build;
 import android.support.annotation.NonNull;
 
-import com.liyi.sutils.utils.prompt.SLogUtil;
+import com.liyi.sutils.utils.log.SLogUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

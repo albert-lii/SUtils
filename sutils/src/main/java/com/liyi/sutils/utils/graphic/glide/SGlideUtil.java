@@ -15,7 +15,7 @@ import com.bumptech.glide.TransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.liyi.sutils.constants.SConstants;
-import com.liyi.sutils.utils.prompt.SLogUtil;
+import com.liyi.sutils.utils.log.SLogUtil;
 
 
 public class SGlideUtil {

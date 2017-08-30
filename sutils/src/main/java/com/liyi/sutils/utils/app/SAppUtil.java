@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 
 import com.liyi.sutils.constants.SConstants;
-import com.liyi.sutils.utils.prompt.SLogUtil;
+import com.liyi.sutils.utils.log.SLogUtil;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.liyi.sutils.R;
 import com.liyi.sutils.constants.SConstants;
-import com.liyi.sutils.utils.prompt.SToastUtil;
+import com.liyi.sutils.utils.common.SToastUtil;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.NotFoundCacheError;
 import com.yanzhenjie.nohttp.error.TimeoutError;

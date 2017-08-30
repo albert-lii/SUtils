@@ -3,7 +3,7 @@ package com.liyi.sutils.utils.common;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.liyi.sutils.utils.prompt.SLogUtil;
+import com.liyi.sutils.utils.log.SLogUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

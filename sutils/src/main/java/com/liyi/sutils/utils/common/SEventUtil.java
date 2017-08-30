@@ -1,7 +1,7 @@
 package com.liyi.sutils.utils.common;
 
 
-import com.liyi.sutils.utils.prompt.SLogUtil;
+import com.liyi.sutils.utils.log.SLogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.meta.SubscriberInfoIndex;

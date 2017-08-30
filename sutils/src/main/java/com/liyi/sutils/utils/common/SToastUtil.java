@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.prompt;
+package com.liyi.sutils.utils.common;
 
 import android.content.Context;
 import android.support.annotation.StringRes;

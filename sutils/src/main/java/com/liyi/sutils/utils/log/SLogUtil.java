@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.prompt;
+package com.liyi.sutils.utils.log;
 
 import android.util.Log;
 
