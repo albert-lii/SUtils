@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.app;
+package com.liyi.sutils.utils.app.permission;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,17 +19,9 @@ import java.util.ArrayList;
 
 
 public class SPermissionUtil {
-    private Activity mActivity;
-    private static int mRequestCode;
-    private String[] mPermissions;
-    private static OnPermissionListener mListener;
-    private static boolean isAutoShowTip;
+    private static ArrayList<PermissionRequest> mRequestList = new ArrayList<PermissionRequest>();
 
-    private SPermissionUtil(@NonNull Activity activity) {
-        this.mActivity = activity;
-    }
-
-    private static boolean isNeedRequest() {
+    public static boolean isNeedRequest() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
@@ -43,8 +35,9 @@ public class SPermissionUtil {
     public static boolean hasPermissions(@NonNull Context context, @NonNull String... permissions) {
         if (isNeedRequest()) {
             for (String p : permissions) {
-                if (!(ContextCompat.checkSelfPermission(context, p) == PackageManager.PERMISSION_GRANTED))
+                if (!(ContextCompat.checkSelfPermission(context, p) == PackageManager.PERMISSION_GRANTED)) {
                     return false;
+                }
             }
             return true;
         }
@@ -111,50 +104,26 @@ public class SPermissionUtil {
         context.startActivity(intent);
     }
 
-    public static SPermissionUtil with(@NonNull Activity activity) {
-        return new SPermissionUtil(activity);
+    public static PermissionRequest with(@NonNull Activity activity) {
+        return addRequest(activity);
     }
 
-    public static SPermissionUtil with(@NonNull Fragment fragment) {
-        return new SPermissionUtil(fragment.getActivity());
+    public static PermissionRequest with(@NonNull Fragment fragment) {
+        return addRequest(fragment.getActivity());
     }
 
     @RequiresApi(Build.VERSION_CODES.HONEYCOMB)
-    public static SPermissionUtil with(@NonNull android.app.Fragment fragment) {
-        return new SPermissionUtil(fragment.getActivity());
+    public static PermissionRequest with(@NonNull android.app.Fragment fragment) {
+        return addRequest(fragment.getActivity());
     }
 
-    public SPermissionUtil requestCode(int requestCode) {
-        this.mRequestCode = requestCode;
-        return this;
-    }
-
-    public SPermissionUtil permissions(@NonNull String... permissions) {
-        this.mPermissions = permissions;
-        return this;
-    }
-
-    public SPermissionUtil callback(OnPermissionListener callback) {
-        this.mListener = callback;
-        return this;
-    }
-
-    public SPermissionUtil autoShowTip(boolean isAutoShowTip) {
-        this.isAutoShowTip = isAutoShowTip;
-        return this;
-    }
-
-    public void execute() {
-        if (isNeedRequest()) {
-            String[] deniedPermissions = getDeniedPermissions(mActivity, mPermissions);
-            if (deniedPermissions.length > 0) {
-                ActivityCompat.requestPermissions(mActivity, deniedPermissions, mRequestCode);
-            } else {
-                if (mListener != null) {
-                    mListener.onPermissionGranted(mRequestCode, mPermissions);
-                }
-            }
+    private static PermissionRequest addRequest(Activity activity) {
+        PermissionRequest request = new PermissionRequest(activity);
+        if (mRequestList == null) {
+            mRequestList = new ArrayList<PermissionRequest>();
         }
+        mRequestList.add(request);
+        return request;
     }
 
     /**
@@ -162,37 +131,35 @@ public class SPermissionUtil {
      * 此方法需要放在onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)方法中执行
      */
     public static void handleRequestPermissionsResult(@NonNull Activity activity, int requestCode, @NonNull String[] permissions, int[] grantResults) {
-        if (requestCode == mRequestCode) {
-            if (mListener != null) {
-                ArrayList<String> deniedPermissions = new ArrayList<String>();
-                for (int i = 0; i < grantResults.length; i++) {
-                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                        deniedPermissions.add(permissions[i]);
-                    }
-                }
-                if (deniedPermissions.size() <= 0) {
-                    mListener.onPermissionGranted(requestCode, permissions);
-                } else {
-                    String[] perms = deniedPermissions.toArray(new String[deniedPermissions.size()]);
-                    boolean hasAlwaysDenied = hasAlwaysDeniedPermission(activity, perms);
-                    if (isAutoShowTip && hasAlwaysDenied) {
-                        showTipDialog(activity);
-                    }
-                    mListener.onPermissionDenied(requestCode, perms, hasAlwaysDenied);
+        if (mRequestList != null && mRequestList.size() > 0) {
+            PermissionRequest currentReq = null;
+            for (PermissionRequest request : mRequestList) {
+                if ((requestCode == request.getRequestCode()) && permissions.equals(request.getPermissions())) {
+                    currentReq = request;
+                    break;
                 }
             }
+            if (currentReq != null) {
+                if (currentReq.getPermissionListener() != null) {
+                    ArrayList<String> deniedPermissions = new ArrayList<String>();
+                    for (int i = 0; i < grantResults.length; i++) {
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            deniedPermissions.add(permissions[i]);
+                        }
+                    }
+                    if (deniedPermissions.size() <= 0) {
+                        currentReq.getPermissionListener().onPermissionGranted(requestCode, permissions);
+                    } else {
+                        String[] perms = deniedPermissions.toArray(new String[deniedPermissions.size()]);
+                        boolean hasAlwaysDenied = hasAlwaysDeniedPermission(activity, perms);
+                        if (currentReq.isAutoShowTip() && hasAlwaysDenied) {
+                            showTipDialog(activity);
+                        }
+                        currentReq.getPermissionListener().onPermissionDenied(requestCode, perms, hasAlwaysDenied);
+                    }
+                }
+                mRequestList.remove(currentReq);
+            }
         }
-    }
-
-    public interface OnPermissionListener extends ActivityCompat.OnRequestPermissionsResultCallback {
-        /**
-         * 用户同意授权
-         */
-        void onPermissionGranted(int requestCode, String[] grantPermissions);
-
-        /**
-         * 用户拒绝授权
-         */
-        void onPermissionDenied(int requestCode, String[] deniedPermissions, boolean hasAlwaysDenied);
     }
 }
