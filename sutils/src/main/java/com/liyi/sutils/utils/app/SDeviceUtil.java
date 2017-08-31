@@ -91,7 +91,7 @@ public class SDeviceUtil {
     /**
      * 在系统上执行一个命令
      */
-    private static boolean canExecuteCommand(String command) {
+    public static boolean canExecuteCommand(String command) {
         Process process = null;
         try {
             process = Runtime.getRuntime().exec(command);

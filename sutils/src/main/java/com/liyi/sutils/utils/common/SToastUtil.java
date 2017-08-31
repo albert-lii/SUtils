@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.other;
+package com.liyi.sutils.utils.common;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
