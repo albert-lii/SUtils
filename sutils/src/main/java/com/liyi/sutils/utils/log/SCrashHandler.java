@@ -9,7 +9,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.liyi.sutils.utils.other.SToastUtil;
+import com.liyi.sutils.utils.common.SToastUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
