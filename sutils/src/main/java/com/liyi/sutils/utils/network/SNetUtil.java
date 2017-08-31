@@ -9,6 +9,10 @@ import android.telephony.TelephonyManager;
 import com.liyi.sutils.constants.SConstants;
 import com.liyi.sutils.utils.log.SLogUtil;
 
+
+/**
+ * 网络相关工具类
+ */
 public class SNetUtil {
     private static final String TAG = SNetUtil.class.getClass().getSimpleName();
 

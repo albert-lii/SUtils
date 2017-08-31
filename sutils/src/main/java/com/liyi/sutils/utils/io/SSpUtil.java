@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+
+/**
+ * SharedPreferences工具类
+ */
 public class SSpUtil {
     private static final String DEF_FILENAME = "SSpUtil";
     private static final int DEF_MODE = Context.MODE_PRIVATE;

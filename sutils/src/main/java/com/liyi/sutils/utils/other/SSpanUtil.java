@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.common;
+package com.liyi.sutils.utils.other;
 
 
 import android.content.Context;

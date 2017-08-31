@@ -1,7 +1,9 @@
 package com.liyi.sutils.constants;
 
 
-
+/**
+ * 常用全局变量
+ */
 public final class SConstants {
     /**
      * 与SNetUtil相关的参数

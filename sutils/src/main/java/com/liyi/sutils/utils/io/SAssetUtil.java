@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+
+/**
+ * assets工具类
+ */
 public class SAssetUtil {
 
     /**

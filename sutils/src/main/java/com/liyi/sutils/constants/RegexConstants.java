@@ -1,9 +1,9 @@
 package com.liyi.sutils.constants;
 
+
 /**
  * 常用正则表达式
  */
-
 public class RegexConstants {
     /**
      * 正则：手机号（简单）

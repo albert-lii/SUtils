@@ -7,6 +7,10 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * gson工具类
+ */
 public class SGsonUtil {
     private static Gson mGson = null;
 

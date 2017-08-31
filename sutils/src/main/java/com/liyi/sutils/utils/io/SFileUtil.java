@@ -30,6 +30,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+
+/**
+ * File相关工具类
+ */
 public class SFileUtil {
     private final String TAG = SFileUtil.class.getSimpleName();
 
