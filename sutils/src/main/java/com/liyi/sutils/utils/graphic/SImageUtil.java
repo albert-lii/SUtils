@@ -99,26 +99,26 @@ public class SImageUtil {
     /**
      * 将图片旋转指定角度
      *
-     * @param bm
+     * @param source
      * @param degree 旋转的角度
      * @return 旋转后的图片
      */
-    public static Bitmap rotateBitmap(@NonNull Bitmap bm, float degree) {
+    public static Bitmap rotateBitmap(@NonNull Bitmap source, float degree) {
         Bitmap newbmp = null;
         // 根据旋转角生成旋转矩阵
         Matrix matrix = new Matrix();
         matrix.postRotate(degree);
         try {
             // 根据旋转矩阵来旋转原始图片，并且获取旋转后的图片
-            newbmp = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+            newbmp = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
         } catch (OutOfMemoryError e) {
             SLogUtil.e(TAG, "rotateBitmap error");
         }
         if (newbmp == null) {
-            newbmp = bm;
+            newbmp = source;
         }
-        if (bm != newbmp) {
-            bm.recycle();
+        if (source != newbmp) {
+            source.recycle();
         }
         return newbmp;
     }
@@ -129,7 +129,7 @@ public class SImageUtil {
      * @param path Image absolute path
      * @return The rotation Angle of the picture
      */
-    public static int getBitmapDegree(@NonNull String path) {
+    public static int getImageDegree(@NonNull String path) {
         int degree = 0;
         try {
             // 从指定的路径读取图像并获取其EXIF信息
@@ -156,31 +156,45 @@ public class SImageUtil {
     /**
      * 获取位图的内存大小
      *
-     * @param bitmap
+     * @param source
      * @return
      */
-    public static int getBitmapSize(@NonNull Bitmap bitmap) {
+    public static int getBitmapSize(@NonNull Bitmap source) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // SDK >= 19
-            return bitmap.getAllocationByteCount();
+            return source.getAllocationByteCount();
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
             // SDK >= 12
-            return bitmap.getByteCount();
+            return source.getByteCount();
         } else {
-            return bitmap.getRowBytes() * bitmap.getHeight();
+            return source.getRowBytes() * source.getHeight();
         }
+    }
+
+    /**
+     * bitmap截图
+     *
+     * @param source 原图
+     * @param x      矩形截取区域左上角的X轴坐标（即起点的X坐标）
+     * @param y      矩形截取区域左上角的Y轴坐标（即起点的Y坐标）
+     * @param width  截取的图片的宽
+     * @param height 截取的图片的高
+     * @return
+     */
+    public static Bitmap cutBitmap(Bitmap source, int x, int y, int width, int height) {
+        return Bitmap.createBitmap(source, x, y, width, height);
     }
 
     /**
      * 图片去色,返回灰度图片
      *
-     * @param bmpOriginal 传入的图片
+     * @param source 传入的图片
      * @return 去色后的图片
      */
-    public static Bitmap toGrayscale(Bitmap bmpOriginal) {
+    public static Bitmap toGrayscale(Bitmap source) {
         int width, height;
-        height = bmpOriginal.getHeight();
-        width = bmpOriginal.getWidth();
+        height = source.getHeight();
+        width = source.getWidth();
         Bitmap bmpGrayscale = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
         Canvas c = new Canvas(bmpGrayscale);
         Paint paint = new Paint();
@@ -188,7 +202,7 @@ public class SImageUtil {
         cm.setSaturation(0);
         ColorMatrixColorFilter f = new ColorMatrixColorFilter(cm);
         paint.setColorFilter(f);
-        c.drawBitmap(bmpOriginal, 0, 0, paint);
+        c.drawBitmap(source, 0, 0, paint);
         return bmpGrayscale;
     }
 }

@@ -17,13 +17,14 @@ public class SImgComprsUtil {
     /**
      * 质量压缩
      *
-     * @param bmp
+     * @param source
+     * @param format  图片的类型： JPEG、PNG、WEBP
      * @param options 范围0-100，100表示不压缩
      * @return
      */
-    public static Bitmap comprsQltyByoptions(@NonNull Bitmap bmp, int options) {
+    public static Bitmap comprsQlty(@NonNull Bitmap source, @NonNull Bitmap.CompressFormat format, int options) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);
+        source.compress(format, options, baos);
         ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());
         Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);
         return bitmap;
@@ -32,19 +33,20 @@ public class SImgComprsUtil {
     /**
      * 质量压缩，并且指定压缩后图片的大小
      *
-     * @param bmp  I
-     * @param size 指定压缩后的大小（这里实际图片的大小可能小于或者等于指定的大小）
+     * @param source
+     * @param format 图片的类型： JPEG、PNG、WEBP
+     * @param size   指定压缩后的大小（这里实际图片的大小可能小于或者等于指定的大小）
      * @return
      */
-    public static Bitmap comprsQltyBySize(@NonNull Bitmap bmp, int size) {
+    public static Bitmap comprsQltyToSize(@NonNull Bitmap source, @NonNull Bitmap.CompressFormat format, int size) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        source.compress(format, 100, baos);
         int options = 90;
         // 循环判断图片的大小是否大于指定的大小
         while (baos.toByteArray().length / 1024 > size) {
             // 充值baos来达到清空baos中数据的目的
             baos.reset();
-            bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);
+            source.compress(format, options, baos);
             // 每次图片的质量都减少10%
             options -= 10;
         }
@@ -56,19 +58,33 @@ public class SImgComprsUtil {
     /**
      * 按比例压缩
      *
-     * @param bitmap
+     * @param source
      * @param ws     宽的缩放比例
      * @param hs     高的缩放比例
+     * @param filter
      * @return
      */
-    public static Bitmap comprsScale(@NonNull Bitmap bitmap, float ws, float hs) {
-        int w = bitmap.getWidth();
-        int h = bitmap.getHeight();
+    public static Bitmap comprsScale(@NonNull Bitmap source, float ws, float hs, boolean filter) {
+        int w = source.getWidth();
+        int h = source.getHeight();
         Matrix matrix = new Matrix();
         // 用矩阵进行缩放，防止出现OOM
-        matrix.postScale(ws, hs);
-        Bitmap newbmp = Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, true);
+        matrix.setScale(ws, hs);
+        Bitmap newbmp = Bitmap.createBitmap(source, 0, 0, w, h, matrix, filter);
         return newbmp;
+    }
+
+    /**
+     * 按比例压缩
+     *
+     * @param source
+     * @param dsth   压缩后的宽
+     * @param dsth   压缩后的高
+     * @param filter
+     * @return
+     */
+    public static Bitmap comprsScale(@NonNull Bitmap source, int dstw, int dsth, boolean filter) {
+        return Bitmap.createScaledBitmap(source, dstw, dsth, filter);
     }
 
     /**
