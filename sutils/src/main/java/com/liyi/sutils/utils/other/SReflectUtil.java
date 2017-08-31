@@ -1,9 +1,13 @@
-package com.liyi.sutils.utils.common;
+package com.liyi.sutils.utils.other;
 
 import android.annotation.SuppressLint;
 
 import java.lang.reflect.Field;
 
+
+/**
+ * 反射工具类
+ */
 public class SReflectUtil {
     /**
      * 修改单个的值

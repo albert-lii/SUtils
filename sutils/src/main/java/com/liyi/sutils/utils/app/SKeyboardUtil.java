@@ -8,6 +8,10 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+
+/**
+ * 与虚拟键盘相关的工具类
+ */
 public class SKeyboardUtil {
     /**
      * 弹出虚拟软键盘

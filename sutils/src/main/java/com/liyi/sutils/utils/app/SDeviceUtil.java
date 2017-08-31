@@ -13,6 +13,10 @@ import java.net.NetworkInterface;
 import java.util.Enumeration;
 import java.util.Locale;
 
+
+/**
+ * 设备信息相关工具类
+ */
 public class SDeviceUtil {
     /**
      * 获取设备的唯一ID（即IMEI）

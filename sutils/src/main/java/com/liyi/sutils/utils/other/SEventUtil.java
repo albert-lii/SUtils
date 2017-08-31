@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.common;
+package com.liyi.sutils.utils.other;
 
 
 import com.liyi.sutils.utils.log.SLogUtil;
@@ -6,6 +6,10 @@ import com.liyi.sutils.utils.log.SLogUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
 
+
+/**
+ * EventBus3.0工具类
+ */
 public class SEventUtil {
     private static final String TAG = SEventUtil.class.getSimpleName();
 

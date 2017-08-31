@@ -17,7 +17,9 @@ import android.support.v4.content.ContextCompat;
 
 import java.util.ArrayList;
 
-
+/**
+ * 权限管理工具类
+ */
 public class SPermissionUtil {
     private static ArrayList<PermissionRequest> mRequestList = new ArrayList<PermissionRequest>();
 

@@ -10,6 +10,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+
+/**
+ * 系统状态栏与底部导航栏工具类
+ * <p>
+ * 仅在 SDK >= 4.4 时有效
+ */
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class SSystemBarUtil {
     private static final String TAG_STATUS_BAR = "StatusBar";
@@ -20,6 +26,7 @@ public class SSystemBarUtil {
     private static final int DEFAULT_STATUS_COLOR = 0x10000000;
     // 默认的底部导航栏颜色
     private static final int DEFAULT_NAVIGATION_COLOR = Color.TRANSPARENT;
+
 
     /**
      * 设置状态栏和底部导航栏的显示方式

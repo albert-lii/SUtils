@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.common;
+package com.liyi.sutils.utils.other;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -9,6 +9,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+/**
+ * 时间工具类
+ */
 public class STimeUtil {
     private static final String TAG = STimeUtil.class.getClass().getSimpleName();
     private static final String DATE_TYPE = "yyyy-MM-dd HH:mm:ss";

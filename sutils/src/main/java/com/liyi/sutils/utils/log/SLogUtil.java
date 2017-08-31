@@ -2,12 +2,13 @@ package com.liyi.sutils.utils.log;
 
 import android.util.Log;
 
-public class SLogUtil {
-    private static boolean isLogEnable = true;
 
-    public void setLogEnable(boolean enable) {
-        isLogEnable = enable;
-    }
+/**
+ * log工具类
+ */
+public class SLogUtil {
+    // 可以用于release时，统一关闭log
+    public static boolean isLogEnable = true;
 
     public static void v(String tag, String msg) {
         if (isLogEnable) {

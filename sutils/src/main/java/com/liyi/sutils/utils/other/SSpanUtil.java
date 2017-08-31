@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.common;
+package com.liyi.sutils.utils.other;
 
 
 import android.content.Context;
@@ -27,6 +27,10 @@ import com.liyi.sutils.utils.log.SLogUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * SpannableString工具类
+ */
 public class SSpanUtil {
     private final String TAG = this.getClass().getSimpleName();
     /**

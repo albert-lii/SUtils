@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.common;
+package com.liyi.sutils.utils.other;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
@@ -7,6 +7,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+
+/**
+ * Toast工具类
+ */
 public class SToastUtil {
     public static void show(Context context, CharSequence msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
@@ -16,8 +20,8 @@ public class SToastUtil {
         Toast.makeText(context, stringId, Toast.LENGTH_SHORT).show();
     }
 
-    public static void show(Context context, String text, int time) {
-        Toast.makeText(context, text, time).show();
+    public static void show(Context context, CharSequence msg, int duration) {
+        Toast.makeText(context, msg, duration).show();
     }
 
     public static void show(Context context, View root) {
@@ -25,7 +29,17 @@ public class SToastUtil {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
         toast.setGravity(Gravity.BOTTOM, 0, (int) (height - 2.0 / 3 * height));
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(root);
+        toast.show();
+    }
+
+    public static void show(Context context, View root, int duration) {
+        Toast toast = new Toast(context);
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        toast.setGravity(Gravity.BOTTOM, 0, (int) (height - 2.0 / 3 * height));
+        toast.setDuration(duration);
         toast.setView(root);
         toast.show();
     }

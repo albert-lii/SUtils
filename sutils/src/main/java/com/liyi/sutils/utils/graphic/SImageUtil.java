@@ -4,7 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,8 +20,16 @@ import com.liyi.sutils.utils.log.SLogUtil;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+
+/**
+ * Image相关工具类
+ */
 public class SImageUtil {
     private static final String TAG = SImageUtil.class.getSimpleName();
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /////  drawable、bitmap、byte之间相互转换
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * drawbale 转 bitmap
@@ -80,6 +91,10 @@ public class SImageUtil {
         }
         return BitmapFactory.decodeByteArray(b, 0, b.length);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /////  图片处理
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * 将图片旋转指定角度
@@ -154,5 +169,26 @@ public class SImageUtil {
         } else {
             return bitmap.getRowBytes() * bitmap.getHeight();
         }
+    }
+
+    /**
+     * 图片去色,返回灰度图片
+     *
+     * @param bmpOriginal 传入的图片
+     * @return 去色后的图片
+     */
+    public static Bitmap toGrayscale(Bitmap bmpOriginal) {
+        int width, height;
+        height = bmpOriginal.getHeight();
+        width = bmpOriginal.getWidth();
+        Bitmap bmpGrayscale = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+        Canvas c = new Canvas(bmpGrayscale);
+        Paint paint = new Paint();
+        ColorMatrix cm = new ColorMatrix();
+        cm.setSaturation(0);
+        ColorMatrixColorFilter f = new ColorMatrixColorFilter(cm);
+        paint.setColorFilter(f);
+        c.drawBitmap(bmpOriginal, 0, 0, paint);
+        return bmpGrayscale;
     }
 }

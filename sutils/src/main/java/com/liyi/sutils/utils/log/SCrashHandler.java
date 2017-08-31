@@ -9,7 +9,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.liyi.sutils.utils.common.SToastUtil;
+import com.liyi.sutils.utils.other.SToastUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,7 +27,6 @@ import java.util.Map;
 /**
  * UncaughtException处理类,当程序发生Uncaught异常的时候,有该类来接管程序,并记录发送错误报告.
  */
-
 public class SCrashHandler implements Thread.UncaughtExceptionHandler {
     private static final String TAG = SCrashHandler.class.getClass().getSimpleName();
 

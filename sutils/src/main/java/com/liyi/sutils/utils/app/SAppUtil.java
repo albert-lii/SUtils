@@ -14,6 +14,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Locale;
 
+
+/**
+ * 与APP相关的工具类
+ */
 public class SAppUtil {
     private static final String TAG = SAppUtil.class.getSimpleName();
 

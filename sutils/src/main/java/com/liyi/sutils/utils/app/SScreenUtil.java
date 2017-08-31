@@ -16,6 +16,18 @@ import java.lang.reflect.Method;
 public class SScreenUtil {
 
     /**
+     * 获取屏幕密度dpi（120 / 160 / 240 /...）
+     *
+     * @param context
+     * @return
+     */
+    public static int getDensityDpi(@NonNull Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        return outMetrics.densityDpi;
+    }
+
+    /**
      * 获取屏幕的宽和高
      *
      * @param context
