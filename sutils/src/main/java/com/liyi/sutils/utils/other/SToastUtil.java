@@ -25,13 +25,7 @@ public class SToastUtil {
     }
 
     public static void show(Context context, View root) {
-        Toast toast = new Toast(context);
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        int height = wm.getDefaultDisplay().getHeight();
-        toast.setGravity(Gravity.BOTTOM, 0, (int) (height - 2.0 / 3 * height));
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(root);
-        toast.show();
+        show(context,root,Toast.LENGTH_SHORT);
     }
 
     public static void show(Context context, View root, int duration) {

@@ -3,16 +3,19 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SUtils.iml" filepath="$PROJECT_DIR$/SUtils.iml" />
+      <module fileurl="file://E:\Android-WorkSpace\SUtils\SUtils.iml" filepath="E:\Android-WorkSpace\SUtils\SUtils.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://E:\Android-Github\sutil-android\sutil-android\app\app.iml" filepath="E:\Android-Github\sutil-android\sutil-android\app\app.iml" />
+      <module fileurl="file://E:\Android-WorkSpace\SUtils\app\app.iml" filepath="E:\Android-WorkSpace\SUtils\app\app.iml" />
       <module fileurl="file://F:\Worksapce-android\github\sutil-android\app\app.iml" filepath="F:\Worksapce-android\github\sutil-android\app\app.iml" />
       <module fileurl="file://E:\Android-Github\Sutils\Sutils\sutil\sutil.iml" filepath="E:\Android-Github\Sutils\Sutils\sutil\sutil.iml" />
-      <module fileurl="file://E:\Android-Github\sutil-android\sutil-android\sutil\sutil.iml" filepath="E:\Android-Github\sutil-android\sutil-android\sutil\sutil.iml" />
       <module fileurl="file://F:\Worksapce-android\github\sutil-android\sutil\sutil.iml" filepath="F:\Worksapce-android\github\sutil-android\sutil\sutil.iml" />
+      <module fileurl="file://E:\Android-Github\sutil-android\sutil-android\sutil\sutil.iml" filepath="E:\Android-Github\sutil-android\sutil-android\sutil\sutil.iml" />
       <module fileurl="file://E:\Android-Github\Sutils\Sutils\sutil-android.iml" filepath="E:\Android-Github\Sutils\Sutils\sutil-android.iml" />
       <module fileurl="file://E:\Android-Github\sutil-android\sutil-android\sutil-android.iml" filepath="E:\Android-Github\sutil-android\sutil-android\sutil-android.iml" />
       <module fileurl="file://F:\Worksapce-android\github\sutil-android\sutil-android.iml" filepath="F:\Worksapce-android\github\sutil-android\sutil-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/sutils/sutils.iml" filepath="$PROJECT_DIR$/sutils/sutils.iml" />
+      <module fileurl="file://E:\Android-WorkSpace\SUtils\sutils\sutils.iml" filepath="E:\Android-WorkSpace\SUtils\sutils\sutils.iml" />
     </modules>
   </component>
 </project>
