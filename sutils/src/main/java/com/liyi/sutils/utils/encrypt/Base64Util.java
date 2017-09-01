@@ -14,7 +14,7 @@ import java.io.IOException;
  * 参考链接：http://www.cnblogs.com/whoislcj/p/5887859.html
  */
 
-public class SBase64Util {
+public class Base64Util {
     /**
      * base64加密字符串
      *

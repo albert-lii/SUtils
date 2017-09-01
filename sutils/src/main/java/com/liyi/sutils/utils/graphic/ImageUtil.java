@@ -15,7 +15,7 @@ import android.media.ExifInterface;
 import android.os.Build;
 import android.support.annotation.NonNull;
 
-import com.liyi.sutils.utils.log.SLogUtil;
+import com.liyi.sutils.utils.log.LogUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,8 +24,8 @@ import java.io.IOException;
 /**
  * Image相关工具类
  */
-public class SImageUtil {
-    private static final String TAG = SImageUtil.class.getSimpleName();
+public class ImageUtil {
+    private static final String TAG = ImageUtil.class.getSimpleName();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     /////  drawable、bitmap、byte之间相互转换
@@ -112,7 +112,7 @@ public class SImageUtil {
             // 根据旋转矩阵来旋转原始图片，并且获取旋转后的图片
             newbmp = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
         } catch (OutOfMemoryError e) {
-            SLogUtil.e(TAG, "rotateBitmap error");
+            LogUtil.e(TAG, "rotateBitmap error");
         }
         if (newbmp == null) {
             newbmp = source;

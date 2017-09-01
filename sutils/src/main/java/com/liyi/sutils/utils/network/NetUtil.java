@@ -7,14 +7,14 @@ import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 
 import com.liyi.sutils.constants.SConstants;
-import com.liyi.sutils.utils.log.SLogUtil;
+import com.liyi.sutils.utils.log.LogUtil;
 
 
 /**
  * 网络相关工具类
  */
-public class SNetUtil {
-    private static final String TAG = SNetUtil.class.getClass().getSimpleName();
+public class NetUtil {
+    private static final String TAG = NetUtil.class.getClass().getSimpleName();
 
     /**
      * 判断网络是否连接
@@ -70,7 +70,7 @@ public class SNetUtil {
             } else if (type == ConnectivityManager.TYPE_MOBILE) {
                 NetworkInfo mobileInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
                 if (mobileInfo != null) {
-                    SLogUtil.i(TAG, "Network Type ========> " + mobileInfo.getSubtypeName());
+                    LogUtil.i(TAG, "Network Type ========> " + mobileInfo.getSubtypeName());
                     switch (mobileInfo.getType()) {
                         // Mobile phone network
                         case ConnectivityManager.TYPE_MOBILE:

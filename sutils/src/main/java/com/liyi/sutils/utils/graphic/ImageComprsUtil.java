@@ -12,7 +12,7 @@ import java.io.ByteArrayOutputStream;
 /**
  * 图片压缩工具类
  */
-public class SImgComprsUtil {
+public class ImageComprsUtil {
 
     /**
      * 质量压缩

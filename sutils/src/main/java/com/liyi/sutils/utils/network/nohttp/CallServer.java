@@ -6,20 +6,20 @@ import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
 
-public class SCallServer {
+public class CallServer {
     private static RequestQueue mRequestQueue;
 
-    private SCallServer() {
+    private CallServer() {
         super();
         checkRequestQueue();
     }
 
-    public static SCallServer get() {
+    public static CallServer get() {
         return SCallServerHolder.INSTANCE;
     }
 
     private static final class SCallServerHolder {
-        private static final SCallServer INSTANCE = new SCallServer();
+        private static final CallServer INSTANCE = new CallServer();
     }
 
     public <T> void sendRequest(int what, Request<T> request, OnResponseListener<T> onResponseListener) {

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.liyi.sutils.constants.SConstants;
-import com.liyi.sutils.utils.log.SLogUtil;
+import com.liyi.sutils.utils.log.LogUtil;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Response;
 
@@ -14,18 +14,18 @@ import java.net.HttpURLConnection;
  * Created by albertlii on 2017/8/24.
  */
 
-public class OnResultCallback<T> implements OnResponseListener<T> {
+public class ResultCallback<T> implements OnResponseListener<T> {
     private final String TAG = this.getClass().getSimpleName();
     private OnLoadListener mLoadListener;
     private OnShowTipsListener mShowTipsListener;
     private OnNetStateListener mNetStateListener;
 
-    public OnResultCallback(OnNetStateListener netStateListener) {
+    public ResultCallback(OnNetStateListener netStateListener) {
         super();
         this.mNetStateListener = netStateListener;
     }
 
-    public OnResultCallback(OnNetStateListener netStateListener, Context context) {
+    public ResultCallback(OnNetStateListener netStateListener, Context context) {
         super();
         this.mNetStateListener = netStateListener;
         if (context != null) {
@@ -33,12 +33,12 @@ public class OnResultCallback<T> implements OnResponseListener<T> {
         }
     }
 
-    public OnResultCallback setOnLoadListener(OnLoadListener loadListener) {
+    public ResultCallback setOnLoadListener(OnLoadListener loadListener) {
         this.mLoadListener = loadListener;
         return this;
     }
 
-    public OnResultCallback OnShowTipsListener(OnShowTipsListener showTipsListener) {
+    public ResultCallback OnShowTipsListener(OnShowTipsListener showTipsListener) {
         this.mShowTipsListener = showTipsListener;
         return this;
     }
@@ -72,7 +72,7 @@ public class OnResultCallback<T> implements OnResponseListener<T> {
             }
             String msg = String.format("http request success2fail ---> <what> is %s, <requestCode> is %s, <response> is %s",
                     String.valueOf(what), String.valueOf(reapondCode), response.get().toString());
-            SLogUtil.e(TAG, msg);
+            LogUtil.e(TAG, msg);
         }
     }
 
@@ -88,7 +88,7 @@ public class OnResultCallback<T> implements OnResponseListener<T> {
         int responseCode = response.responseCode();
         String msg = String.format("http request failed ---> <what> is %s , <responseCode> is %s, <exception> is %s",
                 String.valueOf(what), String.valueOf(responseCode), exception.getMessage());
-        SLogUtil.e(TAG, msg);
+        LogUtil.e(TAG, msg);
     }
 
     @Override

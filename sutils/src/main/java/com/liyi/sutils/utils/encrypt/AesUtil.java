@@ -16,7 +16,7 @@ import javax.crypto.spec.SecretKeySpec;
  * 参考链接：http://www.cnblogs.com/whoislcj/p/5473030.html
  */
 
-public class SAESUtil {
+public class AesUtil {
     private final static String HEX = "0123456789ABCDEF";
     // AES是加密方式 CBC是工作模式 PKCS5Padding是填充模式
     private static final String CBC_PKCS5_PADDING = "AES/CBC/PKCS5Padding";

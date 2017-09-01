@@ -8,7 +8,7 @@ import android.util.TypedValue;
 /**
  * 尺寸单位转化工具类
  */
-public class SDensityUtil {
+public class DensityUtil {
 
     /**
      * dp 转 px

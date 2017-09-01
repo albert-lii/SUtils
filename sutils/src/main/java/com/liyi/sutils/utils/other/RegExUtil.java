@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * 正则表达式工具类
  */
 
-public class SRegExUtil {
+public class RegExUtil {
 
     public static boolean compile(@NonNull String regEx, CharSequence value) {
         Pattern pattern = Pattern.compile(regEx);

@@ -15,22 +15,22 @@ import com.bumptech.glide.TransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.liyi.sutils.constants.SConstants;
-import com.liyi.sutils.utils.log.SLogUtil;
+import com.liyi.sutils.utils.log.LogUtil;
 
 
-public class SGlideUtil {
+public class GlideUtil {
     private final String TAG = this.getClass().getSimpleName();
 
-    private SGlideUtil() {
+    private GlideUtil() {
         super();
     }
 
-    public static SGlideUtil get() {
-        return SGlideUtil.SGlideUtilHolder.INSTANCE;
+    public static GlideUtil get() {
+        return GlideUtil.SGlideUtilHolder.INSTANCE;
     }
 
     private static class SGlideUtilHolder {
-        private static final SGlideUtil INSTANCE = new SGlideUtil();
+        private static final GlideUtil INSTANCE = new GlideUtil();
     }
 
     public void loadImage(@NonNull Object target, Object source, ImageView imageView,
@@ -89,7 +89,7 @@ public class SGlideUtil {
             manager = Glide.with((View) target);
         }
         if (manager == null) {
-            SLogUtil.e(TAG, "Glide中引入的上下文对象格式错误");
+            LogUtil.e(TAG, "Glide中引入的上下文对象格式错误");
         }
         return manager;
     }

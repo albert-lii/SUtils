@@ -11,7 +11,7 @@ import android.widget.Toast;
 /**
  * Toast工具类
  */
-public class SToastUtil {
+public class ToastUtil {
     public static void show(Context context, CharSequence msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }

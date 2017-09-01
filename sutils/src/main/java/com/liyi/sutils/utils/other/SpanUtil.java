@@ -22,7 +22,7 @@ import android.text.style.URLSpan;
 import android.view.View;
 import android.widget.TextView;
 
-import com.liyi.sutils.utils.log.SLogUtil;
+import com.liyi.sutils.utils.log.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * SpannableString工具类
  */
-public class SSpanUtil {
+public class SpanUtil {
     private final String TAG = this.getClass().getSimpleName();
     /**
      * Spannable.SPAN_EXCLUSIVE_EXCLUSIVE :
@@ -53,7 +53,7 @@ public class SSpanUtil {
     private TextView textView;
 
 
-    public SSpanUtil(TextView textView) {
+    public SpanUtil(TextView textView) {
         super();
         init(textView);
     }
@@ -67,16 +67,16 @@ public class SSpanUtil {
         }
     }
 
-    public static SSpanUtil bind(TextView textView) {
-        return new SSpanUtil(textView);
+    public static SpanUtil bind(TextView textView) {
+        return new SpanUtil(textView);
     }
 
-    public SSpanUtil setSpanFlag(int flag) {
+    public SpanUtil setSpanFlag(int flag) {
         this.mSpanFlag = flag;
         return this;
     }
 
-    public SSpanUtil addContent(CharSequence text) {
+    public SpanUtil addContent(CharSequence text) {
         mBuilder.append(text);
         return this;
     }
@@ -89,12 +89,12 @@ public class SSpanUtil {
      * @param end
      * @return
      */
-    public SSpanUtil addFontColor(@ColorInt int color, int start, int end) {
+    public SpanUtil addFontColor(@ColorInt int color, int start, int end) {
         mBuilder.setSpan(new ForegroundColorSpan(color), start, end, mSpanFlag);
         return this;
     }
 
-    public SSpanUtil addFontColorByKey(@ColorInt int color, String key) {
+    public SpanUtil addFontColorByKey(@ColorInt int color, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
             mBuilder.setSpan(new ForegroundColorSpan(color), index[0], index[1], mSpanFlag);
@@ -110,12 +110,12 @@ public class SSpanUtil {
      * @param end
      * @return
      */
-    public SSpanUtil addBgColor(@ColorInt int color, int start, int end) {
+    public SpanUtil addBgColor(@ColorInt int color, int start, int end) {
         mBuilder.setSpan(new BackgroundColorSpan(color), start, end, mSpanFlag);
         return this;
     }
 
-    public SSpanUtil addBgColorByKey(@ColorInt int color, String key) {
+    public SpanUtil addBgColorByKey(@ColorInt int color, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
             mBuilder.setSpan(new BackgroundColorSpan(color), index[0], index[1], mSpanFlag);
@@ -131,12 +131,12 @@ public class SSpanUtil {
      * @param end
      * @return
      */
-    public SSpanUtil addURL(String url, int start, int end) {
+    public SpanUtil addURL(String url, int start, int end) {
         mBuilder.setSpan(new URLSpan(url), start, end, mSpanFlag);
         return this;
     }
 
-    public SSpanUtil addURLByKey(String url, String key) {
+    public SpanUtil addURLByKey(String url, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
             mBuilder.setSpan(new URLSpan(url), index[0], index[1], mSpanFlag);
@@ -152,12 +152,12 @@ public class SSpanUtil {
      * @param end
      * @return
      */
-    public SSpanUtil addTypeface(int style, int start, int end) {
+    public SpanUtil addTypeface(int style, int start, int end) {
         mBuilder.setSpan(new StyleSpan(style), start, end, mSpanFlag);
         return this;
     }
 
-    public SSpanUtil addTypefaceByKey(int style, String key) {
+    public SpanUtil addTypefaceByKey(int style, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
             mBuilder.setSpan(new StyleSpan(style), index[0], index[1], mSpanFlag);
@@ -172,12 +172,12 @@ public class SSpanUtil {
      * @param end
      * @return
      */
-    public SSpanUtil addStrikethrough(int start, int end) {
+    public SpanUtil addStrikethrough(int start, int end) {
         mBuilder.setSpan(new StrikethroughSpan(), start, end, mSpanFlag);
         return this;
     }
 
-    public SSpanUtil addStrikethroughByKey(String key) {
+    public SpanUtil addStrikethroughByKey(String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
             mBuilder.setSpan(new StrikethroughSpan(), index[0], index[1], mSpanFlag);
@@ -193,12 +193,12 @@ public class SSpanUtil {
      * @param end
      * @return
      */
-    public SSpanUtil addImage(ImageSpan span, int start, int end) {
+    public SpanUtil addImage(ImageSpan span, int start, int end) {
         mBuilder.setSpan(span, start, end, mSpanFlag);
         return this;
     }
 
-    public SSpanUtil addImageByKey(ImageSpan span, String key) {
+    public SpanUtil addImageByKey(ImageSpan span, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
             mBuilder.setSpan(span, index[0], index[1], mSpanFlag);
@@ -206,13 +206,13 @@ public class SSpanUtil {
         return this;
     }
 
-    public SSpanUtil addImage(Bitmap b, int verticalAlignment, int start, int end) {
+    public SpanUtil addImage(Bitmap b, int verticalAlignment, int start, int end) {
         ImageSpan span = new ImageSpan(mContext, b, getImageSpanType(verticalAlignment));
         mBuilder.setSpan(span, start, end, mSpanFlag);
         return this;
     }
 
-    public SSpanUtil addImageByKey(Bitmap b, int verticalAlignment, String key) {
+    public SpanUtil addImageByKey(Bitmap b, int verticalAlignment, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
             ImageSpan span = new ImageSpan(mContext, b, getImageSpanType(verticalAlignment));
@@ -221,14 +221,14 @@ public class SSpanUtil {
         return this;
     }
 
-    public SSpanUtil addImage(Drawable d, int verticalAlignment, int start, int end) {
+    public SpanUtil addImage(Drawable d, int verticalAlignment, int start, int end) {
 //        d.setBounds(0,0,d.getIntrinsicWidth(),d.getIntrinsicHeight());
         ImageSpan span = new ImageSpan(d, getImageSpanType(verticalAlignment));
         mBuilder.setSpan(span, start, end, mSpanFlag);
         return this;
     }
 
-    public SSpanUtil addImageByKey(Drawable d, int verticalAlignment, String key) {
+    public SpanUtil addImageByKey(Drawable d, int verticalAlignment, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
             ImageSpan span = new ImageSpan(d, getImageSpanType(verticalAlignment));
@@ -237,13 +237,13 @@ public class SSpanUtil {
         return this;
     }
 
-    public SSpanUtil addImage(@DrawableRes int resourceId, int verticalAlignment, int start, int end) {
+    public SpanUtil addImage(@DrawableRes int resourceId, int verticalAlignment, int start, int end) {
         ImageSpan span = new ImageSpan(mContext, resourceId, getImageSpanType(verticalAlignment));
         mBuilder.setSpan(span, start, end, mSpanFlag);
         return this;
     }
 
-    public SSpanUtil addImageByKey(@DrawableRes int resourceId, int verticalAlignment, String key) {
+    public SpanUtil addImageByKey(@DrawableRes int resourceId, int verticalAlignment, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
             ImageSpan span = new ImageSpan(mContext, resourceId, getImageSpanType(verticalAlignment));
@@ -252,13 +252,13 @@ public class SSpanUtil {
         return this;
     }
 
-    public SSpanUtil addImage(Uri uri, int verticalAlignment, int start, int end) {
+    public SpanUtil addImage(Uri uri, int verticalAlignment, int start, int end) {
         ImageSpan span = new ImageSpan(mContext, uri, getImageSpanType(verticalAlignment));
         mBuilder.setSpan(span, start, end, mSpanFlag);
         return this;
     }
 
-    public SSpanUtil addImageByKey(Uri uri, int verticalAlignment, String key) {
+    public SpanUtil addImageByKey(Uri uri, int verticalAlignment, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
             ImageSpan span = new ImageSpan(mContext, uri, getImageSpanType(verticalAlignment));
@@ -287,7 +287,7 @@ public class SSpanUtil {
      * @param end
      * @return
      */
-    public SSpanUtil addClick(final OnTextClickListener listener, final boolean isNeedUnderLine, int start, int end) {
+    public SpanUtil addClick(final OnTextClickListener listener, final boolean isNeedUnderLine, int start, int end) {
         mBuilder.setSpan(new ClickableSpan() {
             @Override
             public void updateDrawState(TextPaint ds) {
@@ -307,7 +307,7 @@ public class SSpanUtil {
         return this;
     }
 
-    public SSpanUtil addClickByKey(final OnTextClickListener listener, final boolean isNeedUnderLine, String key) {
+    public SpanUtil addClickByKey(final OnTextClickListener listener, final boolean isNeedUnderLine, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int i = 0; i < list.size(); i++) {
             final int finalI = i;
@@ -340,7 +340,7 @@ public class SSpanUtil {
 
     public SpannableStringBuilder getSpanBuilder() {
         if (mBuilder == null) {
-            SLogUtil.e(TAG, "error ========> The SpannableStringBuilder in SSpanUtil is empty");
+            LogUtil.e(TAG, "error ========> The SpannableStringBuilder in SpanUtil is empty");
             return null;
         }
         return mBuilder;
@@ -348,7 +348,7 @@ public class SSpanUtil {
 
     public TextView getTextView() {
         if (textView == null) {
-            SLogUtil.e(TAG, "error ========> The textview in SSpanUtil is empty");
+            LogUtil.e(TAG, "error ========> The textview in SpanUtil is empty");
             return null;
         }
         return textView;

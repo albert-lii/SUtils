@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 /**
  * 反射工具类
  */
-public class SReflectUtil {
+public class ReflectUtil {
     /**
      * 修改单个的值
      *

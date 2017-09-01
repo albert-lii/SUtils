@@ -3,7 +3,7 @@ package com.liyi.sutils.utils.other;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.liyi.sutils.utils.log.SLogUtil;
+import com.liyi.sutils.utils.log.LogUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,8 +13,8 @@ import java.util.Date;
 /**
  * 时间工具类
  */
-public class STimeUtil {
-    private static final String TAG = STimeUtil.class.getClass().getSimpleName();
+public class TimeUtil {
+    private static final String TAG = TimeUtil.class.getClass().getSimpleName();
     private static final String DATE_TYPE = "yyyy-MM-dd HH:mm:ss";
 
     /**
@@ -42,7 +42,7 @@ public class STimeUtil {
             timeStamp = date.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
-            SLogUtil.e(TAG, "Failure to execute the getTimeStamp () method ========> timeStr: " + timeStr);
+            LogUtil.e(TAG, "Failure to execute the getTimeStamp () method ========> timeStr: " + timeStr);
         }
         return timeStamp;
     }
@@ -62,7 +62,7 @@ public class STimeUtil {
         } else if (startTime instanceof Long) {
             longStart = (long) startTime;
         } else {
-            SLogUtil.e(TAG, "The startTime format error in the getTimeDiffAsSecond () method ========> startTime: " + startTime);
+            LogUtil.e(TAG, "The startTime format error in the getTimeDiffAsSecond () method ========> startTime: " + startTime);
             return -1;
         }
         if (endTime instanceof String) {
@@ -70,7 +70,7 @@ public class STimeUtil {
         } else if (endTime instanceof Long) {
             longEnd = (long) endTime;
         } else {
-            SLogUtil.e(TAG, "The endTime format error in the getTimeDiffAsSecond () method ========> endTime: " + endTime);
+            LogUtil.e(TAG, "The endTime format error in the getTimeDiffAsSecond () method ========> endTime: " + endTime);
             return -2;
         }
         return (longEnd - longStart);

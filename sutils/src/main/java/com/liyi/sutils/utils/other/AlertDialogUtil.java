@@ -9,18 +9,18 @@ import android.support.v7.app.AlertDialog;
  * 系统弹出对话框工具类
  */
 
-public class SAlertDialogUtil {
+public class AlertDialogUtil {
     private String mNegBtnText, mPosBtnText;
     private boolean cancelable;
     private Context mContext;
     private OnAlertNegativeListener mNegativeListener;
     private OnAlertPositiveListener mPositiveListener;
 
-    public static SAlertDialogUtil newInstance(@NonNull Context context) {
-        return new SAlertDialogUtil(context);
+    public static AlertDialogUtil newInstance(@NonNull Context context) {
+        return new AlertDialogUtil(context);
     }
 
-    private SAlertDialogUtil(@NonNull Context context) {
+    private AlertDialogUtil(@NonNull Context context) {
         super();
         this.mContext = context;
         cancelable = false;
@@ -57,7 +57,7 @@ public class SAlertDialogUtil {
      * @param cancelable
      * @return
      */
-    public SAlertDialogUtil setCancelable(boolean cancelable) {
+    public AlertDialogUtil setCancelable(boolean cancelable) {
         this.cancelable = cancelable;
         return this;
     }
@@ -68,7 +68,7 @@ public class SAlertDialogUtil {
      * @param text
      * @return
      */
-    public SAlertDialogUtil negativeText(String text) {
+    public AlertDialogUtil negativeText(String text) {
         this.mNegBtnText = text;
         return this;
     }
@@ -79,7 +79,7 @@ public class SAlertDialogUtil {
      * @param text
      * @return
      */
-    public SAlertDialogUtil positiveText(String text) {
+    public AlertDialogUtil positiveText(String text) {
         this.mPosBtnText = text;
         return this;
     }
@@ -90,7 +90,7 @@ public class SAlertDialogUtil {
      * @param listener
      * @return
      */
-    public SAlertDialogUtil negative(OnAlertNegativeListener listener) {
+    public AlertDialogUtil negative(OnAlertNegativeListener listener) {
         this.mNegativeListener = listener;
         return this;
     }
@@ -101,7 +101,7 @@ public class SAlertDialogUtil {
      * @param listener
      * @return
      */
-    public SAlertDialogUtil positive(OnAlertPositiveListener listener) {
+    public AlertDialogUtil positive(OnAlertPositiveListener listener) {
         this.mPositiveListener = listener;
         return this;
     }

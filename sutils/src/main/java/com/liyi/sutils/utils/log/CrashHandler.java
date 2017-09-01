@@ -9,7 +9,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.liyi.sutils.utils.other.SToastUtil;
+import com.liyi.sutils.utils.other.ToastUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,8 +27,8 @@ import java.util.Map;
 /**
  * UncaughtException处理类,当程序发生Uncaught异常的时候,有该类来接管程序,并记录发送错误报告.
  */
-public class SCrashHandler implements Thread.UncaughtExceptionHandler {
-    private static final String TAG = SCrashHandler.class.getClass().getSimpleName();
+public class CrashHandler implements Thread.UncaughtExceptionHandler {
+    private static final String TAG = CrashHandler.class.getClass().getSimpleName();
 
     // 异常文件的存储路径
     private String mCrashPath;
@@ -36,7 +36,7 @@ public class SCrashHandler implements Thread.UncaughtExceptionHandler {
     private String mPreFix;
 
     // CrashHandler实例
-    private static SCrashHandler mInstance;
+    private static CrashHandler mInstance;
     private static Context mContext;
     // 系统默认的UncaughtException处理类
     private Thread.UncaughtExceptionHandler mDefaultHandler;
@@ -47,7 +47,7 @@ public class SCrashHandler implements Thread.UncaughtExceptionHandler {
     // 用于格式化日期,作为日志文件名的一部分
     private DateFormat mFormatter2 = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
-    private SCrashHandler(Config config) {
+    private CrashHandler(Config config) {
         // 获取系统默认的UncaughtException处理器
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         // 设置该CrashHandler为程序的默认处理器
@@ -58,7 +58,7 @@ public class SCrashHandler implements Thread.UncaughtExceptionHandler {
 
     public static void initialize(@NonNull Context context) {
         mContext = context.getApplicationContext();
-        mInstance = new SCrashHandler(new Config(context));
+        mInstance = new CrashHandler(new Config(context));
     }
 
     /**
@@ -68,7 +68,7 @@ public class SCrashHandler implements Thread.UncaughtExceptionHandler {
      */
     public static void initialize(@NonNull Context context, Config config) {
         mContext = context.getApplicationContext();
-        mInstance = new SCrashHandler(config == null ? new Config(context) : config);
+        mInstance = new CrashHandler(config == null ? new Config(context) : config);
     }
 
     public static final class Config {
@@ -83,7 +83,7 @@ public class SCrashHandler implements Thread.UncaughtExceptionHandler {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 // 默认路径
                 filePath = Environment.getExternalStorageDirectory().toString() + File.separator
-                        + "SCrashHandler" + File.separator + this.context.getPackageName();
+                        + "CrashHandler" + File.separator + this.context.getPackageName();
             }
             preFix = "crash";
         }
@@ -92,7 +92,7 @@ public class SCrashHandler implements Thread.UncaughtExceptionHandler {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 if (TextUtils.isEmpty(folder)) {
                     filePath = Environment.getExternalStorageDirectory().toString() + File.separator
-                            + "SCrashHandler" + File.separator + context.getPackageName();
+                            + "CrashHandler" + File.separator + context.getPackageName();
                 } else {
                     filePath = Environment.getExternalStorageDirectory().toString() + File.separator + folder;
                 }
@@ -123,7 +123,7 @@ public class SCrashHandler implements Thread.UncaughtExceptionHandler {
                 // 延迟两秒后退出
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
-                SLogUtil.e(TAG, "error ========> " + e);
+                LogUtil.e(TAG, "error ========> " + e);
             }
             // 退出程序
             android.os.Process.killProcess(android.os.Process.myPid());
@@ -146,7 +146,7 @@ public class SCrashHandler implements Thread.UncaughtExceptionHandler {
             @Override
             public void run() {
                 Looper.prepare();
-                SToastUtil.show(mContext, "很抱歉,程序出现异常,即将退出");
+                ToastUtil.show(mContext, "很抱歉,程序出现异常,即将退出");
                 Looper.loop();
             }
         }.start();
@@ -182,16 +182,16 @@ public class SCrashHandler implements Thread.UncaughtExceptionHandler {
             mInfos.put("Android版本", android.os.Build.VERSION.RELEASE);
             mInfos.put("手机厂商", android.os.Build.BRAND);
         } catch (PackageManager.NameNotFoundException e) {
-            SLogUtil.e(TAG, "an error occured when collect package info ========> " + e);
+            LogUtil.e(TAG, "an error occured when collect package info ========> " + e);
         }
         Field[] fields = Build.class.getDeclaredFields();
         for (Field field : fields) {
             try {
                 field.setAccessible(true);
                 mInfos.put(field.getName(), field.get(null).toString());
-                SLogUtil.d(TAG, field.getName() + " ========> " + field.get(null));
+                LogUtil.d(TAG, field.getName() + " ========> " + field.get(null));
             } catch (Exception e) {
-                SLogUtil.e(TAG, "an error occured when collect crash info ========> " + e);
+                LogUtil.e(TAG, "an error occured when collect crash info ========> " + e);
             }
         }
     }
@@ -239,7 +239,7 @@ public class SCrashHandler implements Thread.UncaughtExceptionHandler {
             }
             return fileName;
         } catch (Exception e) {
-            SLogUtil.e(TAG, "an error occured while writing file ========> " + e);
+            LogUtil.e(TAG, "an error occured while writing file ========> " + e);
         } finally {
             if (fos != null) {
                 try {

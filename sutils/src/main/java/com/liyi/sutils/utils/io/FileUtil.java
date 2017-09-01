@@ -13,7 +13,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 
-import com.liyi.sutils.utils.log.SLogUtil;
+import com.liyi.sutils.utils.log.LogUtil;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -34,18 +34,18 @@ import java.io.Serializable;
 /**
  * File相关工具类
  */
-public class SFileUtil {
-    private final String TAG = SFileUtil.class.getSimpleName();
+public class FileUtil {
+    private final String TAG = FileUtil.class.getSimpleName();
 
-    private SFileUtil() {
+    private FileUtil() {
     }
 
-    public static SFileUtil get() {
+    public static FileUtil get() {
         return SFileUtilHolder.INSTANCE;
     }
 
     private static class SFileUtilHolder {
-        private static final SFileUtil INSTANCE = new SFileUtil();
+        private static final FileUtil INSTANCE = new FileUtil();
     }
 
 
@@ -370,9 +370,9 @@ public class SFileUtil {
                     bytesum += byteread;
                     fos.write(buffer, 0, byteread);
                 }
-                SLogUtil.d(TAG, "Copy file success, the total size of the file is ========> " + bytesum + " byte");
+                LogUtil.d(TAG, "Copy file success, the total size of the file is ========> " + bytesum + " byte");
             } catch (IOException e) {
-                SLogUtil.e(TAG, "Copy file error ========> " + e.toString());
+                LogUtil.e(TAG, "Copy file error ========> " + e.toString());
                 e.printStackTrace();
             } finally {
                 if (fis != null) {
@@ -392,7 +392,7 @@ public class SFileUtil {
                 }
             }
         } else {
-            SLogUtil.e(TAG, "Copy file error ========> source file does not exist!");
+            LogUtil.e(TAG, "Copy file error ========> source file does not exist!");
         }
     }
 
@@ -501,7 +501,7 @@ public class SFileUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            SLogUtil.e(TAG, "Failed to delete file ========> " + e.getMessage());
+            LogUtil.e(TAG, "Failed to delete file ========> " + e.getMessage());
         }
         return false;
     }
@@ -580,7 +580,7 @@ public class SFileUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            SLogUtil.e(TAG, "Failed to get the specified file size ========> " + e.getMessage());
+            LogUtil.e(TAG, "Failed to get the specified file size ========> " + e.getMessage());
         }
         return size;
     }

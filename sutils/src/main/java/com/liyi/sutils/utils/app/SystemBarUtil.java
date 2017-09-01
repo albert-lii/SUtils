@@ -17,7 +17,7 @@ import android.widget.FrameLayout;
  * 仅在 SDK >= 4.4 时有效
  */
 @TargetApi(Build.VERSION_CODES.KITKAT)
-public class SSystemBarUtil {
+public class SystemBarUtil {
     private static final String TAG_STATUS_BAR = "StatusBar";
     private static final String TAG_NAVIGATION_BAR = "NavigationBar";
     // 无效的颜色值
@@ -44,7 +44,7 @@ public class SSystemBarUtil {
      */
     public static void setupStatusBar(Activity activity, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            int statusHeight = SScreenUtil.getStatusBarHeight(activity);
+            int statusHeight = ScreenUtil.getStatusBarHeight(activity);
             int statusColor = DEFAULT_STATUS_COLOR;
             if (color != INVALID_VAL) {
                 statusColor = color;
@@ -123,9 +123,9 @@ public class SSystemBarUtil {
      */
     public static void setupNavBar(Activity activity, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (SScreenUtil.hasNavigationBar(activity)) {
+            if (ScreenUtil.hasNavigationBar(activity)) {
                 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-                int navHeight = SScreenUtil.getNavBarHeight(activity);
+                int navHeight = ScreenUtil.getNavBarHeight(activity);
                 int navColor = DEFAULT_NAVIGATION_COLOR;
                 if (color != INVALID_VAL) {
                     navColor = color;
@@ -166,7 +166,7 @@ public class SSystemBarUtil {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static void setNavBarAlpha(Activity activity, float alpha) {
-        if (SScreenUtil.hasNavigationBar(activity)) {
+        if (ScreenUtil.hasNavigationBar(activity)) {
             ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
             View navBarView = decorView.findViewWithTag(TAG_NAVIGATION_BAR);
             if (navBarView != null) {
@@ -181,7 +181,7 @@ public class SSystemBarUtil {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static void showNavBar(Activity activity, boolean isShow) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            if (SScreenUtil.hasNavigationBar(activity)) {
+            if (ScreenUtil.hasNavigationBar(activity)) {
                 View decorView = activity.getWindow().getDecorView();
                 if (isShow) {
                     decorView.setSystemUiVisibility(

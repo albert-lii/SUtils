@@ -13,7 +13,7 @@ import android.view.WindowManager;
 
 import java.lang.reflect.Method;
 
-public class SScreenUtil {
+public class ScreenUtil {
 
     /**
      * 获取屏幕密度dpi（120 / 160 / 240 /...）

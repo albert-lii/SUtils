@@ -6,7 +6,7 @@ import android.graphics.drawable.GradientDrawable;
 /**
  * Shape工具类
  */
-public class SShapeUtil {
+public class ShapeUtil {
 
     public static GradientDrawable getRectShape(int fillColor, int radius) {
         GradientDrawable shape = new GradientDrawable();

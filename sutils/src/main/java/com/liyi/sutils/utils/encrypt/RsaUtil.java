@@ -19,7 +19,7 @@ import javax.crypto.Cipher;
  * 参考链接：http://www.cnblogs.com/whoislcj/p/5470095.html
  */
 
-public class SRSAUtil {
+public class RsaUtil {
     // 非对称加密密钥算法
     private static final String RSA = "RSA";
     // 加密填充方式

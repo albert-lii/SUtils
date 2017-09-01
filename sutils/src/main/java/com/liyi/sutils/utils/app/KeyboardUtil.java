@@ -12,7 +12,7 @@ import android.widget.EditText;
 /**
  * 与虚拟键盘相关的工具类
  */
-public class SKeyboardUtil {
+public class KeyboardUtil {
     /**
      * 弹出虚拟软键盘
      */

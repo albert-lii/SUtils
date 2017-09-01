@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * gson工具类
  */
-public class SGsonUtil {
+public class GsonUtil {
     private static Gson mGson = null;
 
     static {

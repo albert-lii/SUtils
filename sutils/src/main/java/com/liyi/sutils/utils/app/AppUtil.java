@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 
 import com.liyi.sutils.constants.SConstants;
-import com.liyi.sutils.utils.log.SLogUtil;
+import com.liyi.sutils.utils.log.LogUtil;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -86,11 +86,11 @@ public class AppUtil {
         List<ActivityManager.RunningAppProcessInfo> processInfos = activityManager.getRunningAppProcesses();
         for (int i = 0; i < processInfos.size(); i++) {
             if (processInfos.get(i).processName.equals(packageName)) {
-                SLogUtil.i(TAG, String.format("AppAliveInfo ========> this %s is running", packageName));
+                LogUtil.i(TAG, String.format("AppAliveInfo ========> this %s is running", packageName));
                 return true;
             }
         }
-        SLogUtil.i(TAG, String.format("AppAliveInfo ========> this %s is not running", packageName));
+        LogUtil.i(TAG, String.format("AppAliveInfo ========> this %s is not running", packageName));
         return false;
     }
 
@@ -106,17 +106,17 @@ public class AppUtil {
         List<ActivityManager.RunningTaskInfo> taskInfos = am.getRunningTasks(20);
         // Determines whether the application is on the top of the stack
         if (taskInfos.get(0).topActivity.getPackageName().equals(packageName)) {
-            SLogUtil.i(TAG, String.format("AppStateInfo ========> this %s is running onForeground", packageName));
+            LogUtil.i(TAG, String.format("AppStateInfo ========> this %s is running onForeground", packageName));
             return SConstants.APPSTATE_FORE;
         } else {
             // Determine if the application is in the stack
             for (ActivityManager.RunningTaskInfo info : taskInfos) {
                 if (info.topActivity.getPackageName().equals(packageName)) {
-                    SLogUtil.i(TAG, String.format("AppStateInfo ========> this %s is running onBackground", packageName));
+                    LogUtil.i(TAG, String.format("AppStateInfo ========> this %s is running onBackground", packageName));
                     return SConstants.APPSTATE_BACK;
                 }
             }
-            SLogUtil.i(TAG, String.format("AppStateInfo ========> this %s is not running", packageName));
+            LogUtil.i(TAG, String.format("AppStateInfo ========> this %s is not running", packageName));
             return SConstants.APPSTATE_DEAD;
         }
     }
@@ -133,11 +133,11 @@ public class AppUtil {
             return false;
         for (int i = 0; i < serviceInfos.size(); i++) {
             if (serviceInfos.get(i).service.getClassName().equals(serviceName)) {
-                SLogUtil.i(TAG, String.format("AppServiceInfo ========> this %s is running", serviceName));
+                LogUtil.i(TAG, String.format("AppServiceInfo ========> this %s is running", serviceName));
                 return true;
             }
         }
-        SLogUtil.i(TAG, String.format("AppServiceInfo ========> this %s is not running", serviceName));
+        LogUtil.i(TAG, String.format("AppServiceInfo ========> this %s is not running", serviceName));
         return false;
     }
 
@@ -163,7 +163,7 @@ public class AppUtil {
             }
             String result = hexString.toString();
             String sha1 = result.substring(0, result.length() - 1);
-            SLogUtil.i(TAG, String.format("AppSHA1 ========> SHA1 is %s", sha1));
+            LogUtil.i(TAG, String.format("AppSHA1 ========> SHA1 is %s", sha1));
             return sha1;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

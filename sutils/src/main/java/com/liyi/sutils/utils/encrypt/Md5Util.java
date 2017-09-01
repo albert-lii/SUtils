@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
  * 参考链接：http://www.cnblogs.com/whoislcj/p/5885006.html
  */
 
-public class SMD5Util {
+public class Md5Util {
 
     /**
      * 计算字符串的 MD5 值

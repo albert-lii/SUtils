@@ -17,7 +17,7 @@ import java.util.Locale;
 /**
  * 设备信息相关工具类
  */
-public class SDeviceUtil {
+public class DeviceUtil {
     /**
      * 获取设备的唯一ID（即IMEI）
      */

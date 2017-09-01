@@ -6,7 +6,7 @@ import android.util.Log;
 /**
  * log工具类
  */
-public class SLogUtil {
+public class LogUtil {
     // 可以用于release时，统一关闭log
     public static boolean isLogEnable = true;
 

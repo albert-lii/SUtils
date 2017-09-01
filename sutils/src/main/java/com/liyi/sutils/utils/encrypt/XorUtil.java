@@ -10,7 +10,7 @@ package com.liyi.sutils.utils.encrypt;
  * 参考链接：http://www.cnblogs.com/whoislcj/p/5944917.html
  */
 
-public class SXorUtil {
+public class XorUtil {
 
     /**
      * 固定key的方式加密

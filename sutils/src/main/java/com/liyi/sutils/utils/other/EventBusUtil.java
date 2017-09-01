@@ -1,7 +1,7 @@
 package com.liyi.sutils.utils.other;
 
 
-import com.liyi.sutils.utils.log.SLogUtil;
+import com.liyi.sutils.utils.log.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
@@ -10,8 +10,8 @@ import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
 /**
  * EventBus3.0工具类
  */
-public class SEventUtil {
-    private static final String TAG = SEventUtil.class.getSimpleName();
+public class EventBusUtil {
+    private static final String TAG = EventBusUtil.class.getSimpleName();
 
     /**
      * 使用索引加速
@@ -33,7 +33,7 @@ public class SEventUtil {
         if (!EventBus.getDefault().isRegistered(subscriber)) {
             EventBus.getDefault().register(subscriber);
         } else {
-            SLogUtil.e(TAG, "Failed to register eventbus");
+            LogUtil.e(TAG, "Failed to register eventbus");
         }
     }
 

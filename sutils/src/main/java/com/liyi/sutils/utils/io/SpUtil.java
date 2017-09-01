@@ -12,33 +12,33 @@ import java.util.Set;
 /**
  * SharedPreferences工具类
  */
-public class SSpUtil {
-    private static final String DEF_FILENAME = "SSpUtil";
+public class SpUtil {
+    private static final String DEF_FILENAME = "SpUtil";
     private static final int DEF_MODE = Context.MODE_PRIVATE;
 
-    private static Map<String, SSpUtil> mInstanceMap;
+    private static Map<String, SpUtil> mInstanceMap;
     private static SharedPreferences mSp;
     private static SharedPreferences.Editor mEditor;
     private Context mContext;
 
-    private SSpUtil(Context context, String fileName, int mode) {
+    private SpUtil(Context context, String fileName, int mode) {
         super();
         this.mContext = context.getApplicationContext();
         mSp = mContext.getSharedPreferences(fileName, mode);
         mEditor = mSp.edit();
     }
 
-    public static SSpUtil get(@NonNull Context context) {
+    public static SpUtil get(@NonNull Context context) {
         return get(context, DEF_FILENAME, DEF_MODE);
     }
 
-    public static SSpUtil get(@NonNull Context context, @NonNull String fileName, @NonNull int mode) {
+    public static SpUtil get(@NonNull Context context, @NonNull String fileName, @NonNull int mode) {
         if (mInstanceMap == null) {
-            mInstanceMap = new HashMap<String, SSpUtil>();
+            mInstanceMap = new HashMap<String, SpUtil>();
         }
-        SSpUtil manager = mInstanceMap.get(fileName + "_" + mode);
+        SpUtil manager = mInstanceMap.get(fileName + "_" + mode);
         if (manager == null) {
-            manager = new SSpUtil(context, fileName, mode);
+            manager = new SpUtil(context, fileName, mode);
             mInstanceMap.put(fileName + "_" + mode, manager);
         }
         return manager;
