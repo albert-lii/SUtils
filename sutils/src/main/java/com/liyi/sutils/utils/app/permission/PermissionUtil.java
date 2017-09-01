@@ -14,6 +14,10 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
+
+import com.liyi.sutils.utils.app.SystemBarUtil;
+import com.liyi.sutils.utils.app.SystemPageUtil;
 
 import java.util.ArrayList;
 
@@ -55,7 +59,7 @@ public class PermissionUtil {
      */
     public static String[] getDeniedPermissions(@NonNull Context context, @NonNull String... permissions) {
         ArrayList<String> permissionList = new ArrayList<String>();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (isNeedRequest()) {
             for (String p : permissions) {
                 if (ContextCompat.checkSelfPermission(context, p) == PackageManager.PERMISSION_DENIED) {
                     permissionList.add(p);
@@ -83,27 +87,20 @@ public class PermissionUtil {
     /**
      * 显示提示框
      */
-    public static void showTipDialog(@NonNull final Context context) {
+    public static void showTipDialog(@NonNull final Context context, String message) {
         if (isNeedRequest()) {
             new AlertDialog.Builder(context)
                     .setTitle("提示信息")
-                    .setMessage("当前应用缺少必要权限，可能无法正常使用所有功能。请单击【确定】按钮前往设置中心进行权限授权")
+                    .setMessage(TextUtils.isEmpty(message) ?
+                            "当前应用缺少必要权限，可能无法正常使用所有功能。请单击【确定】按钮前往设置中心进行权限授权"
+                            : message)
                     .setNegativeButton("取消", null)
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            startAppSettings(context);
+                            SystemPageUtil.openAppDetail(context);
                         }
                     }).show();
         }
-    }
-
-    /**
-     * 跳转到设置页面
-     */
-    public static void startAppSettings(Context context) {
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        intent.setData(Uri.parse("package:" + context.getPackageName()));
-        context.startActivity(intent);
     }
 
     public static PermissionRequest with(@NonNull Activity activity) {
@@ -155,7 +152,7 @@ public class PermissionUtil {
                         String[] perms = deniedPermissions.toArray(new String[deniedPermissions.size()]);
                         boolean hasAlwaysDenied = hasAlwaysDeniedPermission(activity, perms);
                         if (currentReq.isAutoShowTip() && hasAlwaysDenied) {
-                            showTipDialog(activity);
+                            showTipDialog(activity, null);
                         }
                         currentReq.getPermissionListener().onPermissionDenied(requestCode, perms, hasAlwaysDenied);
                     }
