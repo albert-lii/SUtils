@@ -43,8 +43,8 @@ public class PermissionRequest {
     }
 
     public void execute() {
-        if (SPermissionUtil.isNeedRequest()) {
-            String[] deniedPermissions = SPermissionUtil.getDeniedPermissions(mActivity, mPermissions);
+        if (PermissionUtil.isNeedRequest()) {
+            String[] deniedPermissions = PermissionUtil.getDeniedPermissions(mActivity, mPermissions);
             if (deniedPermissions.length > 0) {
                 ActivityCompat.requestPermissions(mActivity, deniedPermissions, mRequestCode);
             } else {

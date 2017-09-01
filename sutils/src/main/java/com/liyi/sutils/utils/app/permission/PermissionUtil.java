@@ -20,7 +20,7 @@ import java.util.ArrayList;
 /**
  * 权限管理工具类
  */
-public class SPermissionUtil {
+public class PermissionUtil {
     private static ArrayList<PermissionRequest> mRequestList = new ArrayList<PermissionRequest>();
 
     public static boolean isNeedRequest() {

@@ -21,9 +21,17 @@ public class SDeviceUtil {
     /**
      * 获取设备的唯一ID（即IMEI）
      */
-    public static String getDeviceID(@NonNull Context context) {
+    public static String getIMEI(@NonNull Context context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return telephonyManager.getDeviceId();
+    }
+
+    /**
+     * 获取IMSI
+     */
+    public static String getIMSI(@NonNull Context context) {
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyManager.getSubscriberId();
     }
 
     /**

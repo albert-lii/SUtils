@@ -18,8 +18,8 @@ import java.util.Locale;
 /**
  * 与APP相关的工具类
  */
-public class SAppUtil {
-    private static final String TAG = SAppUtil.class.getSimpleName();
+public class AppUtil {
+    private static final String TAG = AppUtil.class.getSimpleName();
 
 
     /**
@@ -171,5 +171,27 @@ public class SAppUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 检测某应用程序是否安装
+     *
+     * @param context
+     * @param packageName 应用程序包名
+     * @return
+     */
+    public static boolean isInstalledApp(Context context, String packageName) {
+        try {
+            PackageManager pm = context.getPackageManager();
+            List<PackageInfo> pkgs = pm.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES);
+            for (PackageInfo pkg : pkgs) {
+                if ((pkg.packageName).equals(packageName)) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
