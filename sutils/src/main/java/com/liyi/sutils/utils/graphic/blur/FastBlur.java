@@ -1,8 +1,12 @@
-package com.liyi.sutils.utils.graphic.glide.transform.blur;
+package com.liyi.sutils.utils.graphic.blur;
 
 
 import android.graphics.Bitmap;
 
+
+/**
+ * 国外一位大神写的图片模糊算法
+ */
 public class FastBlur {
     public static Bitmap blur(Bitmap sentBitmap, int radius, boolean canReuseInBitmap) {
         Bitmap bitmap;

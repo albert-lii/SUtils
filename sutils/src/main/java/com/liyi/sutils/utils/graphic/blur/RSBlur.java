@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.graphic.glide.transform.blur;
+package com.liyi.sutils.utils.graphic.blur;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -11,8 +11,12 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 
 
-
+/**
+ * 调用Android自己的RenderScript实现图片模糊
+ * 注：仅在 SDK >= 17 时有用
+ */
 public class RSBlur {
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static Bitmap blur(Context context, Bitmap blurredBitmap, int radius) throws RSRuntimeException {
         try {

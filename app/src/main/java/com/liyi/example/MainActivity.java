@@ -7,9 +7,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.liyi.sutils.utils.app.AtyTransitionUtil;
+import com.liyi.sutils.utils.other.QRCodeUtil;
 
 public class MainActivity extends Activity implements View.OnClickListener {
-    private Button btn_systembar, btn_Atytransition;
+    private Button btn_systembar, btn_Atytransition,btn_qrcode;
 
 
     @Override
@@ -23,11 +24,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private void initUI() {
         btn_systembar = (Button) findViewById(R.id.btn_systembar);
         btn_Atytransition = (Button) findViewById(R.id.btn_aty_transition);
+        btn_qrcode=(Button)findViewById(R.id.btn_qrcode);
     }
 
     private void addListeners() {
         btn_systembar.setOnClickListener(this);
         btn_Atytransition.setOnClickListener(this);
+        btn_qrcode.setOnClickListener(this);
     }
 
     @Override
@@ -42,6 +45,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 Intent intent1 = new Intent(this, TransitionActivity.class);
                 startActivity(intent1);
                 AtyTransitionUtil.enterFromRight(this);
+                break;
+            case R.id.btn_qrcode:
+                Intent intent2 = new Intent(this, QRImageActivity.class);
+                startActivity(intent2);
+                AtyTransitionUtil.enterFromTop(this);
                 break;
         }
     }
