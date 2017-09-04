@@ -180,7 +180,7 @@ public class AppUtil {
      * @param packageName 应用程序包名
      * @return
      */
-    public static boolean isInstalledApp(Context context, String packageName) {
+    public static boolean isInstalledApp(@NonNull Context context, String packageName) {
         try {
             PackageManager pm = context.getPackageManager();
             List<PackageInfo> pkgs = pm.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES);
