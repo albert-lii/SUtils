@@ -31,7 +31,7 @@ public class SystemBarUtil {
     /**
      * 设置状态栏和底部导航栏的显示方式
      */
-    public static void setDisplayOption(Activity activity, boolean isFitSystemWindow, boolean clipToPadding) {
+    public static void setDisplayOption(@NonNull Activity activity, boolean isFitSystemWindow, boolean clipToPadding) {
         // 获取根布局
         ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
         rootView.setFitsSystemWindows(isFitSystemWindow);
@@ -42,7 +42,7 @@ public class SystemBarUtil {
     /**
      * 初始化顶部状态栏
      */
-    public static void setupStatusBar(Activity activity, int color) {
+    public static void setupStatusBar(@NonNull Activity activity, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             int statusHeight = ScreenUtil.getStatusBarHeight(activity);
             int statusColor = DEFAULT_STATUS_COLOR;
@@ -64,7 +64,7 @@ public class SystemBarUtil {
     /**
      * 绘制一个和状态栏一样高的矩形View
      */
-    private static View createStatusBarView(Activity activity, int statusHeight, int statusColor) {
+    private static View createStatusBarView(@NonNull Activity activity, int statusHeight, int statusColor) {
         View statusBarView = new View(activity);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, statusHeight);
         params.gravity = Gravity.TOP;
@@ -77,7 +77,7 @@ public class SystemBarUtil {
     /**
      * 移除已经存在的 statusBarView
      */
-    private static void removeStatusBarView(ViewGroup decorView) {
+    private static void removeStatusBarView(@NonNull ViewGroup decorView) {
         View statusBarView = decorView.findViewWithTag(TAG_STATUS_BAR);
         if (statusBarView != null) {
             decorView.removeView(statusBarView);
@@ -88,7 +88,7 @@ public class SystemBarUtil {
      * 设置状态栏的透明度
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static void setStatusBarAlpha(Activity activity, float alpha) {
+    public static void setStatusBarAlpha(@NonNull Activity activity, float alpha) {
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         View statusView = decorView.findViewWithTag(TAG_STATUS_BAR);
         if (statusView != null) {
@@ -100,7 +100,7 @@ public class SystemBarUtil {
      * 设置状态栏的显示和隐藏
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static void showStatusBar(Activity activity, boolean isShow) {
+    public static void showStatusBar(@NonNull Activity activity, boolean isShow) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
             View statusView = decorView.findViewWithTag(TAG_STATUS_BAR);
@@ -121,7 +121,7 @@ public class SystemBarUtil {
     /**
      * 初始化底部导航栏
      */
-    public static void setupNavBar(Activity activity, int color) {
+    public static void setupNavBar(@NonNull Activity activity, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (ScreenUtil.hasNavigationBar(activity)) {
                 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -141,7 +141,7 @@ public class SystemBarUtil {
     /**
      * 绘制一个和底部导航栏一样高的矩形View
      */
-    private static View createNavBarView(Activity activity, int navHeight, int navColor) {
+    private static View createNavBarView(@NonNull Activity activity, int navHeight, int navColor) {
         View navBarView = new View(activity);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, navHeight);
         params.gravity = Gravity.BOTTOM;
@@ -154,7 +154,7 @@ public class SystemBarUtil {
     /**
      * 移除已经存在的 navBarView
      */
-    private static void removeNavBarView(ViewGroup decorView) {
+    private static void removeNavBarView(@NonNull ViewGroup decorView) {
         View navBarView = decorView.findViewWithTag(TAG_NAVIGATION_BAR);
         if (navBarView != null) {
             decorView.removeView(navBarView);
@@ -165,7 +165,7 @@ public class SystemBarUtil {
      * 设置底部导航栏的透明度
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static void setNavBarAlpha(Activity activity, float alpha) {
+    public static void setNavBarAlpha(@NonNull Activity activity, float alpha) {
         if (ScreenUtil.hasNavigationBar(activity)) {
             ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
             View navBarView = decorView.findViewWithTag(TAG_NAVIGATION_BAR);
@@ -179,7 +179,7 @@ public class SystemBarUtil {
      * 设置底部导航栏的显示和隐藏
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static void showNavBar(Activity activity, boolean isShow) {
+    public static void showNavBar(@NonNull Activity activity, boolean isShow) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             if (ScreenUtil.hasNavigationBar(activity)) {
                 View decorView = activity.getWindow().getDecorView();
