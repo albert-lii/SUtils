@@ -116,7 +116,7 @@ public class PermissionUtil {
         return addRequest(fragment.getActivity());
     }
 
-    private static PermissionRequest addRequest(Activity activity) {
+    private static PermissionRequest addRequest(@NonNull Activity activity) {
         PermissionRequest request = new PermissionRequest(activity);
         if (mRequestList == null) {
             mRequestList = new ArrayList<PermissionRequest>();
