@@ -1,14 +1,18 @@
 # SUtils
-轻量级Android工具类库，集成了众多平时开发用到的工具类，方便快速开发项目！
-## 联系方式
-> QQ：1009365545  
+> 轻量级Android工具类库，集成了众多平时开发用到的工具类，方便快速开发项目！
+==========
 
-> 电子邮箱：albertlii@163.com
+## 联系方式
+----------
+> **QQ：1009365545**
+
+> **电子邮箱：albertlii@163.com**
 
 ## 项目内容
+----------
 ### 目录
 #### APP相关
-- [PermissionUtil](#PermissionUtil) Android6.0后权限管理工具类
+- [PermissionUtil](#PermissionUtil) 
 - [AppUtil](#AppUtil) 与APP相关
 - [AtyTransitionUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AtyTransitionUtil.java) Activity过渡动画类
 - [DensityUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/DensityUtil.java) dp、sp、px转换类
@@ -16,7 +20,6 @@
 - [ScreenUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/ScreenUtil.java) 与屏幕相关
 - [SystemBarUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/SystemBarUtil.java) 系统状态栏和底部虚拟导航栏的工具类
 - [SystemPageUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/SystemPageUtil.java) 系统功能界面工具类
-
 #### 设备相关
 - []() 设备信息相关工具类
 
