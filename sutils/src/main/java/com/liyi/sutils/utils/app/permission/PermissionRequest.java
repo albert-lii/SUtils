@@ -12,7 +12,7 @@ public class PermissionRequest {
     private boolean isAutoShowTip;
     private OnPermissionListener mListener;
 
-    public PermissionRequest(Activity activity) {
+    public PermissionRequest(@NonNull Activity activity) {
         this.mActivity = activity;
     }
 
