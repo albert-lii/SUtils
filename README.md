@@ -1,15 +1,12 @@
 # SUtils
 > 轻量级Android工具类库，集成了众多平时开发用到的工具类，方便快速开发项目！
-==========
 
 ## 联系方式
-----------
 > **QQ：1009365545**
 
 > **电子邮箱：albertlii@163.com**
 
 ## 项目内容
-----------
 ### 目录
 #### APP相关
 - [PermissionUtil](#PermissionUtil) 
@@ -25,7 +22,7 @@
 
 
 ### APP相关
-- [<span id="PermissionUtil">PermissionUtil</span>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java) Android6.0后权限管理类
+##### [PermissionUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java) Android6.0后权限管理类
 ~~~
 // 判断是否需要进行权限获取
 boolean isNeedRequest()
