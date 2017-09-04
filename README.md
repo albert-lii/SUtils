@@ -1,4 +1,5 @@
-# SUtils
+SUtils
+============
 > 轻量级Android工具类库，集成了众多平时开发用到的工具类，方便快速开发项目！
 
 ## 联系方式
@@ -9,7 +10,7 @@
 ## 项目内容
 ### 目录
 #### APP相关
-- [PermissionUtil](#PermissionUtil) 
+- [PermissionUtil](#PermissionUtil)  Android6.0后权限管理类
 - [AppUtil](#AppUtil) 与APP相关
 - [AtyTransitionUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AtyTransitionUtil.java) Activity过渡动画类
 - [DensityUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/DensityUtil.java) dp、sp、px转换类
@@ -22,7 +23,7 @@
 
 
 ### APP相关
-##### [PermissionUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java) Android6.0后权限管理类
+##### [PermissionUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java) 
 ~~~
 // 判断是否需要进行权限获取
 boolean isNeedRequest()
