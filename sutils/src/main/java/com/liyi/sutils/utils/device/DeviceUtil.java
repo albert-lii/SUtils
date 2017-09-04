@@ -125,7 +125,7 @@ public class DeviceUtil {
      * @param context
      * @return
      */
-    public static String getMacAddress(Context context) {
+    public static String getMacAddress(@NonNull Context context) {
         String mac_s = "";
         try {
             byte[] mac;
