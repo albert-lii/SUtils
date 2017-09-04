@@ -16,7 +16,7 @@ public class KeyboardUtil {
     /**
      * 弹出虚拟软键盘
      */
-    public static void openKeyboard(Context context, EditText et) {
+    public static void openKeyboard(@NonNull Context context, EditText et) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(et, InputMethodManager.RESULT_SHOWN);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
@@ -25,7 +25,7 @@ public class KeyboardUtil {
     /**
      * 弹出虚拟软键盘并把布局顶上去
      */
-    public static void openKeyboardByTop(Context context, EditText et) {
+    public static void openKeyboardByTop(@NonNull Context context, EditText et) {
         // The keyboard will top the layout
         ((Activity) context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -36,7 +36,7 @@ public class KeyboardUtil {
     /**
      * 关闭软键盘
      */
-    public static void closeKeyboard(Context context, EditText et) {
+    public static void closeKeyboard(@NonNull Context context, EditText et) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
     }
@@ -47,7 +47,7 @@ public class KeyboardUtil {
      * @param activity
      * @return
      */
-    public static boolean isSoftInputShow(Activity activity) {
+    public static boolean isSoftInputShow(@NonNull Activity activity) {
         View view = activity.getWindow().peekDecorView();
         if (view != null) {
             InputMethodManager inputmanger = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
