@@ -32,7 +32,7 @@ public class PermissionRequest {
     }
 
     /**
-     * 是否自动显示提示
+     * 是否自动显示拒绝授权时的提示
      *
      * @param isAutoShowTip
      * @return
