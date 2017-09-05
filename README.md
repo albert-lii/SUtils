@@ -1,5 +1,4 @@
-SUtils
-============
+# SUtils
 > 轻量级Android工具类库，集成了众多平时开发用到的工具类，方便快速开发项目！
 
 ## 联系方式
@@ -23,8 +22,8 @@ SUtils
 
 
 ### APP相关
-##### [PermissionUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java) 
-~~~
+##### [PermissionUtil](https://github.com/albertlii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java) 
+```Java
 // 判断是否需要进行权限获取
 boolean isNeedRequest()
 
@@ -56,7 +55,7 @@ PermissionUtil.with(@NonNull Activity activity)（with(@NonNull Fragment fragmen
 .autoShowTip(boolean isAutoShowTip)
 // 执行权限请求
 .execute()
-~~~
+```
 
 - [<span id="AppUtil">AppUtil</span>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AppUtil.java) 与APP相关
 ~~~
