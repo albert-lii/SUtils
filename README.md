@@ -43,7 +43,10 @@ void showTipDialog(@NonNull final Context context, String message)
 // 此方法需要放在onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)方法中执行
 void handleRequestPermissionsResult(@NonNull Activity activity, int requestCode, @NonNull String[] permissions, int[] grantResults) 
 
-// 使用方法：
+
+/**
+ * 使用方法
+ */
 PermissionUtil.with(@NonNull Activity activity)（with(@NonNull Fragment fragment)）
 // 请求码
 .requestCode(int requestCode)
