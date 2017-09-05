@@ -22,7 +22,7 @@
 
 
 ### APP相关
-##### [PermissionUtil](https://github.com/albertlii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java) 
+##### [<span id="AppUtil">PermissionUtil</span>](https://github.com/albertlii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java) 
 ```Java
 // 判断是否需要进行权限获取
 boolean isNeedRequest()
