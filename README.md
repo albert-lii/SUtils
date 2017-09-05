@@ -57,7 +57,7 @@ PermissionUtil.with(@NonNull Activity activity)（with(@NonNull Fragment fragmen
 .execute()
 ```
 
-- [<span id="1">AppUtil</span>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AppUtil.java) 与APP相关
+- <span id="1">[AppUtil]</span>(https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AppUtil.java) 与APP相关
 ```Java
 // 获取应用程序名称
 String getAppName(@NonNull Context context)  
