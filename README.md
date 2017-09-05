@@ -9,7 +9,7 @@
 ## 项目内容
 ### 目录
 #### APP相关
-- [PermissionUtil](#PermissionUtil)  Android6.0后权限管理类
+- [PermissionUtil](#PermissionUtil) Android6.0后权限管理类
 - [AppUtil](#AppUtil) 与APP相关
 - [AtyTransitionUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AtyTransitionUtil.java) Activity过渡动画类
 - [DensityUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/DensityUtil.java) dp、sp、px转换类
@@ -22,7 +22,7 @@
 
 
 ### APP相关
-##### [PermissionUtil](https://github.com/albertlii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java) 
+- [<div id="PermissionUtil">PermissionUtil</div>](https://github.com/albertlii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java) Android6.0后权限管理类
 ```Java
 // 判断是否需要进行权限获取
 boolean isNeedRequest()
@@ -57,7 +57,9 @@ PermissionUtil.with(@NonNull Activity activity)（with(@NonNull Fragment fragmen
 .execute()
 ```
 
-- [<div id="AppUtil">AppUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AppUtil.java) 与APP相关
+- [<div id="AppUtil">AppUtil</div>]
+(https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AppUtil.java)
+与App相关
 ```Java
 // 获取应用程序名称
 String getAppName(@NonNull Context context)  
@@ -81,7 +83,7 @@ boolean isServiceAlive(@NonNull Context context, @NonNull String serviceName)
 String getSHA1(@NonNull Context context) 
 
 // 检测某应用程序是否安装
-boolean isInstalledApp(Context context, String packageName) 
+boolean isInstalledApp(@NonNull Context context, String packageName) 
 ```
 
 - [AtyTransitionUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AtyTransitionUtil.java) Activity过渡动画类
