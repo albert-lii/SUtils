@@ -10,7 +10,7 @@
 ### 目录
 #### APP相关
 - [PermissionUtil](#PermissionUtil)  Android6.0后权限管理类
-- [AppUtil](#1) 与APP相关
+- [AppUtil](#AppUtil) 与APP相关
 - [AtyTransitionUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AtyTransitionUtil.java) Activity过渡动画类
 - [DensityUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/DensityUtil.java) dp、sp、px转换类
 - [KeyboardUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/KeyboardUtil.java) 虚拟键盘工具类
@@ -22,7 +22,7 @@
 
 
 ### APP相关
-##### [<span id="AppUtil">PermissionUtil</span>](https://github.com/albertlii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java) 
+##### [PermissionUtil](https://github.com/albertlii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java) 
 ```Java
 // 判断是否需要进行权限获取
 boolean isNeedRequest()
@@ -57,7 +57,7 @@ PermissionUtil.with(@NonNull Activity activity)（with(@NonNull Fragment fragmen
 .execute()
 ```
 
-- <span id="1">[AppUtil]</span>(https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AppUtil.java) 与APP相关
+- [<div id="AppUtil">AppUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AppUtil.java) 与APP相关
 ```Java
 // 获取应用程序名称
 String getAppName(@NonNull Context context)  
