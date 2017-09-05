@@ -17,7 +17,6 @@
 - [ScreenUtil](#ScreenUtil) 与屏幕相关
 - [SystemBarUtil](#SystemBarUtil) 系统状态栏和底部虚拟导航栏的工具类
 - [SystemPageUtil](#SystemPageUtil) 系统功能界面工具类
-
 #### 设备相关
 - []() 设备信息相关工具类
 
@@ -44,7 +43,7 @@ void showTipDialog(@NonNull final Context context, String message)
 // 此方法需要放在onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)方法中执行
 void handleRequestPermissionsResult(@NonNull Activity activity, int requestCode, @NonNull String[] permissions, int[] grantResults) 
 
-
+// 使用方法：
 PermissionUtil.with(@NonNull Activity activity)（with(@NonNull Fragment fragment)）
 // 请求码
 .requestCode(int requestCode)
