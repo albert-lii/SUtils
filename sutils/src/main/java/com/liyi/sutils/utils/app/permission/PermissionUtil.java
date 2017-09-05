@@ -87,7 +87,7 @@ public class PermissionUtil {
     /**
      * 显示提示框
      */
-    public static void showTipDialog(@NonNull final Context context, String message) {
+    public static void showTipDialog(@NonNull final Context context,@NonNull String message) {
         if (isNeedRequest()) {
             new AlertDialog.Builder(context)
                     .setTitle("提示信息")

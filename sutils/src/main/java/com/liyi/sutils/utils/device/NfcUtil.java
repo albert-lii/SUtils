@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
+import android.support.annotation.NonNull;
 
 /**
  * Nfc的工具类

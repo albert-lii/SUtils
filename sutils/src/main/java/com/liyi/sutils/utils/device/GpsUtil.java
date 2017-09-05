@@ -13,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.liyi.sutils.utils.app.permission.PermissionUtil;
 import com.liyi.sutils.utils.log.LogUtil;
@@ -83,7 +84,7 @@ public class GpsUtil {
      * @param longitude 经度
      * @return {@link Address}
      */
-    public static Address getAddress(Context context, double latitude, double longitude) {
+    public static Address getAddress(@NonNull Context context, double latitude, double longitude) {
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
         try {
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
@@ -104,7 +105,7 @@ public class GpsUtil {
      * @param longitude 经度
      * @return 所在国家
      */
-    public static String getCountryName(Context context, double latitude, double longitude) {
+    public static String getCountryName(@NonNull Context context, double latitude, double longitude) {
         Address address = getAddress(context, latitude, longitude);
         return address == null ? "unknown" : address.getCountryName();
     }
@@ -117,7 +118,7 @@ public class GpsUtil {
      * @param longitude 经度
      * @return 所在地
      */
-    public static String getLocality(Context context, double latitude, double longitude) {
+    public static String getLocality(@NonNull Context context, double latitude, double longitude) {
         Address address = getAddress(context, latitude, longitude);
         return address == null ? "unknown" : address.getLocality();
     }
@@ -130,7 +131,7 @@ public class GpsUtil {
      * @param longitude 经度
      * @return 所在街道
      */
-    public static String getStreet(Context context, double latitude, double longitude) {
+    public static String getStreet(@NonNull Context context, double latitude, double longitude) {
         Address address = getAddress(context, latitude, longitude);
         return address == null ? "unknown" : address.getAddressLine(0);
     }
@@ -140,7 +141,7 @@ public class GpsUtil {
      *
      * @return {@code true}: 是<br>{@code false}: 否
      */
-    public boolean isGpsEnabled(Context context) {
+    public boolean isGpsEnabled(@NonNull Context context) {
         if (mLocationManager == null) {
             mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         }
@@ -152,7 +153,7 @@ public class GpsUtil {
      *
      * @return {@code true}: 是<br>{@code false}: 否
      */
-    public boolean isLocationEnabled(Context context) {
+    public boolean isLocationEnabled(@NonNull Context context) {
         if (mLocationManager == null) {
             mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         }
@@ -176,7 +177,7 @@ public class GpsUtil {
      *
      * @return {@code true}: 初始化成功<br>{@code false}: 初始化失败
      */
-    public boolean register(Activity activity) {
+    public boolean register(@NonNull Activity activity) {
         checkGpsPermission(activity);
         if (mLocationManager == null) {
             mLocationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
@@ -256,7 +257,7 @@ public class GpsUtil {
      *
      * @param activity
      */
-    private void checkGpsPermission(Activity activity) {
+    private void checkGpsPermission(@NonNull Activity activity) {
         if (PermissionUtil.isNeedRequest()) {
             if (!PermissionUtil.hasPermissions(activity, GPS_PERMISSIONS)) {
                 if (!PermissionUtil.hasAlwaysDeniedPermission(activity, PermissionUtil.getDeniedPermissions(activity, GPS_PERMISSIONS))) {

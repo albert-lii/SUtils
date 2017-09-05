@@ -30,6 +30,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,12 +54,33 @@ public class QRCodeUtil {
      * @return 二维码图片
      */
     public static Bitmap generateQRImage(@NonNull String content, int width, int height) {
+        return generateQRImage(content, width, height, 2);
+    }
+
+    /**
+     * 生成二维码的Bitmap
+     *
+     * @param content 二维码中的内容
+     * @param width   二维码的宽
+     * @param height  二维码的高
+     * @param height  二维码空白边距的宽度
+     * @return 二维码图片
+     */
+    public static Bitmap generateQRImage(@NonNull String content, int width, int height, int border) {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        Map<EncodeHintType, String> hints = new HashMap<>();
+        // 配置参数
+        Map hints = new HashMap<>();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+        // 容错级别
+        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+        // 设置空白边距的宽度,default is 4
+        hints.put(EncodeHintType.MARGIN, border);
         try {
+            // 图像数据转换，使用了矩阵转换
             BitMatrix encode = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, width, height, hints);
             int[] pixels = new int[width * height];
+            // 下面这里按照二维码的算法，逐个生成二维码的图片，
+            // 两个for循环是图片横列扫描的结果
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
                     if (encode.get(j, i)) {
@@ -68,7 +90,8 @@ public class QRCodeUtil {
                     }
                 }
             }
-            return Bitmap.createBitmap(pixels, 0, width, width, height, Bitmap.Config.RGB_565);
+            // 生成二维码图片的格式，使用ARGB_8888
+            return Bitmap.createBitmap(pixels, 0, width, width, height, Bitmap.Config.ARGB_8888);
         } catch (WriterException e) {
             e.printStackTrace();
         }
@@ -133,6 +156,9 @@ public class QRCodeUtil {
      * @return
      */
     public static Result decodeQRcodeRGB(Bitmap qrcode) {
+        if (qrcode == null) {
+            return null;
+        }
         int width = qrcode.getWidth();
         int height = qrcode.getHeight();
         int[] data = new int[width * height];
@@ -181,7 +207,7 @@ public class QRCodeUtil {
      * @return
      */
     public static Result decodeQRcodeYUV(Bitmap qrcode) {
-        if (null == qrcode) {
+        if (qrcode == null) {
             return null;
         }
         int width = qrcode.getWidth();
@@ -299,7 +325,7 @@ public class QRCodeUtil {
      * @param displayCode   是否在条形码下方显示内容
      * @return
      */
-    public static Bitmap generateBarImage(Context context, String contents, int desiredWidth, int desiredHeight, boolean displayCode) {
+    public static Bitmap generateBarImage(@NonNull Context context, String contents, int desiredWidth, int desiredHeight, boolean displayCode) {
         Bitmap ruseltBitmap = null;
         /**
          * 图片两端所保留的空白的宽度
