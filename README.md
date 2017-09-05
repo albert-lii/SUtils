@@ -264,3 +264,10 @@ String getMacAddress(@NonNull Context context)
 // 获取本地IP地址
 String getLocalIpAddress()
 ```
+- [GpsUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/device/GpsUtil.java)
+```Java
+```
+
+- [NfcUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/device/NfcUtil.java)
+```Java
+```
