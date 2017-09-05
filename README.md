@@ -47,13 +47,13 @@ void handleRequestPermissionsResult(@NonNull Activity activity, int requestCode,
 /**
  * 使用方法
  */
-PermissionUtil.with(@NonNull Activity activity) // with(@NonNull Fragment fragment)）
+PermissionUtil.with(@NonNull Activity activity) // with(@NonNull Fragment fragment)
               // 请求码
               .requestCode(int requestCode)
               // 需要获取的权限
               .permissions(@NonNull String... permissions)
-              // 请求权限结果的回调
-              .callback(OnPermissionListener callback)
+              // 请求权限结果的回调（使用此回调方法时，必须执行handleRequestPermissionsResult()方法）
+              .callback(OnPermissionListener callback)
               // 是否自动显示拒绝授权时的提示
               .autoShowTip(boolean isAutoShowTip)
               // 执行权限请求
