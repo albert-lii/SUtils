@@ -22,7 +22,7 @@
 
 
 ### APP相关
-- [<div id="PermissionUtil">PermissionUtil</div>](https://github.com/albertlii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java) Android6.0后权限管理类
+- [<div id="PermissionUtil">PermissionUtil</div>](https://github.com/albertlii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java)
 ```Java
 // 判断是否需要进行权限获取
 boolean isNeedRequest()
@@ -59,7 +59,6 @@ PermissionUtil.with(@NonNull Activity activity)（with(@NonNull Fragment fragmen
 
 - [<div id="AppUtil">AppUtil</div>]
 (https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AppUtil.java)
-与App相关
 ```Java
 // 获取应用程序名称
 String getAppName(@NonNull Context context)  
@@ -86,8 +85,9 @@ String getSHA1(@NonNull Context context)
 boolean isInstalledApp(@NonNull Context context, String packageName) 
 ```
 
-- [AtyTransitionUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AtyTransitionUtil.java) Activity过渡动画类
-~~~
+- [AtyTransitionUtil]
+(https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AtyTransitionUtil.java)
+```Java
 // Activity 从左边进入
 void enterFromLeft(Activity activity) 
 
@@ -114,7 +114,7 @@ void exitToBottom(Activity activity)
 
 // 启动过渡动画
 void startTransition(Activity activity, int enterStyle, int outStyle)
-~~~
+```
 
 - [DensityUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/DensityUtil.java) dp、sp、px转换类
 ~~~
