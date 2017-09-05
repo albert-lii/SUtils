@@ -10,7 +10,7 @@
 ### 目录
 #### APP相关
 - [PermissionUtil](#PermissionUtil)  Android6.0后权限管理类
-- [AppUtil](#AppUtil) 与APP相关
+- [AppUtil](#1) 与APP相关
 - [AtyTransitionUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AtyTransitionUtil.java) Activity过渡动画类
 - [DensityUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/DensityUtil.java) dp、sp、px转换类
 - [KeyboardUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/KeyboardUtil.java) 虚拟键盘工具类
@@ -57,8 +57,8 @@ PermissionUtil.with(@NonNull Activity activity)（with(@NonNull Fragment fragmen
 .execute()
 ```
 
-- [<span id="AppUtil">AppUtil</span>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AppUtil.java) 与APP相关
-~~~
+- [<span id="1">AppUtil</span>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AppUtil.java) 与APP相关
+```Java
 // 获取应用程序名称
 String getAppName(@NonNull Context context)  
 
@@ -82,7 +82,7 @@ String getSHA1(@NonNull Context context)
 
 // 检测某应用程序是否安装
 boolean isInstalledApp(Context context, String packageName) 
-~~~
+```
 
 - [AtyTransitionUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/AtyTransitionUtil.java) Activity过渡动画类
 ~~~
