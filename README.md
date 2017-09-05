@@ -18,8 +18,9 @@
 - [SystemBarUtil](#SystemBarUtil) 系统状态栏和底部虚拟导航栏的工具类
 - [SystemPageUtil](#SystemPageUtil) 系统功能界面工具类
 #### 设备相关
-- []() 设备信息相关工具类
-
+- [DeviceUtil](#DeviceUtil) 设备信息相关工具类
+- [GpsUtil](#GpsUtil) GPS工具类
+- [NfcUtil](#NfcUtil) NFC工具类
 
 ### APP相关
 - [<div id="PermissionUtil">PermissionUtil</div>](https://github.com/albertlii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java)
@@ -226,4 +227,40 @@ void openGpsSettings(Context context)
 
 // 根据包名跳转到系统自带的应用程序信息界面
 void openAppDetail(Context context)
+```
+### 设备相关
+- [<div id="DeviceUtil">DeviceUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/device/DeviceUtil.java)
+```Java
+// 获取设备的唯一ID（即IMEI）
+String getIMEI(@NonNull Context context)
+
+// 获取IMSI
+String getIMSI(@NonNull Context context)
+
+// 获取设备当前的系统版本号
+int getSDKVersion()
+
+//  获取设备型号
+String getDeviceModel()
+
+// 获取设备厂商
+String getDeviceBrand()
+
+// 获取当前的系统语言
+String getSystemLanguage() 
+
+// 获取系统支持的语言列表
+Locale[] getSystemLanguageList()
+
+// 判断设备是否Root过
+boolean isRooted()
+ 
+// 在系统上执行一个命令
+boolean canExecuteCommand(String command)
+
+// 根据ip获取mac地址
+String getMacAddress(@NonNull Context context) 
+
+// 获取本地IP地址
+String getLocalIpAddress()
 ```
