@@ -209,14 +209,7 @@ public class GpsUtil {
     /**
      * 注销
      */
-    public static void unregister() {
-        getInstance().stop();
-    }
-
-    /**
-     * 停止定位
-     */
-    public void stop() {
+    public void unregister() {
         if (mLocationManager != null) {
             if (myLocationListener != null) {
                 mLocationManager.removeUpdates(myLocationListener);
