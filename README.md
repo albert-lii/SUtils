@@ -228,6 +228,7 @@ void openGpsSettings(Context context)
 // 根据包名跳转到系统自带的应用程序信息界面
 void openAppDetail(Context context)
 ```
+
 ### 设备相关
 - [<div id="DeviceUtil">DeviceUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/device/DeviceUtil.java)
 ```Java
@@ -266,8 +267,313 @@ String getLocalIpAddress()
 ```
 - [GpsUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/device/GpsUtil.java)
 ```Java
+// 根据经纬度获取地理位置
+Address getAddress(@NonNull Context context, double latitude, double longitude)
+
+// 根据经纬度获取所在国家
+String getCountryName(@NonNull Context context, double latitude, double longitude)
+
+// 根据经纬度获取所在地
+String getLocality(@NonNull Context context, double latitude, double longitude)
+
+// 根据经纬度获取所在街道
+String getStreet(@NonNull Context context, double latitude, double longitude)
+
+// 判断Gps是否可用
+boolean isGpsEnabled(@NonNull Context context)
+
+// 判断定位是否可用
+boolean isLocationEnabled(@NonNull Context context) 
+
+// 注册
+boolean register(@NonNull Activity activity)
+
+// 注销
+void unregister()
+
+// 自定义定位参数
+GpsUtil criteria(Criteria criteria)
+
+// 设置最小重新定位距离
+GpsUtil minDistance(int minDistance)
+
+// 设置最小重新定位时间
+GpsUtil minTime(int minTime)
+
+// 设置定位监听器
+GpsUtil location(OnLocationListener listener)
+
+// 设置gps状态监听器
+GpsUtil gpsStatus(GpsStatus.Listener listener)
 ```
 
 - [NfcUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/device/NfcUtil.java)
 ```Java
+// 判断设备是否支持NFC功能
+boolean isSupportNfc()
+
+// 是否打开NFC功能
+boolean isNfcEnabled()
+
+// 判断是否有NFC相关的intent
+boolean isHasNfcIntent(Intent intent)
 ```
+
+### 加密相关
+- [<div id="AesUtil">AesUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/encrypt/AesUtil.java)
+```Java
+// 生成随机数，可以当做动态的密钥 加密和解密的密钥必须一致，不然将不能解密
+String generateKey()
+
+// 对密钥进行处理
+byte[] getRawKey(byte[] seed)
+
+// 加密
+String encrypt(String key, String plaintext)
+
+// 加密
+byte[] encrypt(String key, byte[] plain)
+
+// 解密
+String decrypt(String key, String encrypted)
+
+// 解密
+byte[] decrypt(String key, byte[] encrypted)
+
+// 二进制转字符
+String toHex(byte[] buf)
+```
+
+- [<div id="Base64Util">Base64Util</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/encrypt/Base64Util.java)
+```Java
+// base64加密字符串
+String encrypt(String plaintext)
+
+// base64解码字符串
+String decrypt(String ciphertext)
+
+// base64加密文件
+String encrypt(File file)
+
+// base64解密文件
+void decrypt(String ciphertext, File file)
+```
+
+- [Md5Util](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/encrypt/Md5Util.java)
+```Java
+// 计算字符串的 MD5 值
+String encrypt(String plaintext)
+
+// 计算文件的 MD5 值
+String encrypt(File file)
+
+// 采用nio方式进行 MD5 加密
+String encryptByNio(File file)
+
+// 对字符串进行对此 MD5 加密，提高安全性
+String encrypt(String string, int times)
+
+// MD5加盐
+String encrypt(String string, String slat)
+```
+
+- [<div id="RsaUtil">RsaUtil</idv>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/encrypt/RsaUtil.java)
+```Java
+// 随机生成RSA密钥对
+KeyPair generateRSAKeyPair(int keyLength)
+
+// 用公钥对字符串进行加密
+byte[] encryptByPublicKey(byte[] data, byte[] publicKey)
+
+// 私钥加密
+byte[] encryptByPrivateKey(byte[] data, byte[] privateKey)
+
+// 公钥解密
+byte[] decryptByPublicKey(byte[] data, byte[] publicKey)
+
+// 使用私钥进行解密
+byte[] decryptByPrivateKey(byte[] encrypted, byte[] privateKey)
+
+// 用公钥对字符串进行分段加密
+byte[] encryptByPublicKeyForSpilt(byte[] data, byte[] publicKey)
+
+// 私钥分段加密
+byte[] encryptByPrivateKeyForSpilt(byte[] data, byte[] privateKey)
+
+// 公钥分段解密
+byte[] decryptByPublicKeyForSpilt(byte[] encrypted, byte[] publicKey)
+
+// 使用私钥分段解密
+byte[] decryptByPrivateKeyForSpilt(byte[] encrypted, byte[] privateKey)
+```
+
+- [<div id="XorUtil">XorUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/encrypt/XorUtil.java)
+```Java
+// 固定key的方式加密
+byte[] encryptAsFix(byte[] bytes)
+
+// 非固定key的方式加密
+byte[] encrypt(byte[] bytes)
+
+// 解密
+byte[] decrypt(byte[] bytes)
+```
+
+### 图像相关
+- [<div id="FastBlur">FastBlur</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/graphic/blur/FastBlur.java)
+```Java
+Bitmap blur(Bitmap sentBitmap, int radius, boolean canReuseInBitmap)
+```
+
+-[RSBlur](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/graphic/blur/RSBlur.java)
+```Java
+Bitmap blur(Context context, Bitmap blurredBitmap, int radius)
+```
+
+- [<div id="ImageComprsUtil">ImageComprsUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/graphic/ImageComprsUtil.java)
+```Java
+// 质量压缩
+Bitmap comprsQlty(@NonNull Bitmap source, @NonNull Bitmap.CompressFormat format, int options)
+
+// 质量压缩，并且指定压缩后图片的大小
+Bitmap comprsQltyToSize(@NonNull Bitmap source, @NonNull Bitmap.CompressFormat format, int size)
+
+// 按比例压缩
+Bitmap comprsScale(@NonNull Bitmap source, float ws, float hs, boolean filter)
+
+// 按比例压缩
+Bitmap comprsScale(@NonNull Bitmap source, int dstw, int dsth, boolean filter)
+
+// 计算图片缩放的比例
+float getRatioRate(int width, int height, int reqWidth, int reqHeight)
+```
+
+- [<div id="ImageUtil">ImageUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/graphic/ImageUtil.java)
+```Java
+// drawbale 转 bitmap
+Bitmap drawable2Bitmap(@NonNull Context context, int resId)
+
+// bitmap 转 drawbale
+Drawable bitmap2Drawable(@NonNull Bitmap bm)
+
+// bitmap 转 byte array
+byte[] bitmap2Byte(@NonNull Bitmap bm, Bitmap.CompressFormat format)
+
+// byte array 转 bitmap
+Bitmap byte2Bitmap(byte[] b)
+
+// 将图片旋转指定角度
+Bitmap rotateBitmap(@NonNull Bitmap source, float degree)
+
+// 获取图片需要旋转的角度
+int getImageDegree(@NonNull String path)
+
+// 获取位图的内存大小
+int getBitmapSize(@NonNull Bitmap source)
+
+// bitmap截图
+Bitmap cutBitmap(Bitmap source, int x, int y, int width, int height)
+
+// 图片去色,返回灰度图片
+Bitmap toGrayscale(Bitmap source)
+```
+
+- [<div id="ShapeUtil">ShapeUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/graphic/ShapeUtil.java)
+```Java
+// 获取圆角矩形
+GradientDrawable getRectShape(int fillColor, int radius)
+GradientDrawable getRectShape(int fillColor, int radius, int strokeColor, int strokeWidth)
+GradientDrawable getRectShape(int fillColor, float[] radii, int strokeColor, int strokeWidth) 
+```
+
+- [<div id="ACache">ACache</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/ACache.java)
+
+-[<div id="AssetUtil">AssetUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/AssetUtil.java)
+```Java
+// 获取assets目录下的文件
+String getFileFromAssets(@NonNull Context context, @NonNull String path)
+
+// 获取assets目录下的图片
+Bitmap getImageFromAssets(Context context, String path)
+```
+
+- [<div id="FileUtil">FileUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/FileUtil.java)
+```Java
+// 判断是否有SD卡
+boolean isHasSDCard()
+
+// 获取SD卡路径
+String getSDCardPath()
+
+// 创建文件夹 （你必须先创建文件夹，才能创建文件，否则会报“找不到路径”）
+boolean createDir(@NonNull String path)
+
+// 创建文件
+boolean createFile(@NonNull String path)
+
+======================IO 操作======================
+
+// 保存String数据
+put(String key, String value) 
+
+// 读取String数据
+getAsString(String key)
+
+// 保存byte[]
+put(String key, byte[] value)
+
+// 读取byte[]
+getAsBinary(String key)
+
+// 保存序列化对象
+put(String key, Serializable value)
+
+// 读取序列化对象
+Object getAsObject(String key)
+
+// 保存bitmap数据
+put(String key, Bitmap value)
+
+// 读取bitmap数据
+Bitmap getAsBitmap(String key)
+
+======================拷贝删除 操作======================
+
+// 拷贝文件到指定路径
+copyFile(@NonNull String oldPath, @NonNull String newPath)
+
+// 拷贝文件夹内容到指定位置
+copyDir(@NonNull String oldPath, @NonNull String newPath)
+
+// 获取指定文件夹中文件的数量
+int getFileCount(@NonNull String dir, boolean isAll)
+
+// 删除文件或文件夹
+boolean delete(@NonNull String path)
+
+//  删除单个文件
+boolean deleteFile(@NonNull String path)
+
+// 删除文件夹
+boolean deleteDir(@NonNull String dir)
+
+=======================获取文件大小========================
+
+// 获取指定文件或者文件夹的大小
+long getFileSize(@NonNull String path)
+
+// 获取单个文件的大小
+long getSingleFileSize(@NonNull File file)
+
+// 获取指定文件夹的大小
+long getFileDirSize(@NonNull File dir)
+
+=======================获取文件的真实路径========================
+
+// 获取文件的真实路径
+getRealPath(@NonNull final Context context, @NonNull final Uri uri)
+```
+ - [<div id="GsonUtil">GsonUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/GsonUtil.java)
+ 
+ - [<div id="SpUtil">SpUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/SpUtil.java)
+ 
