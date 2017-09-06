@@ -21,6 +21,17 @@
 - [DeviceUtil](#DeviceUtil) 设备信息相关工具类
 - [GpsUtil](#GpsUtil) GPS工具类
 - [NfcUtil](#NfcUtil) NFC工具类
+#### 加密相关
+- [AesUtil](#AesUtil) AES加密工具类
+- [Base64Util](#Base64Util) Base64加密工具类
+- [Md5Util](#Md5Util) MD5加密工具类
+- [RsaUtil](#RsaUtil) RSA加密工具类
+- [XorUtil](#XorUtil) 异或加密工具类
+#### 图像相关
+#### IO相关
+#### Log相关
+#### 网络相关
+#### 其他
 
 ### APP相关
 - [<div id="PermissionUtil">PermissionUtil</div>](https://github.com/albertlii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java)
@@ -265,7 +276,7 @@ String getMacAddress(@NonNull Context context)
 // 获取本地IP地址
 String getLocalIpAddress()
 ```
-- [GpsUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/device/GpsUtil.java)
+- [<div id="GpsUtil">GpsUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/device/GpsUtil.java)
 ```Java
 // 根据经纬度获取地理位置
 Address getAddress(@NonNull Context context, double latitude, double longitude)
@@ -307,7 +318,7 @@ GpsUtil location(OnLocationListener listener)
 GpsUtil gpsStatus(GpsStatus.Listener listener)
 ```
 
-- [NfcUtil](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/device/NfcUtil.java)
+- [<div id="NfcUtil">NfcUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/device/NfcUtil.java)
 ```Java
 // 判断设备是否支持NFC功能
 boolean isSupportNfc()
