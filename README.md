@@ -436,7 +436,7 @@ byte[] decrypt(byte[] bytes)
 Bitmap blur(Bitmap sentBitmap, int radius, boolean canReuseInBitmap)
 ```
 
--[RSBlur](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/graphic/blur/RSBlur.java)
+- [<div id="RSBlur">RSBlur</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/graphic/blur/RSBlur.java)
 ```Java
 Bitmap blur(Context context, Bitmap blurredBitmap, int radius)
 ```
@@ -499,7 +499,7 @@ GradientDrawable getRectShape(int fillColor, float[] radii, int strokeColor, int
 
 - [<div id="ACache">ACache</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/ACache.java)
 
--[<div id="AssetUtil">AssetUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/AssetUtil.java)
+- [<div id="AssetUtil">AssetUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/AssetUtil.java)
 ```Java
 // 获取assets目录下的文件
 String getFileFromAssets(@NonNull Context context, @NonNull String path)
