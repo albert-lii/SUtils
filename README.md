@@ -755,9 +755,13 @@ int[] caculateTimeDiffArray(@NonNull Object startTime, @NonNull Object endTime, 
 
 - [<div id="ToastUtil">ToastUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/other/ToastUtil.java)
 ```Java
-void show(@NonNull Context context, CharSequence msg)
+void show(@NonNull Context context, CharSequence msg) 
+
 void show(@NonNull Context context, @StringRes int stringId)
+
 void void show(@NonNull Context context, CharSequence msg, int duration)
+
 void show(@NonNull Context context, View root)
+
 void show(@NonNull Context context, View root, int duration)
 ```
