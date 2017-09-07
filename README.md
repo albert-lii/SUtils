@@ -28,6 +28,7 @@
 - [RsaUtil](#RsaUtil) RSA加密工具类
 - [XorUtil](#XorUtil) 异或加密工具类
 #### 图像相关
+- [](#)
 #### IO相关
 #### Log相关
 #### 网络相关
@@ -587,4 +588,176 @@ getRealPath(@NonNull final Context context, @NonNull final Uri uri)
  - [<div id="GsonUtil">GsonUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/GsonUtil.java)
  
  - [<div id="SpUtil">SpUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/SpUtil.java)
- 
+```Java
+```
+
+###Log相关
+- [<div id="CrashHandler">CrashHandler</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/log/CrashHandler.java)
+```Java
+// 建议在application中初始化
+initialize(@NonNull Context context)
+initialize(@NonNull Context context, Config config)
+```
+
+- [<div id="LogUtil">LogUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/log/LogUtil.java)
+```Java
+// 可以用于release时，统一关闭log
+public static boolean isLogEnable = true;
+
+void v(String tag, String msg)
+
+void i(String tag, String msg)
+
+void w(String tag, String msg)
+
+void e(String tag, String msg)
+
+// 输出log中包含的信息
+String getLogInfo(StackTraceElement stackTraceElement)
+```
+
+###网络相关
+- [<div id="NetUtil">NetUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/network/NetUtil.java)
+```Java
+// 判断网络是否连接
+boolean isConnected(@NonNull Context context)
+
+// 判断wifi是否连接
+boolean isWifiConnected(@NonNull Context context)
+
+// 获取当前网络的类型
+// 返回 NETTYPE_WIFI，表示 wifi;
+// 返回 NETTYPE_2G，表示 2g网;
+// 返回 NETTYPE_3G，表示 3g网;
+// 返回 NETTYPE_4G，表示 4g网;
+// 返回 NETTYPE_NONE，表示当前未连接网络
+int getNetWorkType(@NonNull Context context)
+```
+
+### 其他
+- [<div id="AlertDialogUtil"></div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/other/AlertDialogUtil.java)
+ - [<div id="EventBusUtil">EventBusUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/other/EventBusUtil.java)
+```Java
+// 使用索引加速
+// 推荐在application中使用
+void installIndex(SubscriberInfoIndex index)
+
+// 注册eventbus
+void register(Object subscriber)
+
+// 取消注册eventbus
+void unregister(Object subscriber)
+
+// 发布一个订阅事件
+// 必须先注册，才能接收到发布的事件，有点类似于startActivityForResult()方法
+void post(Object event)
+
+// 发布粘性事件（可以先发布事件，在注册后在接收）
+void postSticky(Object event)
+
+// 移除指定的粘性订阅事件
+void removeStickyEvent(Class<T> eventType)
+
+// 移除所有的粘性订阅事件
+void removeAllStickyEvents()
+
+// 优先级高的订阅者可以终止事件往下传递
+// 只有在事件通过时才能调用（即在事件接收方法中调用）
+void cancelEventDelivery(Object event)
+
+// 获取EventBus单例
+EventBus getEventBus()
+````
+
+- [<div id="QRCodeUtil">QRCodeUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/other/QRCodeUtil.java)
+```Java
+// 生成二维码的Bitmap
+Bitmap generateQRImage(@NonNull String content, int width, int height) 
+
+// 生成二维码的Bitmap
+// @param content 二维码中的内容
+// @param width   二维码的宽
+// @param height  二维码的高
+// @param height  二维码空白边距的宽度
+Bitmap generateQRImage(@NonNull String content, int width, int height, int border)
+
+// 在二维码中间添加Logo图案
+Bitmap addLogo(Bitmap qrBitmap, Bitmap logoBitmap)
+
+// 解析二维码（使用解析RGB编码数据的方式）
+Result decodeQRcodeRGB(String path)
+
+// 解析二维码 （使用解析RGB编码数据的方式）
+Result decodeQRcodeRGB(Bitmap qrcode)
+
+// 解析二维码（使用解析YUV编码数据的方式）
+Result decodeQRcodeYUV(String path)
+
+// 解析二维码（使用解析YUV编码数据的方式）
+Result decodeQRcodeYUV(Bitmap qrcode)
+
+// 生成条形码
+// @param contents      需要生成的内容
+// @param desiredWidth  生成条形码的宽带
+// @param desiredHeight 生成条形码的高度
+// @param displayCode   是否在条形码下方显示内容
+Bitmap generateBarImage(@NonNull Context context, String contents, int desiredWidth, int desiredHeight, boolean displayCode)
+```
+
+- [<div id="ReflectUtil">ReflectUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/other/ReflectUtil.java)
+
+- [<div id="RegExUtil">RegExUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/other/RegExUtil.java)
+```Java
+boolean compile(@NonNull String regEx, CharSequence value) 
+```
+
+- [<div id="SpanUtil">SpanUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/other/SpanUtil.java)
+```Java
+SpanUtil.bind(TextView textView)
+        // 设置SpannableString样式
+        .setSpanFlag(int flag)
+        .addContent(CharSequence text)
+        // 设置文字颜色
+        .addFontColorByKey(@ColorInt int color, String key)
+        // 设置背景色
+        .addBgColorByKey(@ColorInt int color, String key)
+        // 对文字添加url链接
+        .addURLByKey(String url, String key)
+        // 设置文字字体样式，例如斜体
+        .addTypefaceByKey(int style, String key) 
+        // 添加删除线
+        .addStrikethroughByKey(String key)
+        // 用图片替代指定文字
+        .addImageByKey(ImageSpan span, String key)
+        // 为指定文字添加点击事件
+        .addClickByKey(final OnTextClickListener listener, final boolean isNeedUnderLine, String key)
+        // 执行
+        .build()
+
+// 查询字符串中的所有关键字
+List<int[]> searchAllIndex(String key) 
+```
+
+- [<div id="TimeUtil">TimeUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/other/TimeUtil.java)
+```Java
+// 将时间戳转换为指定格式的时间字符串
+String getTimeStr(long timeStamp, @NonNull String dateType)
+
+// 将时间字符串转换为时间戳
+long getTimeStamp(@NonNull String timeStr, String dateType)
+
+// 计算时间差
+long caculateTimeDiff(@NonNull Object startTime, @NonNull Object endTime, String dateType)
+
+// 计算时间差,返回天数、小时数、分钟数、秒数
+int[] caculateTimeDiffArray(@NonNull Object startTime, @NonNull Object endTime, String dateType)
+```
+
+- [<div id="ToastUtil">ToastUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/other/ToastUtil.java)
+```Java
+void show(@NonNull Context context, CharSequence msg)
+void show(@NonNull Context context, @StringRes int stringId)
+void void show(@NonNull Context context, CharSequence msg, int duration)
+void show(@NonNull Context context, View root)
+void show(@NonNull Context context, View root, int duration)
+```
