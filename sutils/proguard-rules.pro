@@ -44,3 +44,12 @@
 }
 # for DexGuard only
 -keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+
+#nohttp
+-dontwarn com.yanzhenjie.nohttp.**
+-keep class com.yanzhenjie.nohttp.**{*;}
+#okhttp
+-dontwarn okhttp3.**
+-keep class okhttp3.** {*;}
+-dontwarn okio.**
+-keep class okio.** {*;}
