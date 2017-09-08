@@ -2,6 +2,7 @@ package com.liyi.sutils.utils.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -150,5 +151,42 @@ public class ScreenUtil {
         Bitmap bp = Bitmap.createBitmap(bmp, 0, statusBarHeight, point.x, point.y);
         view.destroyDrawingCache();
         return bp;
+    }
+
+    /**
+     * 获取屏幕方向
+     *
+     * @return Configuration.ORIENTATION_PORTRAIT、Configuration.ORIENTATION_LANDSCAPE
+     */
+    public static int getScreenSimpleOrientation(@NonNull Context context) {
+        return context.getResources().getConfiguration().orientation;
+    }
+
+    /**
+     * 获取屏幕方向
+     *
+     * @param activity
+     * @return Surface.ROTATION_0、Surface.ROTATION_90、Surface.ROTATION_180、Surface.ROTATION_270
+     */
+    public static int getScreenOrientation(@NonNull Activity activity) {
+        return activity.getWindowManager().getDefaultDisplay().getRotation();
+    }
+
+    /**
+     * 设置屏幕竖屏
+     *
+     * @return
+     */
+    public static void setScreenPortrait(@NonNull Activity activity) {
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    /**
+     * 设置屏幕横屏
+     *
+     * @return
+     */
+    public static void setScreenLandscape(@NonNull Activity activity) {
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 }

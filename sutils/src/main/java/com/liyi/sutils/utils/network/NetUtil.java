@@ -55,8 +55,8 @@ public class NetUtil {
      * @param context Context
      * @return 返回 NETTYPE_WIFI，表示 wifi;
      * 返回 NETTYPE_2G，表示 2g网;
-     * 返回 NETTYPE_4G，表示 3g网;
-     * 返回 NETTYPE_3G，表示 4g网;
+     * 返回 NETTYPE_3G，表示 3g网;
+     * 返回 NETTYPE_4G，表示 4g网;
      * 返回 NETTYPE_NONE，表示当前未连接网络
      */
     public static int getNetWorkType(@NonNull Context context) {

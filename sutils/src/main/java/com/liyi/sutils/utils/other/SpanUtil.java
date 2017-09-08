@@ -53,7 +53,7 @@ public class SpanUtil {
     private TextView textView;
 
 
-    public SpanUtil(TextView textView) {
+    private SpanUtil(TextView textView) {
         super();
         init(textView);
     }
