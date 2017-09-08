@@ -62,6 +62,7 @@ Step 2:
 - [CrashHandler](#CrashHandler) 异常捕捉工具类
 - [LogUtil](#LogUtil) log工具类
 #### 网络相关
+- [CallServer](#CallServer) nohttp网络请求工具类
 - [NetUtil](#NetUtil) 网络相关工具类
 #### 其他
 - [AlertDialogUtil](#AlertDialogUtil) AlertDialog工具类
@@ -587,7 +588,6 @@ GradientDrawable getRectShape(int fillColor, float[] radii, int strokeColor, int
 ```
 
 ### IO相关
-
 - [<div id="ACache">ACache</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/ACache.java)
 
 - [<div id="AssetUtil">AssetUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/AssetUtil.java)
@@ -744,6 +744,37 @@ String getLogInfo(StackTraceElement stackTraceElement)
 ```
 
 ### 网络相关
+- [<div id="CallServer">CallServer</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/network/nohttp/CallServer.java)
+```Java
+// 使用此工具类前，可先了解nohttp
+// Request创建方法：Request<JSONObject> request = NoHttp.createJsonObjectRequest(...)
+// ResultCallback<T>抽象类继承于OnResponseListener<T>，对OnResponseListener<T>做了简单封装，使用时可直接继承ResultCallback<T>
+
+// 发送网络请求
+CallServer.get().sendRequest(int what, Request<T> request, OnResponseListener<T> onResponseListener)
+// what:请求的编号，当多个请求共用一个onResponseListener时，可根据what区分，返回的结果是哪个请求的
+// cancelsign:请求的标记，可以根据标记取消网络请求
+// request：请求
+// onResponseListener：请求结果监听器
+CallServer.get().sendRequest(int what, Object cancelsign, Request<T> request, OnResponseListener<T> onResponseListener)
+
+// 取消指定请求
+void cancelBySign(Object canclesign)
+
+// 取消所有请求
+void cancelAll()
+
+// 停止所有请求，完全退出app时，调用这个方法释放CPU。
+// 调用此方法后，想要恢复网络请求，必须调用startQueue()
+void stopQueue()
+
+// 恢复请求队列
+void startQueue()
+
+// 获取请求队列
+RequestQueue getRequestQueue()
+```
+
 - [<div id="NetUtil">NetUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/network/NetUtil.java)
 ```Java
 // 判断网络是否连接
