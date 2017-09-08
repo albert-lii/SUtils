@@ -36,7 +36,7 @@ public class CallServer {
      *
      * @return
      */
-    public void checkRequestQueue() {
+    private void checkRequestQueue() {
         if (mRequestQueue == null) {
             // 设置五个并发，此处可以传入并发数量。
             mRequestQueue = NoHttp.newRequestQueue(5);
@@ -64,9 +64,26 @@ public class CallServer {
     /**
      * 停止所有请求
      */
-    public void stopAll() {
+    public void stopQueue() {
         checkRequestQueue();
         // 完全退出app时，调用这个方法释放CPU。
         mRequestQueue.stop();
+    }
+
+    /**
+     * 恢复请求队列
+     */
+    public void startQueue() {
+        checkRequestQueue();
+        mRequestQueue.start();
+    }
+
+    /**
+     * 获取请求队列
+     *
+     * @return
+     */
+    public RequestQueue getRequestQueue() {
+        return mRequestQueue;
     }
 }
