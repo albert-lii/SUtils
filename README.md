@@ -738,7 +738,8 @@ int getNetWorkType(@NonNull Context context)
 ```
 
 ### 其他
-- [<div id="AlertDialogUtil"></div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/other/AlertDialogUtil.java)
+- [<div id="AlertDialogUtil">AlertDialogUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/other/AlertDialogUtil.java)
+
  - [<div id="EventBusUtil">EventBusUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/other/EventBusUtil.java)
 ```Java
 // 使用索引加速
@@ -868,6 +869,7 @@ void show(@NonNull Context context, View root)
 
 void show(@NonNull Context context, View root, int duration)
 ```
+
 
 ## LICENSE
 Copyright 2017 liyi
