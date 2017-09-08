@@ -14,6 +14,7 @@
 - [AtyTransitionUtil](#AtyTransitionUtil) Activity过渡动画类
 - [DensityUtil](#DensityUtil) dp、sp、px转换类
 - [KeyboardUtil](#KeyboardUtil) 虚拟键盘工具类
+- [ScreenRotationUtil ](#ScreenRotationUtil ) 屏幕旋转角度监测类
 - [ScreenUtil](#ScreenUtil) 与屏幕相关
 - [SystemBarUtil](#SystemBarUtil) 系统状态栏和底部虚拟导航栏的工具类
 - [SystemPageUtil](#SystemPageUtil) 系统功能界面工具类
@@ -28,11 +29,32 @@
 - [RsaUtil](#RsaUtil) RSA加密工具类
 - [XorUtil](#XorUtil) 异或加密工具类
 #### 图像相关
-- [](#)
+- [FastBlur](#FastBlur) 高斯模糊
+- [RSBlur](#RSBlur) 高斯模糊
+- [ImageComprsUtil](#ImageComprsUtil) 图片压缩工具类
+- [ImageUtil](#ImageUtil) 图片相关工具类
+- [ShapeUtil](#ShapeUtil) Shape工具类
 #### IO相关
+- [ACache](#ACache) 缓存工具类
+- [AssetUtil](#AssetUtil) asset工具类
+- [FileUtil](#FileUtil) file工具类
+- [GsonUtil](GsonUtil) gson工具类
+- [SpUtil](#SpUtil) SharedPreferences工具类
 #### Log相关
+- [CrashHandler](#CrashHandler) 异常捕捉工具类
+- [LogUtil](#LogUtil) log工具类
 #### 网络相关
+- [NetUtil](#NetUtil) 网络相关工具类
 #### 其他
+- [AlertDialogUtil](#AlertDialogUtil) AlertDialog工具类
+- [EventBusUtil](#EventBusUtil) EventBus3.0工具类
+- [QRCodeUtil](#QRCodeUtil) 二维码工具类
+- [ReflectUtil](#ReflectUtil) 反射工具类
+- [RegExUtil](#RegExUtil) 正则表达式工具类
+- [SpanUtil](#SpanUtil) SpannableString工具类
+- [TimeUtil](#TimeUtil) 时间工具类
+- [ToastUtil](#ToastUtil) Toast工具类
+
 
 ### APP相关
 - [<div id="PermissionUtil">PermissionUtil</div>](https://github.com/albertlii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/permission/PermissionUtil.java)
@@ -160,6 +182,17 @@ void closeKeyboard(Context context, EditText et)
 boolean isSoftInputShow(Activity activity)
 ```
 
+- [<div id="">ScreenRotationUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/ScreenRotationUtil.java)
+```Java
+// 使用方法
+ScreenRotationUtil.getInstance(@NonNull Context context)
+                  .rate(int rate)
+                  .callback(OnRotationListener listener)
+                  .start()
+
+ScreenRotationUtil.getInstance(@NonNull Context context).stop() 
+```
+
 - [<div id="ScreenUtil">ScreenUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/ScreenUtil.java) 
 ```Java
 // 获取屏幕密度dpi（120 / 160 / 240 /...）
@@ -185,6 +218,20 @@ Bitmap screenShot(@NonNull Activity activity)
 
 // 截屏 （返回的bitmap不包括状态栏）
 Bitmap screenShotNoStatusBar(@NonNull Activity activity)
+
+// 获取屏幕方向
+// @return Configuration.ORIENTATION_PORTRAIT、Configuration.ORIENTATION_LANDSCAPE
+int getScreenSimpleOrientation(@NonNull Context context)
+
+// 获取屏幕方向
+// @return Surface.ROTATION_0、Surface.ROTATION_90、Surface.ROTATION_180、Surface.ROTATION_270
+int getScreenOrientation(@NonNull Activity activity) 
+
+// 设置屏幕竖屏
+void setScreenPortrait(@NonNull Activity activity)
+
+// 设置屏幕横屏
+void setScreenLandscape(@NonNull Activity activity)
 ```
 
 - [<div id="SystemBarUtil">SystemBarUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/SystemBarUtil.java) 
@@ -498,6 +545,8 @@ GradientDrawable getRectShape(int fillColor, int radius, int strokeColor, int st
 GradientDrawable getRectShape(int fillColor, float[] radii, int strokeColor, int strokeWidth) 
 ```
 
+### IO相关
+
 - [<div id="ACache">ACache</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/ACache.java)
 
 - [<div id="AssetUtil">AssetUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/AssetUtil.java)
@@ -585,13 +634,50 @@ long getFileDirSize(@NonNull File dir)
 // 获取文件的真实路径
 getRealPath(@NonNull final Context context, @NonNull final Uri uri)
 ```
+
  - [<div id="GsonUtil">GsonUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/GsonUtil.java)
+ ```Java
+ // 将 json 数据转化为 bean
+ <T> T json2Bean(String jsonStr, Class<T> cls)
+ 
+ // 将 json 数据转换为 list
+ <T> List<T> json2List(String jsonStr, Type type)
+ 
+ // 将 json 数据转化为 map
+ <T> Map<String, T> json2Map(String jsonStr)
+ 
+ // 将 json 数据转化为 map 元素的 list
+ <T> List<Map<String, T>> json2ListMap(String jsonStr)
+ 
+ // 将对象转换成 string 数据
+ String obj2String(Object obj)
+ ````
  
  - [<div id="SpUtil">SpUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/io/SpUtil.java)
 ```Java
+SpUtil get(@NonNull Context context)
+
+SpUtil get(@NonNull Context context, @NonNull String fileName, @NonNull int mode)
+
+// 保存单个数据
+put(String key, Object object)
+
+// 同时保存多条数据
+void add(Map<String, Object> map)
+
+// 获取存储的数据
+Object get(String key, Object object)
+
+// 根据 key 删除数据
+void remove(String key)
+
+// 清除所有的数据
+void clear()
+
+SharedPreferences.Editor getEditor()
 ```
 
-###Log相关
+### Log相关
 - [<div id="CrashHandler">CrashHandler</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/log/CrashHandler.java)
 ```Java
 // 建议在application中初始化
@@ -616,7 +702,7 @@ void e(String tag, String msg)
 String getLogInfo(StackTraceElement stackTraceElement)
 ```
 
-###网络相关
+### 网络相关
 - [<div id="NetUtil">NetUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/network/NetUtil.java)
 ```Java
 // 判断网络是否连接
