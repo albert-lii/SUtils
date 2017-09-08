@@ -19,7 +19,7 @@ Step 1:
   
 Step 2:
       dependencies {
-          compile 'com.github.albert-lii:SUtils:1.0.8'
+          compile 'com.github.albert-lii:SUtils:1.0.9'
       }
 ```
 
