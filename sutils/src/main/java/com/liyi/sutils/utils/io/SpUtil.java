@@ -93,6 +93,13 @@ public class SpUtil {
         mEditor.commit();
     }
 
+    /**
+     * 获取存储的数据
+     *
+     * @param key
+     * @param object
+     * @return
+     */
     public Object get(String key, Object object) {
         if (object instanceof String) {
             return mSp.getString(key, (String) object);
@@ -108,11 +115,19 @@ public class SpUtil {
         return null;
     }
 
+    /**
+     * 根据 key 删除数据
+     *
+     * @param key
+     */
     public void remove(String key) {
         mEditor.remove(key);
         mEditor.commit();
     }
 
+    /**
+     * 清除所有的数据
+     */
     public void clear() {
         mEditor.clear();
         mEditor.commit();

@@ -13,7 +13,7 @@ import java.security.MessageDigest;
 
 
 /**
- * 圆角
+ * 圆形
  */
 public class CircleTransform extends BitmapTransformation {
 

@@ -27,7 +27,7 @@ public class GsonUtil {
     }
 
     /**
-     * 将json数据转化为bean
+     * 将 json 数据转化为 bean
      *
      * @param jsonStr
      * @param cls
@@ -41,7 +41,7 @@ public class GsonUtil {
     }
 
     /**
-     * 将json数据转换为list
+     * 将 json 数据转换为 list
      *
      * @param jsonStr
      * @param type
@@ -55,7 +55,7 @@ public class GsonUtil {
     }
 
     /**
-     * 将json数据转化为map
+     * 将 json 数据转化为 map
      *
      * @param jsonStr
      * @param <T>
@@ -69,7 +69,7 @@ public class GsonUtil {
     }
 
     /**
-     * 将json数据转化为map元素的list
+     * 将 json 数据转化为 map 元素的 list
      *
      * @param jsonStr
      * @param <T>
@@ -83,7 +83,7 @@ public class GsonUtil {
     }
 
     /**
-     * 将对象转换成string数据
+     * 将对象转换成 string 数据
      *
      * @param obj
      * @return

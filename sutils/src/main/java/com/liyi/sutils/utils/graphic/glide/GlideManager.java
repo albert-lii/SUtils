@@ -61,7 +61,7 @@ public class GlideManager {
      * 清除内存缓存
      */
     public static void clearMemory(Context context) {
-        // 清理内存缓存  可以在UI主线程中进行
+        // 清理内存缓存可以在UI主线程中进行
         GlideApp.get(context).clearMemory();
     }
 }
