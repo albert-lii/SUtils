@@ -48,6 +48,7 @@ Step 2:
 #### 图像相关
 - [FastBlur](#FastBlur) 高斯模糊
 - [RSBlur](#RSBlur) 高斯模糊
+- [GlideManager](#GlideManager) glide4.xx管理工具类
 - [ImageComprsUtil](#ImageComprsUtil) 图片压缩工具类
 - [ImageUtil](#ImageUtil) 图片相关工具类
 - [ShapeUtil](#ShapeUtil) Shape工具类
@@ -504,6 +505,29 @@ Bitmap blur(Bitmap sentBitmap, int radius, boolean canReuseInBitmap)
 - [<div id="RSBlur">RSBlur</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/graphic/blur/RSBlur.java)
 ```Java
 Bitmap blur(Context context, Bitmap blurredBitmap, int radius)
+```
+
+- [<div id="GlideManager">GlideManager</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/graphic/glide/GlideManager.java)
+```Java
+// 注：extends CusGlideModulel类可以配置glide
+// 工具类中已配有：BlurTransformation（高斯模糊）、CircleTransform（圆形）、RoundTransform（圆角）三种显示效果
+
+
+GlideRequests getRequests(@NonNull Object obj)
+
+// 恢复请求，一般在停止滚动的时候
+void resumeRequests(Context context)
+
+// 暂停请求 正在滚动的时候
+void pauseRequests(Context context)
+
+// 清除磁盘缓存
+// 注：需要在子线程中进行
+clearDiskCache(final Context context)
+
+// 清除内存缓存
+// 清理内存缓存可以在UI主线程中进行
+void clearMemory(Context context)
 ```
 
 - [<div id="ImageComprsUtil">ImageComprsUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/graphic/ImageComprsUtil.java)
