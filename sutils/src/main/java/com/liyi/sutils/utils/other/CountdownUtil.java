@@ -88,8 +88,8 @@ public class CountdownUtil {
     public void stop() {
         if (mTimer != null) {
             mTimer.cancel();
-            isRunning = false;
         }
+        isRunning = false;
     }
 
     public int getIntervalTime() {
