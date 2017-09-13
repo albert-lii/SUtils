@@ -56,7 +56,7 @@ Step 2:
 - [ACache](#ACache) 缓存工具类
 - [AssetUtil](#AssetUtil) asset工具类
 - [FileUtil](#FileUtil) file工具类
-- [GsonUtil](GsonUtil) gson工具类
+- [GsonUtil](#GsonUtil) gson工具类
 - [SpUtil](#SpUtil) SharedPreferences工具类
 #### Log相关
 - [CrashHandler](#CrashHandler) 异常捕捉工具类
