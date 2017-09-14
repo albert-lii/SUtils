@@ -1,5 +1,5 @@
 # SUtils
-> 轻量级Android工具类库，集成了众多平时开发用到的工具类，以后将持续更新！
+> 轻量级Android工具类库，集成了众多平时开发用到的工具类，将一直持续更新！
 
 ## 联系方式
 > **QQ：1009365545**
@@ -56,7 +56,7 @@ Step 2:
 - [ACache](#ACache) 缓存工具类
 - [AssetUtil](#AssetUtil) asset工具类
 - [FileUtil](#FileUtil) file工具类
-- [GsonUtil](GsonUtil) gson工具类
+- [GsonUtil](#GsonUtil) gson工具类
 - [SpUtil](#SpUtil) SharedPreferences工具类
 #### Log相关
 - [CrashHandler](#CrashHandler) 异常捕捉工具类
@@ -925,6 +925,8 @@ void show(@NonNull Context context, View root)
 void show(@NonNull Context context, View root, int duration)
 ```
 
+## 赞赏
+如果你感觉 `SUtils` 帮助到了你，可以点右上角 "Star" 支持一下 谢谢！ ^_^
 
 ## LICENSE
 Copyright 2017 liyi
