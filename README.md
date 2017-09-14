@@ -19,7 +19,7 @@ Step 1:
   
 Step 2:
       dependencies {
-          compile 'com.github.albert-lii:SUtils:1.0.9'
+          compile 'com.github.albert-lii:SUtils:1.1.0'
       }
 ```
 
@@ -35,6 +35,7 @@ Step 2:
 - [ScreenUtil](#ScreenUtil) 与屏幕相关
 - [SystemBarUtil](#SystemBarUtil) 系统状态栏和底部虚拟导航栏的工具类
 - [SystemPageUtil](#SystemPageUtil) 系统功能界面工具类
+- [ScreenRotationUtil](#ScreenRotationUtil) 屏幕旋转角度监听工具类
 #### 设备相关
 - [DeviceUtil](#DeviceUtil) 设备信息相关工具类
 - [GpsUtil](#GpsUtil) GPS工具类
@@ -306,6 +307,7 @@ void openGpsSettings(Context context)
 // 根据包名跳转到系统自带的应用程序信息界面
 void openAppDetail(Context context)
 ```
+- [<div id="ScreenRotationUtil">ScreenRotationUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/ScreenRotationUtil.java)
 
 ### 设备相关
 - [<div id="DeviceUtil">DeviceUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/device/DeviceUtil.java)
