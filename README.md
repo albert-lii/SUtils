@@ -925,6 +925,8 @@ void show(@NonNull Context context, View root)
 void show(@NonNull Context context, View root, int duration)
 ```
 
+## 赞赏
+如果你感觉 `SUtils` 帮助到了你，可以点右上角 "Star" 支持一下 谢谢！ ^_^
 
 ## LICENSE
 Copyright 2017 liyi
