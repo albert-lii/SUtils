@@ -35,7 +35,6 @@ Step 2:
 - [ScreenUtil](#ScreenUtil) 与屏幕相关
 - [SystemBarUtil](#SystemBarUtil) 系统状态栏和底部虚拟导航栏的工具类
 - [SystemPageUtil](#SystemPageUtil) 系统功能界面工具类
-- [ScreenRotationUtil](#ScreenRotationUtil) 屏幕旋转角度监听工具类
 #### 设备相关
 - [DeviceUtil](#DeviceUtil) 设备信息相关工具类
 - [GpsUtil](#GpsUtil) GPS工具类
@@ -74,6 +73,7 @@ Step 2:
 - [SpanUtil](#SpanUtil) SpannableString工具类
 - [TimeUtil](#TimeUtil) 时间工具类
 - [ToastUtil](#ToastUtil) Toast工具类
+- [CountdownUtil](#CountdownUtil) 倒计时工具类
 
 
 ### APP相关
@@ -206,6 +206,7 @@ boolean isSoftInputShow(Activity activity)
 ```Java
 // 使用方法
 ScreenRotationUtil.getInstance(@NonNull Context context)
+                  // 默认为SensorManager.SENSOR_DELAY_NORMAL
                   .rate(int rate)
                   .callback(OnRotationListener listener)
                   .start()
@@ -307,7 +308,6 @@ void openGpsSettings(Context context)
 // 根据包名跳转到系统自带的应用程序信息界面
 void openAppDetail(Context context)
 ```
-- [<div id="ScreenRotationUtil">ScreenRotationUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/app/ScreenRotationUtil.java)
 
 ### 设备相关
 - [<div id="DeviceUtil">DeviceUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/device/DeviceUtil.java)
@@ -925,6 +925,26 @@ void void show(@NonNull Context context, CharSequence msg, int duration)
 void show(@NonNull Context context, View root)
 
 void show(@NonNull Context context, View root, int duration)
+```
+
+- [<div id="CountdownUtil">CountdownUtil</div>](https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/other/CountdownUtil.java)
+```Java
+// 使用方法
+CountdownUtil.newInstance()
+             // 设置倒计时的间隔时间
+             .intervalTime(int intervalTime)
+             // 设置倒计时的总时间
+             .totalTime(int totalTime)
+             // 设置倒计时监听器
+             .callback(OnCountdownListener listener)
+             .start()
+ 
+ // 停止倒计时
+ void stop()
+             
+ // 获取倒计时是否正在进行
+ boolean isRunning() 
+}
 ```
 
 ## 赞赏
