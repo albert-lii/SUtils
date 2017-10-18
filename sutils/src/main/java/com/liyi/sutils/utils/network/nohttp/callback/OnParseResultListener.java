@@ -6,6 +6,6 @@ package com.liyi.sutils.utils.network.nohttp.callback;
  *
  * @param <T> nohttp网络请求返回的数据的类型
  */
-public interface OnParseResultListener<T> {
-    void onParseResult(int what, T t);
+public interface OnParseResultListener<K,T> {
+    K onParseResult(int what, T t);
 }
