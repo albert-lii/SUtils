@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -16,8 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
-import com.liyi.sutils.utils.app.SystemBarUtil;
-import com.liyi.sutils.utils.app.SystemPageUtil;
+import com.liyi.sutils.utils.app.SystemSettingUtil;
 
 import java.util.ArrayList;
 
@@ -97,7 +93,7 @@ public class PermissionUtil {
                     .setNegativeButton("取消", null)
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            SystemPageUtil.openAppDetail(context);
+                            SystemSettingUtil.openAppDetail(context);
                         }
                     }).show();
         }

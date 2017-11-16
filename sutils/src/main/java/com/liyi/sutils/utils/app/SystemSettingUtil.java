@@ -12,7 +12,7 @@ import android.support.annotation.NonNull;
 /**
  * 进入指定系统功能界面的工具类
  */
-public class SystemPageUtil {
+public class SystemSettingUtil {
 
     /**
      * 跳转至系统设置界面
