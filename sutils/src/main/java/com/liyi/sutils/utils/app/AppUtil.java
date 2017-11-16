@@ -6,7 +6,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 
-import com.liyi.sutils.constants.SConstants;
 import com.liyi.sutils.utils.log.LogUtil;
 
 import java.security.MessageDigest;
@@ -20,13 +19,21 @@ import java.util.Locale;
  */
 public class AppUtil {
     private static final String TAG = AppUtil.class.getSimpleName();
-
+    /**
+     * app的状态
+     */
+    // app运行在前台
+    public static final int APPSTATE_FORE = 1;
+    // app运行在后台
+    public static final int APPSTATE_BACK = 2;
+    // app已经被杀死
+    public static final int APPSTATE_DEAD = 3;
 
     /**
      * 获取应用程序名称
      *
      * @param context
-     * @return
+     * @return app名称
      */
     public static String getAppName(@NonNull Context context) {
         try {
@@ -44,7 +51,7 @@ public class AppUtil {
      * 获取应用版本名称
      *
      * @param context
-     * @return version name
+     * @return app当前的版本名称（version name）
      */
     public static String getVersionName(@NonNull Context context) {
         try {
@@ -61,7 +68,7 @@ public class AppUtil {
      * 获取应用版本code
      *
      * @param context
-     * @return version code
+     * @return app当前的版本号（version code）
      */
     public static int getVersionCode(@NonNull Context context) {
         try {
@@ -78,8 +85,8 @@ public class AppUtil {
      * 判断app是否存活
      *
      * @param context
-     * @param packageName
-     * @return
+     * @param packageName 应用程序包名
+     * @return true: app依然存活  false: app已被杀死
      */
     public static boolean isAppAlive(@NonNull Context context, @NonNull String packageName) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(context.ACTIVITY_SERVICE);
@@ -98,8 +105,8 @@ public class AppUtil {
      * 获取app的状态
      *
      * @param context
-     * @param packageName
-     * @return 运行在前台、运行在后台、app已被杀死
+     * @param packageName 应用程序包名
+     * @return APPSTATE_FORE: app运行在前台 | APPSTATE_BACK: app运行在后台 | APPSTATE_DEAD: app已被杀死
      */
     public int getAppSatus(@NonNull Context context, @NonNull String packageName) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -107,24 +114,26 @@ public class AppUtil {
         // Determines whether the application is on the top of the stack
         if (taskInfos.get(0).topActivity.getPackageName().equals(packageName)) {
             LogUtil.i(TAG, String.format("AppStateInfo ========> this %s is running onForeground", packageName));
-            return SConstants.APPSTATE_FORE;
+            return APPSTATE_FORE;
         } else {
             // Determine if the application is in the stack
             for (ActivityManager.RunningTaskInfo info : taskInfos) {
                 if (info.topActivity.getPackageName().equals(packageName)) {
                     LogUtil.i(TAG, String.format("AppStateInfo ========> this %s is running onBackground", packageName));
-                    return SConstants.APPSTATE_BACK;
+                    return APPSTATE_BACK;
                 }
             }
             LogUtil.i(TAG, String.format("AppStateInfo ========> this %s is not running", packageName));
-            return SConstants.APPSTATE_DEAD;
+            return APPSTATE_DEAD;
         }
     }
 
     /**
      * 判断服务是否存活
      *
-     * @return
+     * @param context
+     * @param serviceName service名称
+     * @return true: service存活  false: service死亡
      */
     public static boolean isServiceAlive(@NonNull Context context, @NonNull String serviceName) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
