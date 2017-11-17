@@ -17,7 +17,7 @@ Step 1:
   
 Step 2:
       dependencies {
-          compile 'com.github.albert-lii:SUtils:1.1.0'
+          compile 'com.github.albert-lii:SUtils:1.2.0'
       }
 ```
 
