@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.app;
+package com.liyi.sutils.utils;
 
 
 import android.app.Activity;
@@ -14,8 +14,12 @@ import android.widget.EditText;
  * 与虚拟键盘相关的工具类
  */
 public class KeyboardUtil {
+
     /**
      * 弹出虚拟软键盘
+     *
+     * @param context
+     * @param et
      */
     public static void openKeyboard(@NonNull Context context, EditText et) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -25,8 +29,11 @@ public class KeyboardUtil {
 
     /**
      * 弹出虚拟软键盘并把布局顶上去
+     *
+     * @param context
+     * @param et
      */
-    public static void openKeyboardByTop(@NonNull Context context, EditText et) {
+    public static void openKeyboardAndTop(@NonNull Context context, EditText et) {
         // The keyboard will top the layout
         ((Activity) context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -36,6 +43,9 @@ public class KeyboardUtil {
 
     /**
      * 关闭软键盘
+     *
+     * @param context
+     * @param et
      */
     public static void closeKeyboard(@NonNull Context context, EditText et) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);

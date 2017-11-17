@@ -9,7 +9,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.liyi.sutils.utils.other.ToastUtil;
+import com.liyi.sutils.utils.ToastUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,21 +30,21 @@ import java.util.Map;
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
     private static final String TAG = CrashHandler.class.getClass().getSimpleName();
 
-    // 异常文件的存储路径
+    /* 异常文件的存储路径 */
     private String mCrashPath;
-    // 日志文件名的前缀
+    /* 日志文件名的前缀 */
     private String mPreFix;
 
-    // CrashHandler实例
+    /* CrashHandler实例 */
     private static CrashHandler mInstance;
     private static Context mContext;
-    // 系统默认的UncaughtException处理类
+    /* 系统默认的UncaughtException处理类 */
     private Thread.UncaughtExceptionHandler mDefaultHandler;
-    // 用来存储设备信息和异常信息
+    /* 用来存储设备信息和异常信息 */
     private Map<String, String> mInfos = new HashMap<String, String>();
-    // 用日期来创建日志文件的存放文件夹
+    /* 用日期来创建日志文件的存放文件夹 */
     private DateFormat mFormatter1 = new SimpleDateFormat("yyyy-MM-dd");
-    // 用于格式化日期,作为日志文件名的一部分
+    /* 用于格式化日期,作为日志文件名的一部分 */
     private DateFormat mFormatter2 = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
     private CrashHandler(Config config) {
@@ -65,6 +65,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * 初始化（建议在application中初始化）
      *
      * @param context
+     * @param config  配置类
      */
     public static void initialize(@NonNull Context context, Config config) {
         mContext = context.getApplicationContext();
@@ -74,7 +75,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     public static final class Config {
         // crash文件存储路径
         private String filePath;
-        // 日志文件名的前缀
+        // crash文件名的前缀
         private String preFix;
         private Context context;
 
@@ -88,6 +89,12 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             preFix = "crash";
         }
 
+        /**
+         * 设置crash文件在sd卡中的存储文件夹的路径
+         *
+         * @param folder 存储文件夹的路径
+         * @return
+         */
         public Config setSdCardStore(String folder) {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 if (TextUtils.isEmpty(folder)) {
@@ -100,6 +107,12 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             return this;
         }
 
+        /**
+         * 设置crash文件的前缀
+         *
+         * @param preFix crash文件的前缀
+         * @return
+         */
         public Config setFilePreFix(String preFix) {
             if (TextUtils.isEmpty(preFix)) {
                 this.preFix = "crash";

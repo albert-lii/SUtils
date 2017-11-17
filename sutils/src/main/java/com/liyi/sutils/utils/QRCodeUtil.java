@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.other;
+package com.liyi.sutils.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -53,8 +53,8 @@ public class QRCodeUtil {
      * @param height  二维码的高
      * @return 二维码图片
      */
-    public static Bitmap generateQRImage(@NonNull String content, int width, int height) {
-        return generateQRImage(content, width, height, 2);
+    public static Bitmap createQRImage(@NonNull String content, int width, int height) {
+        return createQRImage(content, width, height, 2);
     }
 
     /**
@@ -66,7 +66,7 @@ public class QRCodeUtil {
      * @param height  二维码空白边距的宽度
      * @return 二维码图片
      */
-    public static Bitmap generateQRImage(@NonNull String content, int width, int height, int border) {
+    public static Bitmap createQRImage(@NonNull String content, int width, int height, int border) {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         // 配置参数
         Map hints = new HashMap<>();
@@ -133,8 +133,8 @@ public class QRCodeUtil {
     /**
      * 解析二维码（使用解析RGB编码数据的方式）
      *
-     * @param path
-     * @return
+     * @param path 二维码图片所在路径
+     * @return 解析结果
      */
     public static Result decodeQRcodeRGB(String path) {
         if (TextUtils.isEmpty(path)) {
@@ -152,8 +152,8 @@ public class QRCodeUtil {
     /**
      * 解析二维码 （使用解析RGB编码数据的方式）
      *
-     * @param qrcode
-     * @return
+     * @param qrcode 二维码图片
+     * @return 解析结果
      */
     public static Result decodeQRcodeRGB(Bitmap qrcode) {
         if (qrcode == null) {
@@ -184,8 +184,8 @@ public class QRCodeUtil {
     /**
      * 解析二维码（使用解析YUV编码数据的方式）
      *
-     * @param path
-     * @return
+     * @param path 二维码图片所在路径
+     * @return 解析结果
      */
     public static Result decodeQRcodeYUV(String path) {
         if (TextUtils.isEmpty(path)) {
@@ -203,8 +203,8 @@ public class QRCodeUtil {
     /**
      * 解析二维码（使用解析YUV编码数据的方式）
      *
-     * @param qrcode
-     * @return
+     * @param qrcode 二维码图片
+     * @return 解析结果
      */
     public static Result decodeQRcodeYUV(Bitmap qrcode) {
         if (qrcode == null) {
@@ -320,12 +320,12 @@ public class QRCodeUtil {
      *
      * @param context
      * @param contents      需要生成的内容
-     * @param desiredWidth  生成条形码的宽带
+     * @param desiredWidth  生成条形码的宽度
      * @param desiredHeight 生成条形码的高度
      * @param displayCode   是否在条形码下方显示内容
      * @return
      */
-    public static Bitmap generateBarImage(@NonNull Context context, String contents, int desiredWidth, int desiredHeight, boolean displayCode) {
+    public static Bitmap createBarImage(@NonNull Context context, String contents, int desiredWidth, int desiredHeight, boolean displayCode) {
         Bitmap ruseltBitmap = null;
         /**
          * 图片两端所保留的空白的宽度
@@ -354,8 +354,8 @@ public class QRCodeUtil {
      *
      * @param contents      需要生成的内容
      * @param format        编码格式
-     * @param desiredWidth
-     * @param desiredHeight
+     * @param desiredWidth  生成条形码的宽度
+     * @param desiredHeight 生成条形码的高度
      * @return
      * @throws WriterException
      */

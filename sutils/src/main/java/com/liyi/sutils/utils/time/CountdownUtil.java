@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.other;
+package com.liyi.sutils.utils.time;
 
 
 import android.os.CountDownTimer;
@@ -7,11 +7,15 @@ import android.os.CountDownTimer;
  * 倒计时工具类
  */
 public class CountdownUtil {
+    /* 倒计时的间隔时间 */
     private int mIntervalTime;
+    /* 倒计时的总时间 */
     private int mTotalTime;
+    /* 倒计时是否在运行 */
     private boolean isRunning;
-
+    /* 系统倒计时类 */
     private CountDownTimer mTimer;
+    /* 倒计时监听器 */
     private OnCountdownListener mCountdownListener;
 
     private CountdownUtil() {
@@ -77,6 +81,9 @@ public class CountdownUtil {
         return this;
     }
 
+    /**
+     * 开始倒计时
+     */
     public void start() {
         if (mTimer == null) {
             init();
@@ -85,6 +92,9 @@ public class CountdownUtil {
         isRunning = true;
     }
 
+    /**
+     * 结束倒计时
+     */
     public void stop() {
         if (mTimer != null) {
             mTimer.cancel();
@@ -92,10 +102,20 @@ public class CountdownUtil {
         isRunning = false;
     }
 
+    /**
+     * 获取倒计时的间隔时间
+     *
+     * @return
+     */
     public int getIntervalTime() {
         return mIntervalTime;
     }
 
+    /**
+     * 获取倒计时的总时间
+     *
+     * @return
+     */
     public int getTotalTime() {
         return mTotalTime;
     }
@@ -109,13 +129,29 @@ public class CountdownUtil {
         return isRunning;
     }
 
+    /**
+     * 获取倒计时类
+     *
+     * @return
+     */
     public CountDownTimer getTimer() {
         return mTimer;
     }
 
+    /**
+     * 倒计时监听器
+     */
     public interface OnCountdownListener {
+        /**
+         * 倒计时正在进行时调用的方法
+         *
+         * @param millisUntilFinished 剩余的时间（毫秒）
+         */
         void onRemain(long millisUntilFinished);
 
+        /**
+         * 倒计时结束
+         */
         void onFinish();
     }
 }

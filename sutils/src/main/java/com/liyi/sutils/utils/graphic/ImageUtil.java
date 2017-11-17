@@ -70,7 +70,7 @@ public class ImageUtil {
      *
      * @param bm
      * @param format 压缩的图片格式：JPEG、PNG、WEBP
-     * @return
+     * @return 字节数组
      */
     public static byte[] bitmap2Byte(@NonNull Bitmap bm, Bitmap.CompressFormat format) {
         if (bm == null) {
@@ -126,8 +126,8 @@ public class ImageUtil {
     /**
      * 获取图片需要旋转的角度
      *
-     * @param path Image absolute path
-     * @return The rotation Angle of the picture
+     * @param path 图片的绝对路径
+     * @return 图片的旋转角度
      */
     public static int getImageDegree(@NonNull String path) {
         int degree = 0;
@@ -179,7 +179,7 @@ public class ImageUtil {
      * @param y      矩形截取区域左上角的Y轴坐标（即起点的Y坐标）
      * @param width  截取的图片的宽
      * @param height 截取的图片的高
-     * @return
+     * @return 截取后的图片
      */
     public static Bitmap cutBitmap(Bitmap source, int x, int y, int width, int height) {
         return Bitmap.createBitmap(source, x, y, width, height);

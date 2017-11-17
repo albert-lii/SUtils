@@ -15,9 +15,9 @@ import android.location.LocationProvider;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.liyi.sutils.utils.app.permission.PermissionUtil;
+import com.liyi.sutils.utils.permission.PermissionUtil;
 import com.liyi.sutils.utils.log.LogUtil;
-import com.liyi.sutils.utils.other.ToastUtil;
+import com.liyi.sutils.utils.ToastUtil;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -27,9 +27,8 @@ import java.util.Locale;
 /**
  * Gps工具类
  */
-
 public class GpsUtil {
-    // Gps权限
+    /* Gps权限 */
     private final String[] GPS_PERMISSIONS = new String[]{
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -40,20 +39,20 @@ public class GpsUtil {
     private GpsStatus.Listener mGpsStatusListener;
     private LocationManager mLocationManager;
 
-    // gps参数类
+    /* gps参数类 */
     private Criteria mCriteria;
-    // 位置变化最小距离：当位置距离变化超过此值时，将更新位置信息（单位：米）
+    /* 位置变化最小距离：当位置距离变化超过此值时，将更新位置信息（单位：米）*/
     private int mMinDistance;
-    // 位置信息更新周期（单位：毫秒）
+    /* 位置信息更新周期（单位：毫秒）*/
     private int mMinTime;
-    // 卫星数量
+    /* 卫星数量 */
     private int mGpsCount;
 
     public static GpsUtil getInstance() {
         return GpsUtilHolder.INSTANCE;
     }
 
-    public static final class GpsUtilHolder {
+    private static final class GpsUtilHolder {
         private static final GpsUtil INSTANCE = new GpsUtil();
     }
 
@@ -268,16 +267,34 @@ public class GpsUtil {
      ****  相关属性设置
      **********************************************************************************************/
 
+    /**
+     * 设置gps参数类
+     *
+     * @param criteria
+     * @return
+     */
     public GpsUtil criteria(Criteria criteria) {
         this.mCriteria = criteria;
         return this;
     }
 
+    /**
+     * 设置位置变化的最小距离
+     *
+     * @param minDistance
+     * @return
+     */
     public GpsUtil minDistance(int minDistance) {
         this.mMinDistance = minDistance;
         return this;
     }
 
+    /**
+     * 设置位置变化的最小时间
+     *
+     * @param minTime
+     * @return
+     */
     public GpsUtil minTime(int minTime) {
         this.mMinTime = minTime;
         return this;
@@ -301,6 +318,11 @@ public class GpsUtil {
         return this;
     }
 
+    /**
+     * 获取gps卫星的数量
+     *
+     * @return
+     */
     public int getGpsCount() {
         return mGpsCount;
     }

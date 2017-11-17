@@ -20,6 +20,9 @@ import java.util.Locale;
 public class DeviceUtil {
     /**
      * 获取设备的唯一ID（即IMEI）
+     *
+     * @param context
+     * @return
      */
     public static String getIMEI(@NonNull Context context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -28,6 +31,9 @@ public class DeviceUtil {
 
     /**
      * 获取IMSI
+     *
+     * @param context
+     * @return
      */
     public static String getIMSI(@NonNull Context context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -98,6 +104,9 @@ public class DeviceUtil {
 
     /**
      * 在系统上执行一个命令
+     *
+     * @param command 命令
+     * @return
      */
     public static boolean canExecuteCommand(String command) {
         Process process = null;

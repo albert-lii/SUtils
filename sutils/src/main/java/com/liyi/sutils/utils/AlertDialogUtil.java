@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.other;
+package com.liyi.sutils.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,12 +8,15 @@ import android.support.v7.app.AlertDialog;
 /**
  * 系统弹出对话框工具类
  */
-
 public class AlertDialogUtil {
+    /* 取消按钮的文字  确定按钮的文字 */
     private String mNegBtnText, mPosBtnText;
+    /* 是否可以按返回键关闭 */
     private boolean cancelable;
     private Context mContext;
+    /* 取消按钮的点击监听 */
     private OnAlertNegativeListener mNegativeListener;
+    /* 确定按钮的点击监听 */
     private OnAlertPositiveListener mPositiveListener;
 
     public static AlertDialogUtil newInstance(@NonNull Context context) {
@@ -28,6 +31,11 @@ public class AlertDialogUtil {
         mPosBtnText = "确定";
     }
 
+    /**
+     * 显示对话框
+     *
+     * @param message 对话框的内容
+     */
     public void showDialog(String message) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
         dialog.setMessage(message)
@@ -47,12 +55,11 @@ public class AlertDialogUtil {
                             mNegativeListener.onNegativeClick(i);
                         }
                     }
-                })
-                .show();
+                }).show();
     }
 
     /**
-     * 点击外部区域是否消失
+     * 是否可以按返回键关闭
      *
      * @param cancelable
      * @return

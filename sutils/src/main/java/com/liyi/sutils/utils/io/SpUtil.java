@@ -28,11 +28,11 @@ public class SpUtil {
         mEditor = mSp.edit();
     }
 
-    public static SpUtil get(@NonNull Context context) {
-        return get(context, DEF_FILENAME, DEF_MODE);
+    public static SpUtil getInstance(@NonNull Context context) {
+        return getInstance(context, DEF_FILENAME, DEF_MODE);
     }
 
-    public static SpUtil get(@NonNull Context context, @NonNull String fileName, @NonNull int mode) {
+    public static SpUtil getInstance(@NonNull Context context, @NonNull String fileName, @NonNull int mode) {
         if (mInstanceMap == null) {
             mInstanceMap = new HashMap<String, SpUtil>();
         }
@@ -120,7 +120,7 @@ public class SpUtil {
      *
      * @param key
      */
-    public void remove(String key) {
+    public void delete(String key) {
         mEditor.remove(key);
         mEditor.commit();
     }

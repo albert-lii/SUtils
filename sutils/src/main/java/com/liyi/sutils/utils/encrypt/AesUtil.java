@@ -15,14 +15,13 @@ import javax.crypto.spec.SecretKeySpec;
  * <p>
  * 参考链接：http://www.cnblogs.com/whoislcj/p/5473030.html
  */
-
 public class AesUtil {
     private final static String HEX = "0123456789ABCDEF";
-    // AES是加密方式 CBC是工作模式 PKCS5Padding是填充模式
+    /* AES是加密方式 CBC是工作模式 PKCS5Padding是填充模式 */
     private static final String CBC_PKCS5_PADDING = "AES/CBC/PKCS5Padding";
-    // AES 加密
+    /* AES 加密 */
     private static final String AES = "AES";
-    // SHA1PRNG 强随机种子算法, 要区别4.2以上版本的调用方法
+    /* SHA1PRNG 强随机种子算法, 要区别4.2以上版本的调用方法 */
     private static final String SHA1PRNG = "SHA1PRNG";
 
     /**
@@ -42,7 +41,6 @@ public class AesUtil {
         }
         return null;
     }
-
 
     /**
      * 对密钥进行处理
@@ -72,7 +70,6 @@ public class AesUtil {
         return raw;
     }
 
-
     /*
      * 加密
      */
@@ -89,7 +86,6 @@ public class AesUtil {
         return null;
     }
 
-
     /*
     * 加密
     */
@@ -101,7 +97,6 @@ public class AesUtil {
         byte[] encrypted = cipher.doFinal(plain);
         return encrypted;
     }
-
 
     /**
      * 解密
@@ -124,7 +119,6 @@ public class AesUtil {
         return null;
     }
 
-
     /**
      * 解密
      *
@@ -141,7 +135,6 @@ public class AesUtil {
         byte[] decrypted = cipher.doFinal(encrypted);
         return decrypted;
     }
-
 
     /**
      * 二进制转字符

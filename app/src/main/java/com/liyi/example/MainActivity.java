@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.liyi.sutils.utils.app.AtyTransitionUtil;
-import com.liyi.sutils.utils.other.QRCodeUtil;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     private Button btn_systembar, btn_Atytransition,btn_qrcode;

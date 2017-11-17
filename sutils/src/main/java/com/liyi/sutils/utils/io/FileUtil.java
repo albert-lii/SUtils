@@ -40,7 +40,7 @@ public class FileUtil {
     private FileUtil() {
     }
 
-    public static FileUtil get() {
+    public static FileUtil getInstance() {
         return SFileUtilHolder.INSTANCE;
     }
 
@@ -69,7 +69,7 @@ public class FileUtil {
     /**
      * 创建文件夹 （你必须先创建文件夹，才能创建文件，否则会报“找不到路径”）
      *
-     * @param path
+     * @param path 创建的文件夹的路径
      */
     public boolean createDir(@NonNull String path) {
         boolean isSuccess;
@@ -86,7 +86,7 @@ public class FileUtil {
     /**
      * 创建文件
      *
-     * @param path
+     * @param path 创建的文件的路径
      * @return
      */
     public boolean createFile(@NonNull String path) {
@@ -113,8 +113,8 @@ public class FileUtil {
     /**
      * 保存String数据
      *
-     * @param key
-     * @param value
+     * @param key   保存String数据的文件的路径
+     * @param value 保存的String数据
      * @throws IOException
      */
     public void put(String key, String value) {
@@ -140,7 +140,8 @@ public class FileUtil {
     /**
      * 读取String数据
      *
-     * @return
+     * @param key 保存String数据的文件的路径
+     * @return 保存的String数据
      */
     public String getAsString(String key) {
         File file = new File(key);
@@ -172,6 +173,9 @@ public class FileUtil {
 
     /**
      * 保存byte[]
+     *
+     * @param key   保存byte[]数据的文件的路径
+     * @param value 保存的byte[]数据
      */
     public void put(String key, byte[] value) {
         File file = new File(key);
@@ -198,7 +202,8 @@ public class FileUtil {
     /**
      * 读取byte[]
      *
-     * @return
+     * @param key 保存byte[]数据的文件的路径
+     * @return 保存的byte[]数据
      */
     public byte[] getAsBinary(String key) {
         File file = new File(key);
@@ -238,6 +243,9 @@ public class FileUtil {
 
     /**
      * 保存序列化对象
+     *
+     * @param key   保存序列化对象数据的文件的路径
+     * @param value 保存的序列化对象数据
      */
     public void put(String key, Serializable value) {
         ByteArrayOutputStream baos = null;
@@ -271,7 +279,8 @@ public class FileUtil {
     /**
      * 读取序列化对象
      *
-     * @return
+     * @param key 保存序列化对象数据的文件的路径
+     * @return 保存的序列化对象数据
      */
     public Object getAsObject(String key) {
         ByteArrayInputStream bais = null;
@@ -308,6 +317,9 @@ public class FileUtil {
 
     /**
      * 保存bitmap数据
+     *
+     * @param key   保存bitmap数据的文件的路径
+     * @param value 保存的bitmap数据
      */
     public void put(String key, Bitmap value) {
         put(key, bitmap2Byte(value));
@@ -316,8 +328,8 @@ public class FileUtil {
     /**
      * 读取bitmap数据
      *
-     * @param key
-     * @return
+     * @param key 保存bitmap数据的文件的路径
+     * @return 保存的bitmap数据
      */
     public Bitmap getAsBitmap(String key) {
         if (getAsBinary(key) == null) {
@@ -350,8 +362,8 @@ public class FileUtil {
     /**
      * 拷贝文件到指定路径
      *
-     * @param oldPath
-     * @param newPath
+     * @param oldPath 被拷贝文件的原始路径
+     * @param newPath 文件被拷贝后的所在路径
      */
     public void copyFile(@NonNull String oldPath, @NonNull String newPath) {
         int bytesum = 0;
@@ -397,8 +409,8 @@ public class FileUtil {
     /**
      * 拷贝文件夹内容到指定位置
      *
-     * @param oldPath
-     * @param newPath
+     * @param oldPath 被拷贝文件夹的原始路径
+     * @param newPath 文件夹被拷贝后的所在路径
      */
     public void copyDir(@NonNull String oldPath, @NonNull String newPath) {
         try {
@@ -451,7 +463,7 @@ public class FileUtil {
     /**
      * 获取指定文件夹中文件的数量
      *
-     * @param dir
+     * @param dir   指定文件夹路径
      * @param isAll true代表获取所有的文件数量，false代表只获取第一级的文件数量
      * @return
      */
@@ -484,7 +496,7 @@ public class FileUtil {
     /**
      * 删除文件或文件夹
      *
-     * @param path
+     * @param path 被刪除的文件或文件夾的路径
      */
     public boolean delete(@NonNull String path) {
         try {
@@ -506,7 +518,7 @@ public class FileUtil {
     /**
      * 删除单个文件
      *
-     * @param path
+     * @param path 被删除的文件的路径
      * @return
      */
     public boolean deleteFile(@NonNull String path) {
@@ -520,7 +532,7 @@ public class FileUtil {
     /**
      * 删除文件夹
      *
-     * @param dir
+     * @param dir 被删除的文件夹的路径
      * @return
      */
     public boolean deleteDir(@NonNull String dir) {
@@ -560,8 +572,8 @@ public class FileUtil {
     /**
      * 获取指定文件或者文件夹的大小
      *
-     * @param path
-     * @return
+     * @param path 文件或文件夹的路径
+     * @return 文件或文件夹的字节数
      */
     public long getFileSize(@NonNull String path) {
         long size = 0;
@@ -584,8 +596,8 @@ public class FileUtil {
     /**
      * 获取单个文件的大小
      *
-     * @param file
-     * @return
+     * @param file 文件的路径
+     * @return 文件的字节数
      * @throws Exception
      */
     public long getSingleFileSize(@NonNull File file) {
@@ -604,8 +616,8 @@ public class FileUtil {
     /**
      * 获取指定文件夹的大小
      *
-     * @param dir
-     * @return
+     * @param dir 文件夹的路径
+     * @return 文件夹的字节数
      * @throws Exception
      */
     public long getFileDirSize(@NonNull File dir) {

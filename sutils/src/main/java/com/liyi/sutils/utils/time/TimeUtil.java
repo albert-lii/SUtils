@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.other;
+package com.liyi.sutils.utils.time;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -15,14 +15,19 @@ import java.util.Date;
  */
 public class TimeUtil {
     private static final String TAG = TimeUtil.class.getClass().getSimpleName();
-    private static final String DATE_TYPE = "yyyy-MM-dd HH:mm:ss";
+    /* 默认的日期格式 */
+    private static final String DEF_DATE_TYPE = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * 将时间戳转换为指定格式的时间字符串
+     *
+     * @param timeStamp 时间戳
+     * @param dateType  日期类型
+     * @return
      */
     public static String getTimeStr(long timeStamp, @NonNull String dateType) {
         if (TextUtils.isEmpty(dateType)) {
-            dateType = DATE_TYPE;
+            dateType = DEF_DATE_TYPE;
         }
         SimpleDateFormat sdf = new SimpleDateFormat(dateType);
         return sdf.format(new Date(timeStamp));
@@ -30,10 +35,14 @@ public class TimeUtil {
 
     /**
      * 将时间字符串转换为时间戳
+     *
+     * @param timeStr
+     * @param dateType
+     * @return
      */
     public static long getTimeStamp(@NonNull String timeStr, String dateType) {
         if (TextUtils.isEmpty(dateType)) {
-            dateType = DATE_TYPE;
+            dateType = DEF_DATE_TYPE;
         }
         long timeStamp = 0;
         SimpleDateFormat sdf = new SimpleDateFormat(dateType);
@@ -54,7 +63,7 @@ public class TimeUtil {
      */
     public static long caculateTimeDiff(@NonNull Object startTime, @NonNull Object endTime, String dateType) {
         if (TextUtils.isEmpty(dateType)) {
-            dateType = DATE_TYPE;
+            dateType = DEF_DATE_TYPE;
         }
         long longStart, longEnd;
         if (startTime instanceof String) {

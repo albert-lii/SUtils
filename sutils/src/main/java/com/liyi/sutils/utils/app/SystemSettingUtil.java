@@ -83,7 +83,7 @@ public class SystemSettingUtil {
     /**
      * 根据包名跳转到系统自带的应用程序信息界面
      */
-    public static void openAppDetail(@NonNull Context context) {
+    public static void openAppInfo(@NonNull Context context) {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         intent.setData(Uri.parse("package:" + context.getPackageName()));
         context.startActivity(intent);

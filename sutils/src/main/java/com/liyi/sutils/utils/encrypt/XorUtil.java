@@ -9,7 +9,6 @@ package com.liyi.sutils.utils.encrypt;
  * <p>
  * 参考链接：http://www.cnblogs.com/whoislcj/p/5944917.html
  */
-
 public class XorUtil {
 
     /**

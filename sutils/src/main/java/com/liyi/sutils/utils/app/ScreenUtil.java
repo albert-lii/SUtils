@@ -57,6 +57,7 @@ public class ScreenUtil {
     /**
      * 获取状态栏的高度
      *
+     * @param context
      * @return
      */
     public static int getStatusBarHeight(@NonNull Context context) {
@@ -156,6 +157,7 @@ public class ScreenUtil {
     /**
      * 获取屏幕方向
      *
+     * @param context
      * @return Configuration.ORIENTATION_PORTRAIT、Configuration.ORIENTATION_LANDSCAPE
      */
     public static int getScreenSimpleOrientation(@NonNull Context context) {
@@ -163,12 +165,12 @@ public class ScreenUtil {
     }
 
     /**
-     * 获取屏幕方向
+     * 获取屏幕旋转角度
      *
      * @param activity
      * @return Surface.ROTATION_0、Surface.ROTATION_90、Surface.ROTATION_180、Surface.ROTATION_270
      */
-    public static int getScreenOrientation(@NonNull Activity activity) {
+    public static int getScreenRotation(@NonNull Activity activity) {
         return activity.getWindowManager().getDefaultDisplay().getRotation();
     }
 

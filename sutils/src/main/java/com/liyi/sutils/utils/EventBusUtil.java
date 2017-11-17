@@ -1,4 +1,4 @@
-package com.liyi.sutils.utils.other;
+package com.liyi.sutils.utils;
 
 
 import com.liyi.sutils.utils.log.LogUtil;
@@ -95,6 +95,11 @@ public class EventBusUtil {
         EventBus.getDefault().cancelEventDelivery(event);
     }
 
+    /**
+     * 获取eventbus单例
+     *
+     * @return
+     */
     public static EventBus getEventBus() {
         return EventBus.getDefault();
     }

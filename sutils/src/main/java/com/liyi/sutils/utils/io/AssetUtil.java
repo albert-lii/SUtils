@@ -19,6 +19,10 @@ public class AssetUtil {
 
     /**
      * 获取assets目录下的文件
+     *
+     * @param context
+     * @param path    文件在assets文件夹中的路径
+     * @return
      */
     public static String getFileFromAssets(@NonNull Context context, @NonNull String path) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -37,8 +41,12 @@ public class AssetUtil {
 
     /**
      * 获取assets目录下的图片
+     *
+     * @param context
+     * @param path    图片在assets文件夹中的路径
+     * @return
      */
-    public static Bitmap getImageFromAssets(Context context, String path) {
+    public static Bitmap getImageFromAssets(@NonNull Context context, String path) {
         Bitmap image = null;
         AssetManager am = context.getResources().getAssets();
         try {
