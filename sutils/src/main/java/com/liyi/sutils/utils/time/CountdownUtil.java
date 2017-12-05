@@ -25,7 +25,7 @@ public class CountdownUtil {
         this.isRunning = false;
     }
 
-    public CountdownUtil newInstance() {
+    public static CountdownUtil newInstance() {
         return new CountdownUtil();
     }
 

@@ -1,4 +1,4 @@
-package com.liyi.sutils.view;
+package com.liyi.sutils.view.base;
 
 
 import android.app.Dialog;
@@ -12,7 +12,7 @@ import android.view.WindowManager;
 /**
  * DialogFragment的基类
  */
-public class BaseDialogFragment extends DialogFragment {
+public abstract class BaseDialogFragment extends DialogFragment {
     private final float DEF_VISIBLE_ALPHA = 0.5f;
     private final float DEF_WIDTH_PER = 0.75f;
     private final float DEF_HEIGHT_PER = ViewGroup.LayoutParams.WRAP_CONTENT;

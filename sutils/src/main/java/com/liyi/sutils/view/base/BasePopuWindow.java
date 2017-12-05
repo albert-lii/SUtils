@@ -1,4 +1,4 @@
-package com.liyi.sutils.view;
+package com.liyi.sutils.view.base;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +12,7 @@ import android.widget.PopupWindow;
 /**
  * PopupWindow的基类
  */
-public class BasePopuWindow extends PopupWindow {
+public abstract class BasePopuWindow extends PopupWindow {
     private final float DEF_SHOW_ALPHA = 0.5f;
     private final float DEF_DISMISS_ALPHA = 1.0f;
 

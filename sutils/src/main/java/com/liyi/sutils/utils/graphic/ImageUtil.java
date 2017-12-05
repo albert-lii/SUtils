@@ -27,6 +27,7 @@ import java.io.IOException;
 public class ImageUtil {
     private static final String TAG = ImageUtil.class.getSimpleName();
 
+
     /***********************************************************************************************
      ****  drawable、bitmap、byte之间相互转换
      **********************************************************************************************/
@@ -41,7 +42,7 @@ public class ImageUtil {
     /**
      * drawbale 转 bitmap
      */
-    private static Bitmap drawable2Bitmap(@NonNull Drawable drawable) {
+    public static Bitmap drawable2Bitmap(@NonNull Drawable drawable) {
         if (drawable == null) {
             return null;
         }
