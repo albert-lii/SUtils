@@ -13,7 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
-import com.liyi.sutils.utils.app.SystemSettingUtil;
+import com.liyi.sutils.utils.SystemSettingUtil;
 
 import java.util.ArrayList;
 

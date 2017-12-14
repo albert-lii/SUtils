@@ -1,16 +1,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.liyi.sutils">
-
+    <!--网络-->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!--位置服务权限-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- SDCard中创建与删除文件权限 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <!-- 向SDCard写入数据权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- SdCard 中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 向 SdCard 写入数据权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--安装 APK 需要的权限-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!--NFC管理权限-->
+    <uses-permission android:name="android.permission.NFC" />
 </manifest>

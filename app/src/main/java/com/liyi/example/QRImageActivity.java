@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
-import com.liyi.sutils.utils.app.DensityUtil;
+import com.liyi.sutils.utils.DensityUtil;
 import com.liyi.sutils.utils.graphic.ImageUtil;
 import com.liyi.sutils.utils.QRCodeUtil;
 

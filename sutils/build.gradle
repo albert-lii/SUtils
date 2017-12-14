@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 25
+        targetSdkVersion 22
         versionCode 14
         versionName "1.2.1"
 
@@ -29,8 +29,8 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:25.3.1'
     testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:25.3.1'
     implementation 'com.google.code.gson:gson:2.8.1'
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation files('libs/core-3.2.1.jar')

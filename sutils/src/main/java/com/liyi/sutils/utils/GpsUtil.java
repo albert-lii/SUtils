@@ -1,6 +1,5 @@
-package com.liyi.sutils.utils.device;
+package com.liyi.sutils.utils;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Address;
@@ -15,9 +14,7 @@ import android.location.LocationProvider;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.liyi.sutils.utils.permission.PermissionUtil;
 import com.liyi.sutils.utils.log.LogUtil;
-import com.liyi.sutils.utils.ToastUtil;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -25,14 +22,14 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Gps工具类
+ * GPS 相关工具类
  */
 public class GpsUtil {
-    /* Gps权限 */
-    private final String[] GPS_PERMISSIONS = new String[]{
-            Manifest.permission.INTERNET,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION};
+//    /* Gps权限 */
+//    private final String[] GPS_PERMISSIONS = new String[]{
+//            Manifest.permission.INTERNET,
+//            Manifest.permission.ACCESS_COARSE_LOCATION,
+//            Manifest.permission.ACCESS_FINE_LOCATION};
 
     private OnLocationListener mListener;
     private MyLocationListener myLocationListener;
@@ -57,18 +54,7 @@ public class GpsUtil {
     }
 
     private GpsUtil() {
-        super();
         initParams();
-    }
-
-    /**
-     * 初始化相关参数
-     */
-    private void initParams() {
-        this.mCriteria = getCriteria();
-        this.mMinDistance = 1;
-        this.mMinTime = 1000;
-        this.mGpsCount = 0;
     }
 
     /***********************************************************************************************
@@ -78,13 +64,12 @@ public class GpsUtil {
     /**
      * 根据经纬度获取地理位置
      *
-     * @param context   上下文
      * @param latitude  纬度
      * @param longitude 经度
      * @return {@link Address}
      */
-    public static Address getAddress(@NonNull Context context, double latitude, double longitude) {
-        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+    public static Address getAddress(double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(SUtils.getApp(), Locale.getDefault());
         try {
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
             if (addresses.size() > 0) {
@@ -99,50 +84,61 @@ public class GpsUtil {
     /**
      * 根据经纬度获取所在国家
      *
-     * @param context   上下文
      * @param latitude  纬度
      * @param longitude 经度
      * @return 所在国家
      */
-    public static String getCountryName(@NonNull Context context, double latitude, double longitude) {
-        Address address = getAddress(context, latitude, longitude);
+    public static String getCountry(double latitude, double longitude) {
+        Address address = getAddress(latitude, longitude);
         return address == null ? "unknown" : address.getCountryName();
     }
 
     /**
      * 根据经纬度获取所在地
      *
-     * @param context   上下文
      * @param latitude  纬度
      * @param longitude 经度
      * @return 所在地
      */
-    public static String getLocality(@NonNull Context context, double latitude, double longitude) {
-        Address address = getAddress(context, latitude, longitude);
+    public static String getLocality(double latitude, double longitude) {
+        Address address = getAddress(latitude, longitude);
         return address == null ? "unknown" : address.getLocality();
     }
 
     /**
      * 根据经纬度获取所在街道
      *
-     * @param context   上下文
      * @param latitude  纬度
      * @param longitude 经度
      * @return 所在街道
      */
-    public static String getStreet(@NonNull Context context, double latitude, double longitude) {
-        Address address = getAddress(context, latitude, longitude);
+    public static String getStreet(double latitude, double longitude) {
+        Address address = getAddress(latitude, longitude);
         return address == null ? "unknown" : address.getAddressLine(0);
     }
 
+    /***********************************************************************************************
+     ****  单例操作
+     **********************************************************************************************/
+
     /**
-     * 判断Gps是否可用
+     * 初始化相关参数
+     */
+    private void initParams() {
+        this.mCriteria = setCriteria();
+        this.mMinDistance = 1;
+        this.mMinTime = 1000;
+        this.mGpsCount = 0;
+    }
+
+    /**
+     * 判断 Gps 是否可用
      *
      * @return {@code true}: 是<br>{@code false}: 否
      */
-    public boolean isGpsEnabled(@NonNull Context context) {
+    public boolean isGpsEnabled() {
         if (mLocationManager == null) {
-            mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            mLocationManager = (LocationManager) SUtils.getApp().getSystemService(Context.LOCATION_SERVICE);
         }
         return mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
@@ -152,9 +148,9 @@ public class GpsUtil {
      *
      * @return {@code true}: 是<br>{@code false}: 否
      */
-    public boolean isLocationEnabled(@NonNull Context context) {
+    public boolean isLocationEnabled() {
         if (mLocationManager == null) {
-            mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            mLocationManager = (LocationManager) SUtils.getApp().getSystemService(Context.LOCATION_SERVICE);
         }
         return mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
                 || mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -167,21 +163,17 @@ public class GpsUtil {
     /**
      * 注册
      * <p>使用完记得调用{@link #unregister()}</p>
-     * <p>需添加权限 {@code <uses-permission android:name="android.permission.INTERNET"/>}</p>
-     * <p>需添加权限 {@code <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>}</p>
-     * <p>需添加权限 {@code <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>}</p>
-     * <p>如果{@code minDistance}为0，则通过{@code minTime}来定时更新</p>
-     * <p>{@code minDistance}不为0，则以{@code minDistance}为准</p>
-     * <p>两者都为0，则随时刷新。</p>
+     * <p>如果{@code minDistance}为 0，则通过{@code minTime}来定时更新</p>
+     * <p>{@code minDistance}不为 0，则以{@code minDistance}为准</p>
+     * <p>两者都为 0，则随时刷新</p>
      *
      * @return {@code true}: 初始化成功<br>{@code false}: 初始化失败
      */
     public boolean register(@NonNull Activity activity) {
-        checkGpsPermission(activity);
         if (mLocationManager == null) {
             mLocationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
         }
-        if (!isLocationEnabled(activity)) {
+        if (!isLocationEnabled()) {
             ToastUtil.show(activity, "无法定位，请打开定位服务");
             return false;
         }
@@ -194,13 +186,13 @@ public class GpsUtil {
             myLocationListener = new MyLocationListener();
         }
         // 定位监听
-        // 参数1，设备：有GPS_PROVIDER和NETWORK_PROVIDER两种
-        // 参数2，位置信息更新周期，单位毫秒
-        // 参数3，位置变化最小距离：当位置距离变化超过此值时，将更新位置信息
-        // 参数4，监听
-        // 备注：参数2和3，如果参数3不为0，则以参数3为准；参数3为0，则通过时间来定时更新；两者为0，则随时刷新
-        // 1秒更新一次，或最小位移变化超过1米更新一次；
-        // 注意：此处更新准确度非常低，推荐在service里面启动一个Thread，在run中sleep(10000);然后执行handler.sendMessage(),更新位置
+        // 参数 1，设备：有 GPS_PROVIDER 和 NETWORK_PROVIDER 两种
+        // 参数 2，位置信息更新周期，单位毫秒
+        // 参数 3，位置变化最小距离：当位置距离变化超过此值时，将更新位置信息
+        // 参数 4，监听
+        // 备注：参数 2 和 3，如果参数 3 不为 0，则以参数 3 为准；参数 3 为 0，则通过时间来定时更新；两者为 0，则随时刷新
+        // 1 秒更新一次，或最小位移变化超过1米更新一次；
+        // 注意：此处更新准确度非常低，推荐在 service 里面启动一个 Thread，在 run 中 sleep(10000); 然后执行 handler.sendMessage(), 更新位置
         mLocationManager.requestLocationUpdates(provider, mMinTime, mMinDistance, myLocationListener);
         return true;
     }
@@ -226,9 +218,9 @@ public class GpsUtil {
     /**
      * 设置定位参数
      */
-    private Criteria getCriteria() {
+    private Criteria setCriteria() {
         Criteria criteria = new Criteria();
-        // 设置定位精确度 Criteria.ACCURACY_COARSE比较粗略，Criteria.ACCURACY_FINE则比较精细
+        // 设置定位精确度 Criteria.ACCURACY_COARSE 比较粗略，Criteria.ACCURACY_FINE 则比较精细
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         // 设置是否要求速度
         criteria.setSpeedRequired(true);
@@ -243,35 +235,15 @@ public class GpsUtil {
         return criteria;
     }
 
-
-    /**
-     * 检查是否有Gps服务权限
-     *
-     * @param activity
-     */
-    private void checkGpsPermission(@NonNull Activity activity) {
-        if (PermissionUtil.isNeedRequest()) {
-            if (!PermissionUtil.hasPermissions(activity, GPS_PERMISSIONS)) {
-                if (!PermissionUtil.hasAlwaysDeniedPermission(activity, PermissionUtil.getDeniedPermissions(activity, GPS_PERMISSIONS))) {
-                    PermissionUtil.with(activity)
-                            .permissions(GPS_PERMISSIONS)
-                            .execute();
-                } else {
-                    PermissionUtil.showTipDialog(activity, "当前应用位置服务权限，请单击【确定】按钮前往设置中心进行权限授权");
-                }
-            }
-        }
-    }
-
     /***********************************************************************************************
      ****  相关属性设置
      **********************************************************************************************/
 
     /**
-     * 设置gps参数类
+     * 设置 gps 参数类
      *
      * @param criteria
-     * @return
+     * @return GpsUtil
      */
     public GpsUtil criteria(Criteria criteria) {
         this.mCriteria = criteria;
@@ -282,7 +254,7 @@ public class GpsUtil {
      * 设置位置变化的最小距离
      *
      * @param minDistance
-     * @return
+     * @return GpsUtil
      */
     public GpsUtil minDistance(int minDistance) {
         this.mMinDistance = minDistance;
@@ -293,7 +265,7 @@ public class GpsUtil {
      * 设置位置变化的最小时间
      *
      * @param minTime
-     * @return
+     * @return GpsUtil
      */
     public GpsUtil minTime(int minTime) {
         this.mMinTime = minTime;
@@ -303,7 +275,7 @@ public class GpsUtil {
     /**
      * 设置定位监听器
      */
-    public GpsUtil location(OnLocationListener listener) {
+    public GpsUtil locationListener(OnLocationListener listener) {
         this.mListener = listener;
         return this;
     }
@@ -313,7 +285,7 @@ public class GpsUtil {
      *
      * @return
      */
-    public GpsUtil gpsStatus(GpsStatus.Listener listener) {
+    public GpsUtil gpsStatusListener(GpsStatus.Listener listener) {
         this.mGpsStatusListener = listener;
         return this;
     }
@@ -321,66 +293,19 @@ public class GpsUtil {
     /**
      * 获取gps卫星的数量
      *
-     * @return
+     * @return GpsUtil
      */
     public int getGpsCount() {
         return mGpsCount;
     }
 
     /***********************************************************************************************
-     ****  GPS的相关监听器
+     ****  GPS 的相关监听器
      **********************************************************************************************/
-
-    public class MyGpsStatusListener implements GpsStatus.Listener {
-        private Activity activity;
-
-        public MyGpsStatusListener(Activity activity) {
-            this.activity = activity;
-        }
-
-        @Override
-        public void onGpsStatusChanged(int event) {
-            switch (event) {
-                // 定位启动
-                case GpsStatus.GPS_EVENT_STARTED:
-                    break;
-                // 第一次定位时间
-                case GpsStatus.GPS_EVENT_FIRST_FIX:
-                    break;
-                // 卫星状态改变,收到卫星信息
-                case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
-                    try {
-                        mGpsCount = 0;
-                        checkGpsPermission(activity);
-                        // 取当前状态
-                        GpsStatus gpsStauts = mLocationManager.getGpsStatus(null);
-                        // 获取卫星颗数的默认最大值
-                        int maxSatellites = gpsStauts.getMaxSatellites();
-                        // 创建一个迭代器保存所有卫星
-                        Iterator<GpsSatellite> it = gpsStauts.getSatellites().iterator();
-                        while (it.hasNext() && mGpsCount <= maxSatellites) {
-                            GpsSatellite s = it.next();
-                            // 可见卫星数量
-                            if (s.usedInFix()) {
-                                // 已定位卫星数量
-                                mGpsCount++;
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        LogUtil.e("onGpsStatusChanged", "获取GpsStatus失败");
-                    }
-                    break;
-                // 定位结束
-                case GpsStatus.GPS_EVENT_STOPPED:
-                    break;
-            }
-        }
-    }
 
     private class MyLocationListener implements LocationListener {
         /**
-         * 当坐标改变时触发此函数，如果Provider传进相同的坐标，它就不会被触发
+         * 当坐标改变时触发此函数，如果 Provider 传进相同的坐标，它就不会被触发
          *
          * @param location 坐标
          */
@@ -392,11 +317,11 @@ public class GpsUtil {
         }
 
         /**
-         * provider的在可用、暂时不可用和无服务三个状态直接切换时触发此函数
+         * provider 的在可用、暂时不可用和无服务三个状态直接切换时触发此函数
          *
          * @param provider 提供者
          * @param status   状态
-         * @param extras   provider可选包
+         * @param extras   provider 可选包
          */
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -456,5 +381,51 @@ public class GpsUtil {
          * @param location 坐标
          */
         void getLastKnownLocation(Location location);
+    }
+
+    public class MyGpsStatusListener implements GpsStatus.Listener {
+        private Activity activity;
+
+        public MyGpsStatusListener(Activity activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        public void onGpsStatusChanged(int event) {
+            switch (event) {
+                // 定位启动
+                case GpsStatus.GPS_EVENT_STARTED:
+                    break;
+                // 第一次定位时间
+                case GpsStatus.GPS_EVENT_FIRST_FIX:
+                    break;
+                // 卫星状态改变,收到卫星信息
+                case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
+                    try {
+                        mGpsCount = 0;
+                        // 取当前状态
+                        GpsStatus gpsStauts = mLocationManager.getGpsStatus(null);
+                        // 获取卫星颗数的默认最大值
+                        int maxSatellites = gpsStauts.getMaxSatellites();
+                        // 创建一个迭代器保存所有卫星
+                        Iterator<GpsSatellite> it = gpsStauts.getSatellites().iterator();
+                        while (it.hasNext() && mGpsCount <= maxSatellites) {
+                            GpsSatellite s = it.next();
+                            // 可见卫星数量
+                            if (s.usedInFix()) {
+                                // 已定位卫星数量
+                                mGpsCount++;
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        LogUtil.e("onGpsStatusChanged", "获取GpsStatus失败");
+                    }
+                    break;
+                // 定位结束
+                case GpsStatus.GPS_EVENT_STOPPED:
+                    break;
+            }
+        }
     }
 }

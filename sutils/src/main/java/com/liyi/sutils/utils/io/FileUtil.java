@@ -12,7 +12,9 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import com.liyi.sutils.utils.SUtils;
 import com.liyi.sutils.utils.log.LogUtil;
 
 import java.io.BufferedReader;
@@ -32,7 +34,7 @@ import java.io.Serializable;
 
 
 /**
- * File相关工具类
+ * File 相关工具类
  */
 public class FileUtil {
     private final String TAG = FileUtil.class.getSimpleName();
@@ -48,11 +50,14 @@ public class FileUtil {
         private static final FileUtil INSTANCE = new FileUtil();
     }
 
+    /***********************************************************************************************
+     ****  公用方法
+     **********************************************************************************************/
 
     /**
      * 判断是否有SD卡
      */
-    public static boolean isHasSDCard() {
+    public static boolean isHasSdCard() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             return true;
         }
@@ -62,9 +67,59 @@ public class FileUtil {
     /**
      * 获取SD卡路径
      */
-    public static String getSDCardPath() {
+    public static String getSdCardPath() {
         return Environment.getExternalStorageDirectory().toString();
     }
+
+    /**
+     * 判断是否是文件夹
+     *
+     * @param dirPath 文件路径
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    public static boolean isDir(@Nullable String dirPath) {
+        return isDir(new File(dirPath));
+    }
+
+    /**
+     * 判断是否是文件夹
+     *
+     * @param dir 文件对象
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    public static boolean isDir(File dir) {
+        if (dir == null || !dir.exists()) {
+            return false;
+        }
+        return dir.isDirectory();
+    }
+
+    /**
+     * 判断是否是文件
+     *
+     * @param filePath 文件路径
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    public static boolean isFile(@Nullable String filePath) {
+        return isFile(new File(filePath));
+    }
+
+    /**
+     * 判断是否是文件
+     *
+     * @param file 文件对象
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    public static boolean isFile(File file) {
+        if (file == null || !file.exists()) {
+            return false;
+        }
+        return file.isFile();
+    }
+
+    /***********************************************************************************************
+     ****  单例操作
+     **********************************************************************************************/
 
     /**
      * 创建文件夹 （你必须先创建文件夹，才能创建文件，否则会报“找不到路径”）
@@ -111,13 +166,13 @@ public class FileUtil {
      **********************************************************************************************/
 
     /**
-     * 保存String数据
+     * 保存 String 数据
      *
-     * @param key   保存String数据的文件的路径
-     * @param value 保存的String数据
+     * @param key   保存 String 数据的文件的路径
+     * @param value 保存的 String 数据
      * @throws IOException
      */
-    public void put(String key, String value) {
+    public void put(@Nullable String key, String value) {
         File file = new File(key);
         BufferedWriter out = null;
         try {
@@ -138,12 +193,12 @@ public class FileUtil {
     }
 
     /**
-     * 读取String数据
+     * 读取 String 数据
      *
-     * @param key 保存String数据的文件的路径
-     * @return 保存的String数据
+     * @param key 保存 String 数据的文件的路径
+     * @return 保存的 String 数据
      */
-    public String getAsString(String key) {
+    public String getAsString(@Nullable String key) {
         File file = new File(key);
         if (!file.exists()) {
             return null;
@@ -172,12 +227,12 @@ public class FileUtil {
     }
 
     /**
-     * 保存byte[]
+     * 保存 byte[]
      *
-     * @param key   保存byte[]数据的文件的路径
-     * @param value 保存的byte[]数据
+     * @param key   保存 byte[] 数据的文件的路径
+     * @param value 保存的 byte[] 数据
      */
-    public void put(String key, byte[] value) {
+    public void put(@Nullable String key, byte[] value) {
         File file = new File(key);
         FileOutputStream out = null;
         try {
@@ -200,12 +255,12 @@ public class FileUtil {
     }
 
     /**
-     * 读取byte[]
+     * 读取 byte[]
      *
-     * @param key 保存byte[]数据的文件的路径
-     * @return 保存的byte[]数据
+     * @param key 保存 byte[] 数据的文件的路径
+     * @return 保存的 byte[] 数据
      */
-    public byte[] getAsBinary(String key) {
+    public byte[] getAsBinary(@Nullable String key) {
         File file = new File(key);
         if (!file.exists()) {
             return null;
@@ -247,7 +302,7 @@ public class FileUtil {
      * @param key   保存序列化对象数据的文件的路径
      * @param value 保存的序列化对象数据
      */
-    public void put(String key, Serializable value) {
+    public void put(@Nullable String key, Serializable value) {
         ByteArrayOutputStream baos = null;
         ObjectOutputStream oos = null;
         try {
@@ -282,7 +337,7 @@ public class FileUtil {
      * @param key 保存序列化对象数据的文件的路径
      * @return 保存的序列化对象数据
      */
-    public Object getAsObject(String key) {
+    public Object getAsObject(@Nullable String key) {
         ByteArrayInputStream bais = null;
         ObjectInputStream ois = null;
         try {
@@ -316,22 +371,22 @@ public class FileUtil {
     }
 
     /**
-     * 保存bitmap数据
+     * 保存 bitmap 数据
      *
-     * @param key   保存bitmap数据的文件的路径
-     * @param value 保存的bitmap数据
+     * @param key   保存 bitmap 数据的文件的路径
+     * @param value 保存的 bitmap 数据
      */
-    public void put(String key, Bitmap value) {
+    public void put(@Nullable String key, Bitmap value) {
         put(key, bitmap2Byte(value));
     }
 
     /**
-     * 读取bitmap数据
+     * 读取 bitmap 数据
      *
-     * @param key 保存bitmap数据的文件的路径
-     * @return 保存的bitmap数据
+     * @param key 保存 bitmap 数据的文件的路径
+     * @return 保存的 bitmap 数据
      */
-    public Bitmap getAsBitmap(String key) {
+    public Bitmap getAsBitmap(@Nullable String key) {
         if (getAsBinary(key) == null) {
             return null;
         }
@@ -380,7 +435,7 @@ public class FileUtil {
                     bytesum += byteread;
                     fos.write(buffer, 0, byteread);
                 }
-                LogUtil.d(TAG, "Copy file success, the total size of the file is ========> " + bytesum + " byte");
+                LogUtil.d(TAG, "copy file success, the total size of the file is ========> " + bytesum + " byte");
             } catch (IOException e) {
                 LogUtil.e(TAG, "Copy file error ========> " + e.toString());
                 e.printStackTrace();
@@ -464,7 +519,7 @@ public class FileUtil {
      * 获取指定文件夹中文件的数量
      *
      * @param dir   指定文件夹路径
-     * @param isAll true代表获取所有的文件数量，false代表只获取第一级的文件数量
+     * @param isAll {@code true}: 获取所有的文件数量<br>{@code false}: 只获取第一级的文件数量
      * @return
      */
     public int getFileCount(@NonNull String dir, boolean isAll) {
@@ -646,11 +701,11 @@ public class FileUtil {
      * Callers should check whether the path is local before assuming it
      * represents a local file.
      *
-     * @param context The context.
-     * @param uri     The Uri to query.l
+     * @param uri The Uri to query.l
      */
-    @TargetApi(19)
-    public String getRealPath(@NonNull final Context context, @NonNull final Uri uri) {
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public String getRealPath(@NonNull final Uri uri) {
+        Context context = SUtils.getApp();
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         // DocumentProvider
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
