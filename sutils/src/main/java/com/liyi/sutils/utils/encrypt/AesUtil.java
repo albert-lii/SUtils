@@ -18,7 +18,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * AES 加密工具类
+ * AES 加密工具类（对称加密，用于替代 DES）
  * <p>
  * 参考链接：http://www.cnblogs.com/whoislcj/p/5473030.html
  */
@@ -30,6 +30,10 @@ public class AesUtil {
     private static final String AES = "AES";
     /* SHA1PRNG 强随机种子算法, 要区别 4.2 以上版本的调用方法 */
     private static final String SHA1PRNG = "SHA1PRNG";
+
+    private AesUtil() {
+        throw new UnsupportedOperationException("cannot be instantiated");
+    }
 
     /**
      * 生成随机数，可以当做动态的密钥 加密和解密的密钥必须一致，不然将不能解密

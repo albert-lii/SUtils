@@ -9,16 +9,23 @@ import android.renderscript.Element;
 import android.renderscript.RSRuntimeException;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.support.annotation.IntRange;
 
 
 /**
- * 调用Android自己的RenderScript实现图片模糊
+ * 调用 Android 自己的 RenderScript 实现图片模糊
  * 注：仅在 SDK >= 17 时有用
  */
 public class RSBlur {
-
+    /**
+     * @param context       上下文对象
+     * @param blurredBitmap 待模糊图片
+     * @param radius        模糊度（0-25）
+     * @return 被模糊后的图片
+     * @throws RSRuntimeException
+     */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public static Bitmap blur(Context context, Bitmap blurredBitmap, int radius) throws RSRuntimeException {
+    public static Bitmap blur(Context context, Bitmap blurredBitmap, @IntRange(from = 0, to = 25) int radius) throws RSRuntimeException {
         try {
             RenderScript rs = RenderScript.create(context);
             Allocation input = Allocation.createFromBitmap(rs, blurredBitmap, Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT);

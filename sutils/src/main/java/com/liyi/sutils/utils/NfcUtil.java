@@ -16,7 +16,7 @@ import java.nio.charset.Charset;
 /**
  * NFC 相关的工具类
  * <p>
- * SDK最低版本为14
+ * SDK 最低版本为 14
  */
 @RequiresApi(Build.VERSION_CODES.GINGERBREAD_MR1)
 public class NfcUtil {
@@ -263,6 +263,15 @@ public class NfcUtil {
      */
     public void setDeleteNdefListener(OnDeleteNdefListener listener) {
         this.mDeleteNdefListener = listener;
+    }
+
+    /**
+     * 清除信息
+     */
+    public void clear(){
+        setReadNdefListener(null);
+        setWriteNdefListener(null);
+        setDeleteNdefListener(null);
     }
 
     /**

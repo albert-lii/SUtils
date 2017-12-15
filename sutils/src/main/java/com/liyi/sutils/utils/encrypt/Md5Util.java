@@ -17,6 +17,10 @@ import java.security.NoSuchAlgorithmException;
  */
 public class Md5Util {
 
+    private Md5Util() {
+        throw new UnsupportedOperationException("cannot be instantiated");
+    }
+
     /**
      * 计算字符串的 MD5 值
      *
@@ -48,8 +52,8 @@ public class Md5Util {
     /**
      * 计算文件的 MD5 值
      *
-     * @param file
-     * @return
+     * @param file 需要加密的文件
+     * @return 加密后的数据
      */
     public static String encrypt(File file) {
         if (file == null || !file.isFile() || !file.exists()) {
@@ -91,8 +95,8 @@ public class Md5Util {
     /**
      * 采用nio方式进行 MD5 加密
      *
-     * @param file
-     * @return
+     * @param file 需要加密的文件
+     * @return 加密后的数据
      */
     public static String encryptByNio(File file) {
         String result = "";
@@ -127,9 +131,9 @@ public class Md5Util {
     /**
      * 对字符串进行对此 MD5 加密，提高安全性
      *
-     * @param string
+     * @param string 需要加密的数据
      * @param times  加密次数
-     * @return
+     * @return 加密后的数据
      */
     public static String encrypt(String string, int times) {
         if (TextUtils.isEmpty(string)) {
@@ -145,11 +149,11 @@ public class Md5Util {
     /**
      * MD5加盐
      * <p>
-     * string+key（盐值key）然后进行 MD5 加密
+     * string + key（盐值 key）然后进行 MD5 加密
      *
-     * @param string
-     * @param slat
-     * @return
+     * @param string 需要加密的数据
+     * @param slat 盐
+     * @return 加密后的数据
      */
     public static String encrypt(String string, String slat) {
         if (TextUtils.isEmpty(string)) {

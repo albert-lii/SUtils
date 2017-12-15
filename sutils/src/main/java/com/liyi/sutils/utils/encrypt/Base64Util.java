@@ -9,16 +9,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * Base64加密工具类
+ * Base64 加密工具类
  * <p>
  * 参考链接：http://www.cnblogs.com/whoislcj/p/5887859.html
  */
 public class Base64Util {
+
+    private Base64Util() {
+        throw new UnsupportedOperationException("cannot be instantiated");
+    }
+
     /**
-     * base64加密字符串
+     * base64 加密字符串
      *
      * @param plaintext 明文
-     * @return
+     * @return 加密后的数据
      */
     public static String encrypt(String plaintext) {
         if (TextUtils.isEmpty(plaintext)) {
@@ -28,10 +33,10 @@ public class Base64Util {
     }
 
     /**
-     * base64解码字符串
+     * base64 解码字符串
      *
      * @param ciphertext
-     * @return
+     * @return 解密后的数据
      */
     public static String decrypt(String ciphertext) {
         if (TextUtils.isEmpty(ciphertext)) {
@@ -41,10 +46,10 @@ public class Base64Util {
     }
 
     /**
-     * base64加密文件
+     * base64 加密文件
      *
-     * @param file
-     * @return
+     * @param file 需要加密的文件
+     * @return 解密后的数据
      */
     public static String encrypt(File file) {
         FileInputStream inputFile = null;

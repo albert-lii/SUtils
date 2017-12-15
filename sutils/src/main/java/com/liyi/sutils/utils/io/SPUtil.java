@@ -1,8 +1,11 @@
 package com.liyi.sutils.utils.io;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+
+import com.liyi.sutils.utils.SUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,35 +13,36 @@ import java.util.Set;
 
 
 /**
- * SharedPreferences工具类
+ * SharedPreferences 工具类
  */
-public class SpUtil {
-    private static final String DEF_FILENAME = "SpUtil";
+@SuppressLint("ApplySharedPref")
+public class SPUtil {
+    private static final String DEF_FILENAME = "SPUtil";
     private static final int DEF_MODE = Context.MODE_PRIVATE;
-
-    private static Map<String, SpUtil> mInstanceMap;
+    /* 存储所有的 SharedPreferences 实例 */
+    private static Map<String, SPUtil> mInstanceMap;
     private static SharedPreferences mSp;
     private static SharedPreferences.Editor mEditor;
-    private Context mContext;
 
-    private SpUtil(Context context, String fileName, int mode) {
+    private SPUtil(String fileName, int mode) {
         super();
-        this.mContext = context.getApplicationContext();
-        mSp = mContext.getSharedPreferences(fileName, mode);
+        mSp = SUtils.getApp().getSharedPreferences(fileName, mode);
         mEditor = mSp.edit();
     }
 
-    public static SpUtil getInstance(@NonNull Context context) {
-        return getInstance(context, DEF_FILENAME, DEF_MODE);
+    public static SPUtil getInstance() {
+        return getInstance(DEF_FILENAME, DEF_MODE);
     }
 
-    public static SpUtil getInstance(@NonNull Context context, @NonNull String fileName, @NonNull int mode) {
+    public static SPUtil getInstance(@NonNull String fileName, @NonNull int mode) {
         if (mInstanceMap == null) {
-            mInstanceMap = new HashMap<String, SpUtil>();
+            mInstanceMap = new HashMap<String, SPUtil>();
         }
-        SpUtil manager = mInstanceMap.get(fileName + "_" + mode);
+        // 先获取 SharedPreferences 实例
+        SPUtil manager = mInstanceMap.get(fileName + "_" + mode);
+        // 如果获取不到，则重新创建
         if (manager == null) {
-            manager = new SpUtil(context, fileName, mode);
+            manager = new SPUtil(fileName, mode);
             mInstanceMap.put(fileName + "_" + mode, manager);
         }
         return manager;

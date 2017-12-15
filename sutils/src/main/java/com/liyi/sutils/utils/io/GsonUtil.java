@@ -12,7 +12,7 @@ import java.util.Map;
  * gson工具类
  */
 public class GsonUtil {
-    private static Gson mGson = null;
+    private static Gson mGson;
 
     static {
         if (mGson == null) {
@@ -29,10 +29,10 @@ public class GsonUtil {
     /**
      * 将 json 数据转化为 bean
      *
-     * @param jsonStr
-     * @param cls
-     * @param <T>
-     * @return
+     * @param jsonStr json 字符串
+     * @param cls 转换成的 bean 类型
+     * @param <T> 返回的 bean 类型
+     * @return bean
      */
     public static <T> T json2Bean(String jsonStr, Class<T> cls) {
         checkGson();
@@ -43,9 +43,9 @@ public class GsonUtil {
     /**
      * 将 json 数据转换为 list
      *
-     * @param jsonStr
-     * @param type
-     * @param <T>
+     * @param jsonStr json 字符串
+     * @param type 转换成的对象类型
+     * @param <T> 返回的类型
      * @return
      */
     public static <T> List<T> json2List(String jsonStr, Type type) {
@@ -57,8 +57,8 @@ public class GsonUtil {
     /**
      * 将 json 数据转化为 map
      *
-     * @param jsonStr
-     * @param <T>
+     * @param jsonStr json 字符串
+     * @param <T> 转换成的 map 类型
      * @return
      */
     public static <T> Map<String, T> json2Map(String jsonStr) {
@@ -71,8 +71,8 @@ public class GsonUtil {
     /**
      * 将 json 数据转化为 map 元素的 list
      *
-     * @param jsonStr
-     * @param <T>
+     * @param jsonStr json 字符串
+     * @param <T> 转换成的 List<Map<?,?>> 类型
      * @return
      */
     public static <T> List<Map<String, T>> json2ListMap(String jsonStr) {

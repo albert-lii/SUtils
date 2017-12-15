@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
  * 国外一位大神写的图片模糊算法
  */
 public class FastBlur {
-    public static Bitmap blur(Bitmap sentBitmap, int radius, boolean canReuseInBitmap) {
+    public static Bitmap blur(Bitmap sentBitmap,int radius, boolean canReuseInBitmap) {
         Bitmap bitmap;
         if (canReuseInBitmap) {
             bitmap = sentBitmap;

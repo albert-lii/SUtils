@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * base64解密
+ * base64 解密
  */
 public class Base64Decoder extends FilterInputStream {
 

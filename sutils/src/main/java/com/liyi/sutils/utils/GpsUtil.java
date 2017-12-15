@@ -299,6 +299,18 @@ public class GpsUtil {
         return mGpsCount;
     }
 
+    /**
+     * 清除信息
+     */
+    public void clear(){
+        this.mCriteria = setCriteria();
+        this.mMinDistance = 1;
+        this.mMinTime = 1000;
+        this.mGpsCount = 0;
+        locationListener(null);
+        gpsStatusListener(null);
+    }
+
     /***********************************************************************************************
      ****  GPS 的相关监听器
      **********************************************************************************************/
