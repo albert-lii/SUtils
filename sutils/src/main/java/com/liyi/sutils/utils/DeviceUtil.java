@@ -131,13 +131,23 @@ public class DeviceUtil {
     }
 
     /**
-     * 获取设备厂商
+     * 获取设备硬件制造商
      * <p>如 Xiaomi</p>
      *
-     * @return 设备厂商
+     * @return 设备硬件制造商
      */
     public static String getManufacturer() {
         return Build.MANUFACTURER;
+    }
+
+    /**
+     * 获取设备android系统定制商
+     * <p>如 Xiaomi</p>
+     *
+     * @return 设备android系统定制商
+     */
+    public static String getBrand() {
+        return Build.BRAND;
     }
 
     /**
@@ -260,54 +270,5 @@ public class DeviceUtil {
             }
         }
         return "02:00:00:00:00:00";
-    }
-
-    /**
-     * 获取本地 IP 地址（内网）
-     *
-     * @return Ipv4 的地址
-     */
-    public static String getLocalIpAddress() {
-        try {
-            for (Enumeration<NetworkInterface> en = NetworkInterface
-                    .getNetworkInterfaces(); en.hasMoreElements(); ) {
-                NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr = intf
-                        .getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
-                    InetAddress inetAddress = enumIpAddr.nextElement();
-                    if (!inetAddress.isLoopbackAddress() && !inetAddress.isLinkLocalAddress()) {
-                        return inetAddress.getHostAddress().toString();
-                    }
-                }
-            }
-        } catch (SocketException e) {
-            e.printStackTrace();
-            LogUtil.e(TAG, "GetLocalIpAddress ========> " + e.toString());
-        }
-        return null;
-    }
-
-    /**
-     * 通过 wifi 获取本地 IP 地址
-     *
-     * @return IP 地址
-     */
-    public static String getIpAddressByWifi() {
-        // 获取wifi服务
-        WifiManager wifiManager = (WifiManager) SUtils.getApp().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        // 判断wifi是否开启
-        if (!wifiManager.isWifiEnabled()) {
-            wifiManager.setWifiEnabled(true);
-        }
-        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-        int ipAddress = wifiInfo.getIpAddress();
-        return intToIp(ipAddress);
-    }
-
-    private static String intToIp(int i) {
-        return (i & 0xFF) + "." +
-                ((i >> 8) & 0xFF) + "." +
-                ((i >> 16) & 0xFF) + "." +
-                (i >> 24 & 0xFF);
     }
 }

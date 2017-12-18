@@ -6,9 +6,9 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.liyi.sutils.utils.SUtils;
 import com.liyi.sutils.utils.ToastUtil;
 
 import java.io.File;
@@ -25,92 +25,94 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * UncaughtException处理类,当程序发生Uncaught异常的时候,有该类来接管程序,并记录发送错误报告.
+ * UncaughtException 处理类,当程序发生 Uncaught 异常的时候,有该类来接管程序,并记录发送错误报告.
  */
-public class CrashHandler implements Thread.UncaughtExceptionHandler {
-    private static final String TAG = CrashHandler.class.getClass().getSimpleName();
+public class CrashUtil implements Thread.UncaughtExceptionHandler {
+    private static final String TAG = CrashUtil.class.getClass().getSimpleName();
 
-    /* 异常文件的存储路径 */
-    private String mCrashPath;
-    /* 日志文件名的前缀 */
-    private String mPreFix;
+    /* 崩溃文件的存储路径 */
+    private String mCrashDirPath;
+    /* 崩溃文件名的前缀 */
+    private String mCrashFilePreFix;
 
-    /* CrashHandler实例 */
-    private static CrashHandler mInstance;
+    /* CrashUtil 的实例*/
+    private static CrashUtil INSTANCE;
     private static Context mContext;
-    /* 系统默认的UncaughtException处理类 */
+    /* 系统默认的 UncaughtException 处理类 */
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     /* 用来存储设备信息和异常信息 */
     private Map<String, String> mInfos = new HashMap<String, String>();
-    /* 用日期来创建日志文件的存放文件夹 */
-    private DateFormat mFormatter1 = new SimpleDateFormat("yyyy-MM-dd");
-    /* 用于格式化日期,作为日志文件名的一部分 */
-    private DateFormat mFormatter2 = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+    /* 用日期来创建崩溃文件的存放文件夹 */
+    private DateFormat mDirNameFormat = new SimpleDateFormat("yyyy-MM-dd");
+    /* 用于格式化日期,作为崩溃文件名的一部分 */
+    private DateFormat mFileNameFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+    private OnHandleCrashCallback mCallback;
 
-    private CrashHandler(Config config) {
-        // 获取系统默认的UncaughtException处理器
+    private CrashUtil(Config config) {
+        mContext = SUtils.getApp().getApplicationContext();
+        // 获取系统默认的 UncaughtException 处理器
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
-        // 设置该CrashHandler为程序的默认处理器
+        // 设置 CrashUtil 为程序的默认处理器
         Thread.setDefaultUncaughtExceptionHandler(this);
-        mCrashPath = config.filePath;
-        mPreFix = config.preFix;
-    }
-
-    public static void initialize(@NonNull Context context) {
-        mContext = context.getApplicationContext();
-        mInstance = new CrashHandler(new Config(context));
+        mCrashDirPath = config.dirPath;
+        mCrashFilePreFix = config.preFix;
+        mCallback = config.callback;
     }
 
     /**
-     * 初始化（建议在application中初始化）
-     *
-     * @param context
-     * @param config  配置类
+     * 初始化（建议在 application 中初始化）
      */
-    public static void initialize(@NonNull Context context, Config config) {
-        mContext = context.getApplicationContext();
-        mInstance = new CrashHandler(config == null ? new Config(context) : config);
+    public static void initialize() {
+        INSTANCE = new CrashUtil(new Config());
     }
 
-    public static final class Config {
-        // crash文件存储路径
-        private String filePath;
-        // crash文件名的前缀
-        private String preFix;
-        private Context context;
+    /**
+     * 初始化（建议在 application 中初始化）
+     *
+     * @param config 配置类
+     */
+    public static void initialize(Config config) {
+        INSTANCE = new CrashUtil(config == null ? new Config() : config);
+    }
 
-        public Config(Context context) {
-            this.context = context.getApplicationContext();
+    /**
+     * 崩溃文件信息配置类
+     */
+    public static final class Config {
+        // 崩溃文件夹的存储路径
+        private String dirPath;
+        // 崩溃文件名的前缀
+        private String preFix;
+        // 崩溃文件处理回调
+        private OnHandleCrashCallback callback;
+
+        public Config() {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 // 默认路径
-                filePath = Environment.getExternalStorageDirectory().toString() + File.separator
-                        + "CrashHandler" + File.separator + this.context.getPackageName();
+                dirPath = Environment.getExternalStorageDirectory().toString() + File.separator
+                        + "CrashUtil" + File.separator
+                        + SUtils.getApp().getPackageName();
+                preFix = "crash";
             }
-            preFix = "crash";
         }
 
         /**
-         * 设置crash文件在sd卡中的存储文件夹的路径
+         * 设置崩溃文件夹在 sd 卡中的存储路径
          *
-         * @param folder 存储文件夹的路径
+         * @param dir 存储文件夹的路径
          * @return
          */
-        public Config setSdCardStore(String folder) {
+        public Config setSdCardStore(String dir) {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                if (TextUtils.isEmpty(folder)) {
-                    filePath = Environment.getExternalStorageDirectory().toString() + File.separator
-                            + "CrashHandler" + File.separator + context.getPackageName();
-                } else {
-                    filePath = Environment.getExternalStorageDirectory().toString() + File.separator + folder;
-                }
+                dirPath = Environment.getExternalStorageDirectory().toString() + File.separator + dir;
             }
             return this;
         }
 
         /**
-         * 设置crash文件的前缀
+         * 设置崩溃文件的前缀
          *
-         * @param preFix crash文件的前缀
+         * @param preFix 崩溃文件的前缀
          * @return
          */
         public Config setFilePreFix(String preFix) {
@@ -121,10 +123,21 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             }
             return this;
         }
+
+        /**
+         * 设置崩溃文件处理回调
+         *
+         * @param callback
+         * @return
+         */
+        public Config setHandleCrashCallback(OnHandleCrashCallback callback) {
+            this.callback = callback;
+            return this;
+        }
     }
 
     /**
-     * 当UncaughtException发生时会转入该函数来处理
+     * 当 UncaughtException 发生时会转入该函数来处理
      */
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
@@ -136,7 +149,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 // 延迟两秒后退出
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
-                LogUtil.e(TAG, "error ========> " + e);
+                LogUtil.e(TAG, "CrashUtil Error ========> " + e);
             }
             // 退出程序
             android.os.Process.killProcess(android.os.Process.myPid());
@@ -145,16 +158,16 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     }
 
     /**
-     * 自定义错误处理,收集错误信息 发送错误报告等操作均在此完成.
+     * 自定义错误处理、收集错误信息、发送错误报告等操作均在此完成.
      *
      * @param ex
-     * @return true:如果处理了该异常信息;否则返回false.
+     * @return {@code true}: 处理了该异常信息<br>{@code false}: 未处理该异常信息
      */
     private boolean handleException(Throwable ex) {
         if (ex == null) {
             return false;
         }
-        // 使用Toast来显示异常信息
+        // 使用 Toast 来显示异常信息
         new Thread() {
             @Override
             public void run() {
@@ -166,7 +179,10 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         // 收集设备参数信息
         collectDeviceInfo(mContext);
         // 保存日志文件
-        saveCrashInfo2File(ex);
+        String fileName = saveCrashInfo2File(ex);
+        if (mCallback != null) {
+            mCallback.handleCrash(fileName);
+        }
         return true;
     }
 
@@ -183,17 +199,18 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 String appName = pi.applicationInfo.loadLabel(pm).toString();
                 String versionName = pi.versionName == null ? "null" : pi.versionName;
                 String versionCode = pi.versionCode + "";
-                mInfos.put("appName", appName);
+                mInfos.put("应用名称", appName);
                 mInfos.put("versionName", versionName);
                 mInfos.put("versionCode", versionCode);
             }
             /**
-             * 获取手机型号，系统版本，以及SDK版本
+             * 获取手机型号，系统版本，以及 SDK 版本等
              */
-            mInfos.put("手机型号:", android.os.Build.MODEL);
+            mInfos.put("手机型号", android.os.Build.MODEL);
             mInfos.put("系统版本", android.os.Build.VERSION.SDK + "");
             mInfos.put("Android版本", android.os.Build.VERSION.RELEASE);
-            mInfos.put("手机厂商", android.os.Build.BRAND);
+            mInfos.put("手机系统定制商", android.os.Build.BRAND);
+            mInfos.put("手机硬件制造商", android.os.Build.MANUFACTURER);
         } catch (PackageManager.NameNotFoundException e) {
             LogUtil.e(TAG, "an error occured when collect package info ========> " + e);
         }
@@ -235,14 +252,14 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         sb.append(result);
         FileOutputStream fos = null;
         try {
-            String time = mFormatter2.format(new Date());
-            // mPreFix默认是"scrash"
-            String fileName = mPreFix + "-" + time + ".log";
+            String time = mFileNameFormat.format(new Date());
+            // mCrashFilePreFix 默认是 "crash"
+            String fileName = mCrashFilePreFix + "-" + time + ".log";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                if (!mCrashPath.endsWith(File.separator)) {
-                    mCrashPath = mCrashPath + File.separator;
+                if (!mCrashDirPath.endsWith(File.separator)) {
+                    mCrashDirPath = mCrashDirPath + File.separator;
                 }
-                String path = mCrashPath + mFormatter1;
+                String path = mCrashDirPath + mDirNameFormat;
                 File dir = new File(path);
                 if (!dir.exists()) {
                     dir.mkdirs();
@@ -264,5 +281,17 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             }
         }
         return null;
+    }
+
+    /**
+     * 崩溃文件处理回调
+     */
+    public interface OnHandleCrashCallback {
+        /**
+         * 处理崩溃文件
+         *
+         * @param fileName 崩溃文件名
+         */
+        void handleCrash(String fileName);
     }
 }

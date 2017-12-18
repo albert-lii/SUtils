@@ -4,44 +4,77 @@ import android.util.Log;
 
 
 /**
- * log工具类
+ * Log 工具类
  */
 public class LogUtil {
-    // 可以用于release时，统一关闭log
-    public static boolean isLogEnable = true;
+    /* 可以用于release时，统一关闭log */
+    public static boolean isLogEnabled = true;
 
+    /**
+     * 打印所有的信息
+     *
+     * @param tag
+     * @param msg
+     */
     public static void v(String tag, String msg) {
-        if (isLogEnable) {
+        if (isLogEnabled) {
             Log.v(tag, msg);
         }
     }
 
+    /**
+     * 打印 info 信息
+     *
+     * @param tag
+     * @param msg
+     */
     public static void i(String tag, String msg) {
-        if (isLogEnable) {
+        if (isLogEnabled) {
             Log.i(tag, msg);
         }
     }
 
+    /**
+     * 打印 debug 信息
+     *
+     * @param tag
+     * @param msg
+     */
     public static void d(String tag, String msg) {
-        if (isLogEnable) {
+        if (isLogEnabled) {
             Log.d(tag, msg);
         }
     }
 
+    /**
+     * 打印警告信息
+     *
+     * @param tag
+     * @param msg
+     */
     public static void w(String tag, String msg) {
-        if (isLogEnable) {
+        if (isLogEnabled) {
             Log.w(tag, msg);
         }
     }
 
+    /**
+     * 打印错误信息
+     *
+     * @param tag
+     * @param msg
+     */
     public static void e(String tag, String msg) {
-        if (isLogEnable) {
+        if (isLogEnabled) {
             Log.e(tag, msg);
         }
     }
 
     /**
-     * 输出log中包含的信息
+     * 输出 Log 中包含的信息
+     *
+     * @param stackTraceElement
+     * @return Log 中包含的信息
      */
     public static String getLogInfo(StackTraceElement stackTraceElement) {
         StringBuilder logInfoStringBuilder = new StringBuilder();

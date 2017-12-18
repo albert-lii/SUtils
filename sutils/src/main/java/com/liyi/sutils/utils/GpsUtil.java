@@ -169,12 +169,12 @@ public class GpsUtil {
      *
      * @return {@code true}: 初始化成功<br>{@code false}: 初始化失败
      */
-    public boolean register(@NonNull Activity activity) {
+    public boolean register() {
         if (mLocationManager == null) {
-            mLocationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+            mLocationManager = (LocationManager) SUtils.getApp().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         }
         if (!isLocationEnabled()) {
-            ToastUtil.show(activity, "无法定位，请打开定位服务");
+            ToastUtil.show(SUtils.getApp().getApplicationContext(), "无法定位，请打开定位服务");
             return false;
         }
         String provider = mLocationManager.getBestProvider(mCriteria, true);
