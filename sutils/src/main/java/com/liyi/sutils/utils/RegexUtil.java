@@ -12,9 +12,9 @@ import java.util.regex.Pattern;
 /**
  * 正则表达式相关工具类
  */
-public final class RegExUtil {
+public final class RegexUtil {
 
-    private RegExUtil() {
+    private RegexUtil() {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
