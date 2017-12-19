@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 
 
 /**
- * 系统状态栏与底部导航栏工具类
+ * 系统状态栏与底部导航栏相关工具类
  * <p>仅在 SDK >= 4.4 时有效</p>
  */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)

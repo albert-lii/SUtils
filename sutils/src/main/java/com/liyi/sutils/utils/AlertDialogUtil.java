@@ -61,8 +61,8 @@ public class AlertDialogUtil {
     /**
      * 是否可以按返回键关闭
      *
-     * @param cancelable
-     * @return
+     * @param cancelable {@code true}: 可以<br>{@code false}: 不可以
+     * @return AlertDialogUtil 类
      */
     public AlertDialogUtil setCancelable(boolean cancelable) {
         this.cancelable = cancelable;
@@ -70,10 +70,10 @@ public class AlertDialogUtil {
     }
 
     /**
-     * 取消按钮的文字
+     * 设置取消按钮的文字
      *
-     * @param text
-     * @return
+     * @param text 取消按钮的文字
+     * @return AlertDialogUtil 类
      */
     public AlertDialogUtil negativeText(String text) {
         this.mNegBtnText = text;
@@ -81,10 +81,10 @@ public class AlertDialogUtil {
     }
 
     /**
-     * 确定按钮的文字
+     * 设置确定按钮的文字
      *
-     * @param text
-     * @return
+     * @param text 确定按钮的文字
+     * @return AlertDialogUtil 类
      */
     public AlertDialogUtil positiveText(String text) {
         this.mPosBtnText = text;
@@ -94,8 +94,8 @@ public class AlertDialogUtil {
     /**
      * 设置取消按钮的点击事件
      *
-     * @param listener
-     * @return
+     * @param listener 取消按钮的点击事件监听
+     * @return AlertDialogUtil 类
      */
     public AlertDialogUtil negative(OnAlertNegativeListener listener) {
         this.mNegativeListener = listener;
@@ -105,8 +105,8 @@ public class AlertDialogUtil {
     /**
      * 设置确定按钮的点击事件
      *
-     * @param listener
-     * @return
+     * @param listener 确定按钮的点击事件监听
+     * @return AlertDialogUtil 类
      */
     public AlertDialogUtil positive(OnAlertPositiveListener listener) {
         this.mPositiveListener = listener;

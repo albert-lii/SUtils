@@ -36,9 +36,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 二维码工具类
+ * 二维码相关工具类
  */
-
 public class QRCodeUtil {
 
     /***********************************************************************************************
@@ -46,19 +45,19 @@ public class QRCodeUtil {
      **********************************************************************************************/
 
     /**
-     * 生成二维码的Bitmap
+     * 生成二维码的 Bitmap
      *
      * @param content 二维码中的内容
      * @param width   二维码的宽
      * @param height  二维码的高
      * @return 二维码图片
      */
-    public static Bitmap createQRImage(@NonNull String content, int width, int height) {
-        return createQRImage(content, width, height, 2);
+    public static Bitmap createQRCode(String content, int width, int height) {
+        return createQRCode(content, width, height, 2);
     }
 
     /**
-     * 生成二维码的Bitmap
+     * 生成二维码的 Bitmap
      *
      * @param content 二维码中的内容
      * @param width   二维码的宽
@@ -66,21 +65,21 @@ public class QRCodeUtil {
      * @param height  二维码空白边距的宽度
      * @return 二维码图片
      */
-    public static Bitmap createQRImage(@NonNull String content, int width, int height, int border) {
+    public static Bitmap createQRCode(String content, int width, int height, int border) {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         // 配置参数
         Map hints = new HashMap<>();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
         // 容错级别
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-        // 设置空白边距的宽度,default is 4
+        // 设置空白边距的宽度，default is 4
         hints.put(EncodeHintType.MARGIN, border);
         try {
             // 图像数据转换，使用了矩阵转换
             BitMatrix encode = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, width, height, hints);
             int[] pixels = new int[width * height];
             // 下面这里按照二维码的算法，逐个生成二维码的图片，
-            // 两个for循环是图片横列扫描的结果
+            // 两个 for 循环是图片横列扫描的结果
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
                     if (encode.get(j, i)) {
@@ -90,7 +89,7 @@ public class QRCodeUtil {
                     }
                 }
             }
-            // 生成二维码图片的格式，使用ARGB_8888
+            // 生成二维码图片的格式，使用 ARGB_8888
             return Bitmap.createBitmap(pixels, 0, width, width, height, Bitmap.Config.ARGB_8888);
         } catch (WriterException e) {
             e.printStackTrace();
@@ -99,13 +98,15 @@ public class QRCodeUtil {
     }
 
     /**
-     * 在二维码中间添加Logo图案
+     * 在二维码中间添加 Logo 图案
      *
-     * @param qrBitmap
-     * @param logoBitmap
-     * @return
+     * @param qrBitmap   二维码图片
+     * @param logoBitmap logo 图片
+     * @return 添加了 Logo 的二维码图片
      */
-    public static Bitmap addLogo(Bitmap qrBitmap, Bitmap logoBitmap) {
+    public static Bitmap addLogoToQRCode(Bitmap qrBitmap, Bitmap logoBitmap) {
+        if (qrBitmap == null) return null;
+        if (logoBitmap == null) return qrBitmap;
         int qrBitmapWidth = qrBitmap.getWidth();
         int qrBitmapHeight = qrBitmap.getHeight();
         int logoBitmapWidth = logoBitmap.getWidth();
@@ -136,29 +137,25 @@ public class QRCodeUtil {
      * @param path 二维码图片所在路径
      * @return 解析结果
      */
-    public static Result decodeQRcodeRGB(String path) {
-        if (TextUtils.isEmpty(path)) {
-            return null;
-        }
+    public static Result decodeQRCodeRGB(String path) {
+        if (TextUtils.isEmpty(path)) return null;
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inSampleSize = 1;
         Bitmap qrcode = BitmapFactory.decodeFile(path, opts);
-        Result result = decodeQRcodeRGB(qrcode);
+        Result result = decodeQRCodeRGB(qrcode);
         qrcode.recycle();
         qrcode = null;
         return result;
     }
 
     /**
-     * 解析二维码 （使用解析RGB编码数据的方式）
+     * 解析二维码 （使用解析 RGB 编码数据的方式）
      *
      * @param qrcode 二维码图片
      * @return 解析结果
      */
-    public static Result decodeQRcodeRGB(Bitmap qrcode) {
-        if (qrcode == null) {
-            return null;
-        }
+    public static Result decodeQRCodeRGB(Bitmap qrcode) {
+        if (qrcode == null) return null;
         int width = qrcode.getWidth();
         int height = qrcode.getHeight();
         int[] data = new int[width * height];
@@ -182,60 +179,54 @@ public class QRCodeUtil {
     }
 
     /**
-     * 解析二维码（使用解析YUV编码数据的方式）
+     * 解析二维码（使用解析 YUV 编码数据的方式）
      *
      * @param path 二维码图片所在路径
      * @return 解析结果
      */
-    public static Result decodeQRcodeYUV(String path) {
-        if (TextUtils.isEmpty(path)) {
-            return null;
-        }
+    public static Result decodeQRCodeYUV(String path) {
+        if (TextUtils.isEmpty(path)) return null;
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inSampleSize = 1;
         Bitmap barcode = BitmapFactory.decodeFile(path, opts);
-        Result result = decodeQRcodeYUV(barcode);
+        Result result = decodeQRCodeYUV(barcode);
         barcode.recycle();
         barcode = null;
         return result;
     }
 
     /**
-     * 解析二维码（使用解析YUV编码数据的方式）
+     * 解析二维码（使用解析 YUV 编码数据的方式）
      *
      * @param qrcode 二维码图片
      * @return 解析结果
      */
-    public static Result decodeQRcodeYUV(Bitmap qrcode) {
-        if (qrcode == null) {
-            return null;
-        }
+    public static Result decodeQRCodeYUV(Bitmap qrcode) {
+        if (qrcode == null) return null;
         int width = qrcode.getWidth();
         int height = qrcode.getHeight();
-        // 以argb方式存放图片的像素
+        // 以 argb 方式存放图片的像素
         int[] argb = new int[width * height];
         qrcode.getPixels(argb, 0, width, 0, 0, width, height);
-        // 将argb转换为yuv
+        // 将 argb 转换为 yuv
         byte[] yuv = new byte[width * height * 3 / 2];
         encodeYUV420SP(yuv, argb, width, height);
-        // 解析YUV编码方式的二维码
-        Result result = decodeQRcodeYUV(yuv, width, height);
-
+        // 解析 YUV 编码方式的二维码
+        Result result = decodeQRCodeYUV(yuv, width, height);
         qrcode.recycle();
         qrcode = null;
         return result;
     }
 
     /**
-     * 解析二维码（使用解析YUV编码数据的方式）
+     * 解析二维码（使用解析 YUV 编码数据的方式）
      *
-     * @param yuv
-     * @param width
-     * @param height
-     * @return
+     * @param yuv    二维码图片
+     * @param width  二维码图片的宽
+     * @param height 二维码图片的高
+     * @return 解析结果
      */
-    private static Result decodeQRcodeYUV(byte[] yuv, int width, int height) {
-        long start = System.currentTimeMillis();
+    private static Result decodeQRCodeYUV(byte[] yuv, int width, int height) {
         MultiFormatReader multiFormatReader = new MultiFormatReader();
         multiFormatReader.setHints(null);
 
@@ -270,16 +261,16 @@ public class QRCodeUtil {
     private static void encodeYUV420SP(byte[] yuv, int[] argb, int width, int height) {
         // 帧图片的像素大小
         final int frameSize = width * height;
-        // ---YUV数据---
+        // ---YUV 数据---
         int Y, U, V;
-        // Y的index从0开始
+        // Y 的 index 从0开始
         int yIndex = 0;
-        // UV的index从frameSize开始
+        // UV 的 index 从 frameSize 开始
         int uvIndex = frameSize;
         // ---颜色数据---
         int R, G, B;
         int rgbIndex = 0;
-        // ---循环所有像素点，RGB转YUV---
+        // ---循环所有像素点，RGB 转 YUV---
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
                 R = (argb[rgbIndex] & 0xff0000) >> 16;
@@ -287,7 +278,7 @@ public class QRCodeUtil {
                 B = (argb[rgbIndex] & 0xff);
                 //
                 rgbIndex++;
-                // well known RGB to YUV algorithm
+                // 已知的 RGB 转 YUV 算法
                 Y = ((66 * R + 129 * G + 25 * B + 128) >> 8) + 16;
                 U = ((-38 * R - 74 * G + 112 * B + 128) >> 8) + 128;
                 V = ((112 * R - 94 * G - 18 * B + 128) >> 8) + 128;
@@ -301,9 +292,7 @@ public class QRCodeUtil {
                 yuv[yIndex++] = (byte) Y;
                 // ---UV---
                 if ((j % 2 == 0) && (i % 2 == 0)) {
-                    //
                     yuv[uvIndex++] = (byte) V;
-                    //
                     yuv[uvIndex++] = (byte) U;
                 }
             }
@@ -318,14 +307,13 @@ public class QRCodeUtil {
     /**
      * 生成条形码
      *
-     * @param context
      * @param contents      需要生成的内容
      * @param desiredWidth  生成条形码的宽度
      * @param desiredHeight 生成条形码的高度
      * @param displayCode   是否在条形码下方显示内容
      * @return
      */
-    public static Bitmap createBarImage(@NonNull Context context, String contents, int desiredWidth, int desiredHeight, boolean displayCode) {
+    public static Bitmap createBarCode(String contents, int desiredWidth, int desiredHeight, boolean displayCode) {
         Bitmap ruseltBitmap = null;
         /**
          * 图片两端所保留的空白的宽度
@@ -339,7 +327,7 @@ public class QRCodeUtil {
             Bitmap barcodeBitmap = encodeAsBitmap(contents, barcodeFormat,
                     desiredWidth, desiredHeight);
             Bitmap codeBitmap = createCodeBitmap(contents, desiredWidth + 2
-                    * marginW, desiredHeight, context);
+                    * marginW, desiredHeight, SUtils.getApp());
             ruseltBitmap = mixtureBitmap(barcodeBitmap, codeBitmap, new PointF(
                     0, desiredHeight));
         } else {
@@ -350,7 +338,7 @@ public class QRCodeUtil {
     }
 
     /**
-     * 生成条形码的Bitmap
+     * 生成条形码的 Bitmap
      *
      * @param contents      需要生成的内容
      * @param format        编码格式
@@ -370,7 +358,7 @@ public class QRCodeUtil {
         int width = result.getWidth();
         int height = result.getHeight();
         int[] pixels = new int[width * height];
-        // All are 0, or black, by default
+        // 默认情况下，所有的都是 0 或黑色
         for (int y = 0; y < height; y++) {
             int offset = y * width;
             for (int x = 0; x < width; x++) {
@@ -384,7 +372,7 @@ public class QRCodeUtil {
     }
 
     /**
-     * 生成显示编码的Bitmap
+     * 生成显示编码的 Bitmap
      *
      * @param contents
      * @param width
@@ -413,12 +401,12 @@ public class QRCodeUtil {
     }
 
     /**
-     * 将两个Bitmap合并成一个
+     * 将两个 Bitmap 合并成一个
      *
      * @param first
      * @param second
-     * @param fromPoint 第二个Bitmap开始绘制的起始位置（相对于第一个Bitmap）
-     * @return
+     * @param fromPoint 第二个Bitmap开始绘制的起始位置（相对于第一个 Bitmap）
+     * @return 合并后的 bitmap
      */
     private static Bitmap mixtureBitmap(Bitmap first, Bitmap second, PointF fromPoint) {
         if (first == null || second == null || fromPoint == null) {

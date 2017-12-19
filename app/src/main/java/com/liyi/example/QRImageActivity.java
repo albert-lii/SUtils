@@ -13,7 +13,6 @@ import com.liyi.sutils.utils.QRCodeUtil;
 /**
  * 二维码页面
  */
-
 public class QRImageActivity extends Activity {
     private ImageView iv_qr;
 
@@ -22,8 +21,8 @@ public class QRImageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrimage);
         iv_qr = (ImageView) findViewById(R.id.iv_qicode);
-        Bitmap qrImg = QRCodeUtil.createQRImage("liyi", DensityUtil.dp2px(this, 400), DensityUtil.dp2px(this, 400), 2);
-        Bitmap qrLogo = QRCodeUtil.addLogo(qrImg, ImageUtil.drawable2Bitmap(this, R.drawable.img_isooqi_holder));
+        Bitmap qrImg = QRCodeUtil.createQRCode("liyi", DensityUtil.dp2px(400), DensityUtil.dp2px(400), 2);
+        Bitmap qrLogo = QRCodeUtil.addLogoToQRCode(qrImg, ImageUtil.drawable2Bitmap(R.drawable.img_isooqi_holder));
         iv_qr.setImageBitmap(qrLogo);
     }
 }

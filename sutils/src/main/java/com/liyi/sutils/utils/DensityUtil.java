@@ -1,8 +1,5 @@
 package com.liyi.sutils.utils;
 
-import com.liyi.sutils.utils.SUtils;
-
-
 /**
  * 单位转换工具类
  */

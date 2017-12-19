@@ -8,7 +8,7 @@ import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
 
 
 /**
- * EventBus3.0工具类
+ * EventBus 3.0 工具类
  */
 public class EventBusUtil {
     private static final String TAG = EventBusUtil.class.getSimpleName();
@@ -16,7 +16,7 @@ public class EventBusUtil {
     /**
      * 使用索引加速
      * <p>
-     * 推荐在application中使用
+     * 推荐在 application 中使用
      *
      * @param index
      */
@@ -25,9 +25,9 @@ public class EventBusUtil {
     }
 
     /**
-     * 注册eventbus
+     * 注册 eventbus
      *
-     * @param subscriber
+     * @param subscriber 绑定对象
      */
     public static void register(Object subscriber) {
         if (!EventBus.getDefault().isRegistered(subscriber)) {
@@ -38,9 +38,9 @@ public class EventBusUtil {
     }
 
     /**
-     * 取消注册eventbus
+     * 取消注册 eventbus
      *
-     * @param subscriber
+     * @param subscriber 绑定对象
      */
     public static void unregister(Object subscriber) {
         EventBus.getDefault().unregister(subscriber);
@@ -49,7 +49,7 @@ public class EventBusUtil {
     /**
      * 发布一个订阅事件
      * <p>
-     * 必须先注册，才能接收到发布的事件，有点类似于startActivityForResult（）方法
+     * 必须先注册，才能接收到发布的事件，有点类似于 startActivityForResult（）方法
      */
     public static void post(Object event) {
         EventBus.getDefault().post(event);
@@ -68,7 +68,7 @@ public class EventBusUtil {
     /**
      * 移除指定的粘性订阅事件
      *
-     * @param eventType
+     * @param eventType 事件类型
      */
     public static <T> void removeStickyEvent(Class<T> eventType) {
         T stickyEvent = EventBus.getDefault().getStickyEvent(eventType);
@@ -96,7 +96,7 @@ public class EventBusUtil {
     }
 
     /**
-     * 获取eventbus单例
+     * 获取 eventbus 单例
      *
      * @return
      */

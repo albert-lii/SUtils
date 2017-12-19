@@ -136,9 +136,7 @@ public class AppUtil {
      *                  即 AndroidManifest.xml 中的 FileProvider 的路径
      */
     public static void installApp(File file, String authority) {
-        if (file == null || !file.exists()) {
-            return;
-        }
+        if (file == null || !file.exists()) return;
         Intent intent = new Intent(Intent.ACTION_VIEW);
         Uri uri;
         // 在 7.0 之前安装的时候,只需要通过隐式 Intent 来跳转,并且指定安装的文件 Uri 即可
@@ -197,12 +195,8 @@ public class AppUtil {
             LogUtil.e("InstallAppSilent", "InstallException ========> " + e.getMessage());
         } finally {
             try {
-                if (dataOutputStream != null) {
-                    dataOutputStream.close();
-                }
-                if (errorStream != null) {
-                    errorStream.close();
-                }
+                if (dataOutputStream != null) dataOutputStream.close();
+                if (errorStream != null) errorStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
                 LogUtil.e("InstallAppSilent", "InstallException ========> " + e.getMessage());

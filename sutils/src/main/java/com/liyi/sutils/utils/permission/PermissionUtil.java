@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
+import com.liyi.sutils.utils.AppUtil;
 import com.liyi.sutils.utils.SystemSettingUtil;
 
 import java.util.ArrayList;
@@ -109,7 +110,7 @@ public class PermissionUtil {
                     .setNegativeButton("取消", null)
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            SystemSettingUtil.openAppInfo(context);
+                            AppUtil.openAppSettings();
                         }
                     }).show();
         }

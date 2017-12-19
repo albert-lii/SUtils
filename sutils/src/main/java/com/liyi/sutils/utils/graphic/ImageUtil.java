@@ -21,7 +21,6 @@ import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
@@ -95,9 +94,7 @@ public class ImageUtil {
      * @return bitmap
      */
     public static Bitmap drawable2Bitmap(Drawable drawable) {
-        if (drawable == null) {
-            return null;
-        }
+        if (drawable == null) return null;
         if (drawable instanceof BitmapDrawable) {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
             if (bitmapDrawable.getBitmap() != null) {
@@ -140,9 +137,7 @@ public class ImageUtil {
      * @return 字节数组
      */
     public static byte[] bitmap2Bytes(Bitmap bitmap, Bitmap.CompressFormat format) {
-        if (bitmap == null) {
-            return null;
-        }
+        if (bitmap == null) return null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(format, 100, baos);
         return baos.toByteArray();
@@ -189,9 +184,7 @@ public class ImageUtil {
      * @return bitmap
      */
     public static Bitmap view2Bitmap(View view) {
-        if (view == null) {
-            return null;
-        }
+        if (view == null) return null;
         Bitmap ret = Bitmap.createBitmap(view.getWidth(), view.getHeight(),
                 Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(ret);
@@ -301,9 +294,7 @@ public class ImageUtil {
      * @return bitmap 的内存大小
      */
     public static int getBitmapSize(Bitmap src) {
-        if (src == null) {
-            return 0;
-        }
+        if (src == null) return 0;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // SDK >= 19
             return src.getAllocationByteCount();
@@ -356,9 +347,7 @@ public class ImageUtil {
      * @return 倾斜后的图片
      */
     public static Bitmap skew(Bitmap src, float kx, float ky, float px, float py) {
-        if (src == null) {
-            return src;
-        }
+        if (src == null) return src;
         Matrix matrix = new Matrix();
         matrix.setSkew(kx, ky, px, py);
         return Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
@@ -374,12 +363,8 @@ public class ImageUtil {
      * @return 旋转后的图片
      */
     public static Bitmap rotate(Bitmap src, int degrees, float px, float py) {
-        if (src == null) {
-            return null;
-        }
-        if (degrees == 0) {
-            return src;
-        }
+        if (src == null) return null;
+        if (degrees == 0) return src;
         Matrix matrix = new Matrix();
         matrix.setRotate(degrees, px, py);
         Bitmap ret = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
@@ -426,9 +411,7 @@ public class ImageUtil {
      * @return 缩放后的图片
      */
     public static Bitmap scale(Bitmap src, float scaleWidth, float scaleHeight) {
-        if (src == null) {
-            return null;
-        }
+        if (src == null) return null;
         Matrix matrix = new Matrix();
         matrix.setScale(scaleWidth, scaleHeight);
         return Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
@@ -443,9 +426,7 @@ public class ImageUtil {
      * @return 被缩放后的图片
      */
     public static Bitmap scale(Bitmap src, int dstw, int dsth) {
-        if (src == null) {
-            return null;
-        }
+        if (src == null) return null;
         return Bitmap.createScaledBitmap(src, dstw, dsth, true);
     }
 
@@ -494,9 +475,7 @@ public class ImageUtil {
      * @return 去色后的图片
      */
     public static Bitmap toGray(Bitmap src) {
-        if (src == null) {
-            return null;
-        }
+        if (src == null) return null;
         int width, height;
         height = src.getHeight();
         width = src.getWidth();
@@ -530,9 +509,7 @@ public class ImageUtil {
      * @return 圆形图片
      */
     public static Bitmap toRound(Bitmap src, @IntRange(from = 0) int borderSize, @ColorInt int borderColor) {
-        if (src == null) {
-            return null;
-        }
+        if (src == null) return null;
         int width = src.getWidth();
         int height = src.getHeight();
         int size = Math.min(width, height);
@@ -581,9 +558,7 @@ public class ImageUtil {
      * @return 圆角图片
      */
     public static Bitmap toRoundCorner(Bitmap src, float radius, @IntRange(from = 0) int borderSize, @ColorInt int borderColor) {
-        if (src == null) {
-            return null;
-        }
+        if (src == null) return null;
         int width = src.getWidth();
         int height = src.getHeight();
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -619,9 +594,7 @@ public class ImageUtil {
      */
     public static Bitmap addTextWatermark(Bitmap src, String content, float textSize, @ColorInt int color,
                                           float x, float y) {
-        if (src == null) {
-            return null;
-        }
+        if (src == null) return null;
         Bitmap ret = src.copy(src.getConfig(), true);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         Canvas canvas = new Canvas(ret);
@@ -645,9 +618,7 @@ public class ImageUtil {
      */
     public static Bitmap addImageWatermark(Bitmap src, Bitmap watermark,
                                            int x, int y, int alpha) {
-        if (src == null) {
-            return null;
-        }
+        if (src == null) return null;
         Bitmap ret = src.copy(src.getConfig(), true);
         if (watermark != null) {
             Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -666,9 +637,7 @@ public class ImageUtil {
      * @return 模糊后的图片
      */
     public static Bitmap stackBlurByFast(Bitmap src, int radius) {
-        if (src == null) {
-            return null;
-        }
+        if (src == null) return null;
         return FastBlur.blur(src, radius, false);
     }
 
@@ -681,9 +650,7 @@ public class ImageUtil {
      */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static Bitmap stackBlurByRS(Bitmap src, @IntRange(from = 0, to = 25) int radius) {
-        if (src == null) {
-            return null;
-        }
+        if (src == null) return null;
         return RSBlur.blur(SUtils.getApp(), src, radius);
     }
 
@@ -724,9 +691,7 @@ public class ImageUtil {
      * @return 被压缩后的图片
      */
     public static Bitmap compressByQuality(Bitmap src, Bitmap.CompressFormat format, @IntRange(from = 0, to = 100) int options) {
-        if (src == null) {
-            return null;
-        }
+        if (src == null) return null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         src.compress(format, options, baos);
         ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());
@@ -743,9 +708,7 @@ public class ImageUtil {
      * @return 被压缩后的图片
      */
     public static Bitmap compressByQuality(Bitmap src, Bitmap.CompressFormat format, long maxByteSize) {
-        if (src == null) {
-            return null;
-        }
+        if (src == null) return null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         src.compress(format, 100, baos);
         byte[] bytes;
@@ -794,9 +757,7 @@ public class ImageUtil {
      * @return 按采样率压缩后的图片
      */
     public static Bitmap compressBySampleSize(Bitmap src, int sampleSize) {
-        if (src == null) {
-            return null;
-        }
+        if (src == null) return null;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = sampleSize;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -814,9 +775,7 @@ public class ImageUtil {
      * @return 按采样率压缩后的图片
      */
     public static Bitmap compressBySampleSize(Bitmap src, int maxWidth, int maxHeight) {
-        if (src == null) {
-            return null;
-        }
+        if (src == null) return null;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

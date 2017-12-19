@@ -52,7 +52,6 @@ public class SpanUtil {
     private Context mContext;
     private TextView textView;
 
-
     private SpanUtil(TextView textView) {
         super();
         init(textView);
@@ -70,8 +69,8 @@ public class SpanUtil {
     /**
      * 绑定需要使用SpannableString效果的textview
      *
-     * @param textView
-     * @return
+     * @param textView textview
+     * @return SpanUtil 类
      */
     public static SpanUtil bind(TextView textView) {
         return new SpanUtil(textView);

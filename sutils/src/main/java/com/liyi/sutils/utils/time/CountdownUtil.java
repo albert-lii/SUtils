@@ -51,8 +51,8 @@ public class CountdownUtil {
     /**
      * 设置倒计时的间隔时间
      *
-     * @param intervalTime
-     * @return
+     * @param intervalTime 间隔时间
+     * @return CountdownUtil
      */
     public CountdownUtil intervalTime(int intervalTime) {
         this.mIntervalTime = intervalTime;
@@ -62,8 +62,8 @@ public class CountdownUtil {
     /**
      * 设置倒计时的总时间
      *
-     * @param totalTime
-     * @return
+     * @param totalTime 总时间
+     * @return CountdownUtil
      */
     public CountdownUtil totalTime(int totalTime) {
         this.mTotalTime = totalTime;
@@ -73,8 +73,8 @@ public class CountdownUtil {
     /**
      * 设置倒计时监听器
      *
-     * @param listener
-     * @return
+     * @param listener 倒计时监听器
+     * @return CountdownUtil
      */
     public CountdownUtil callback(OnCountdownListener listener) {
         this.mCountdownListener = listener;

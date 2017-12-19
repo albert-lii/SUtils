@@ -2,11 +2,15 @@ package com.liyi.example;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.liyi.sutils.utils.AtyTransitionUtil;
+import com.liyi.sutils.utils.QRCodeUtil;
+import com.liyi.sutils.utils.graphic.ImageUtil;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     private Button btn_systembar, btn_Atytransition,btn_qrcode;
