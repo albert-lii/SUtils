@@ -27,7 +27,7 @@ import java.util.UUID;
 /**
  * 设备相关工具类
  */
-public class DeviceUtil {
+public final class DeviceUtil {
     private static final String TAG = DeviceUtil.class.getSimpleName();
     private static final String PREFS_FILE = "device_id.xml";
     private static final String PREFS_DEVICE_ID = "device_id";

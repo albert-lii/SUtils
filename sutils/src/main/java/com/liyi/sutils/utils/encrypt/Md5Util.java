@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
  * <p>
  * 参考链接：http://www.cnblogs.com/whoislcj/p/5885006.html
  */
-public class Md5Util {
+public final class Md5Util {
 
     private Md5Util() {
         throw new UnsupportedOperationException("cannot be instantiated");

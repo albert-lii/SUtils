@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * 二维码相关工具类
  */
-public class QRCodeUtil {
+public final class QRCodeUtil {
 
     /***********************************************************************************************
      *****  生成二维码

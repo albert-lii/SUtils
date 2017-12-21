@@ -52,7 +52,7 @@ public class CountdownUtil {
      * 设置倒计时的间隔时间
      *
      * @param intervalTime 间隔时间
-     * @return CountdownUtil
+     * @return {@link CountdownUtil}
      */
     public CountdownUtil intervalTime(int intervalTime) {
         this.mIntervalTime = intervalTime;
@@ -63,7 +63,7 @@ public class CountdownUtil {
      * 设置倒计时的总时间
      *
      * @param totalTime 总时间
-     * @return CountdownUtil
+     * @return {@link CountdownUtil}
      */
     public CountdownUtil totalTime(int totalTime) {
         this.mTotalTime = totalTime;
@@ -74,7 +74,7 @@ public class CountdownUtil {
      * 设置倒计时监听器
      *
      * @param listener 倒计时监听器
-     * @return CountdownUtil
+     * @return {@link CountdownUtil}
      */
     public CountdownUtil callback(OnCountdownListener listener) {
         this.mCountdownListener = listener;
@@ -85,9 +85,7 @@ public class CountdownUtil {
      * 开始倒计时
      */
     public void start() {
-        if (mTimer == null) {
-            init();
-        }
+        if (mTimer == null) init();
         mTimer.start();
         isRunning = true;
     }
@@ -96,16 +94,14 @@ public class CountdownUtil {
      * 结束倒计时
      */
     public void stop() {
-        if (mTimer != null) {
-            mTimer.cancel();
-        }
+        if (mTimer != null) mTimer.cancel();
         isRunning = false;
     }
 
     /**
      * 获取倒计时的间隔时间
      *
-     * @return
+     * @return 间隔时间
      */
     public int getIntervalTime() {
         return mIntervalTime;
@@ -114,7 +110,7 @@ public class CountdownUtil {
     /**
      * 获取倒计时的总时间
      *
-     * @return
+     * @return 总时间
      */
     public int getTotalTime() {
         return mTotalTime;
@@ -123,7 +119,7 @@ public class CountdownUtil {
     /**
      * 获取倒计时是否正在进行
      *
-     * @return
+     * @return {@code true}: 正在进行<br>{@code false}: 已经结束
      */
     public boolean isRunning() {
         return isRunning;
@@ -132,7 +128,7 @@ public class CountdownUtil {
     /**
      * 获取倒计时类
      *
-     * @return
+     * @return {@link CountDownTimer}
      */
     public CountDownTimer getTimer() {
         return mTimer;

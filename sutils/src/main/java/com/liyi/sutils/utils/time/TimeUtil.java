@@ -12,9 +12,9 @@ import java.util.Date;
 
 
 /**
- * 时间工具类
+ * 时间相关工具类
  */
-public class TimeUtil {
+public final class TimeUtil {
     private static final String TAG = TimeUtil.class.getClass().getSimpleName();
     /* 默认的时间格式 */
     private static final String DEF_FORMAT = "yyyy-MM-dd HH:mm:ss";

@@ -46,7 +46,7 @@ public class GsonUtil {
      * @param jsonStr json 字符串
      * @param type 转换成的对象类型
      * @param <T> 返回的类型
-     * @return
+     * @return List<?>
      */
     public static <T> List<T> json2List(String jsonStr, Type type) {
         checkGson();
@@ -58,8 +58,8 @@ public class GsonUtil {
      * 将 json 数据转化为 map
      *
      * @param jsonStr json 字符串
-     * @param <T> 转换成的 map 类型
-     * @return
+     * @param <T> 转换成的 Map<String,?> 类型
+     * @return Map<String,?>
      */
     public static <T> Map<String, T> json2Map(String jsonStr) {
         checkGson();
@@ -72,8 +72,8 @@ public class GsonUtil {
      * 将 json 数据转化为 map 元素的 list
      *
      * @param jsonStr json 字符串
-     * @param <T> 转换成的 List<Map<?,?>> 类型
-     * @return
+     * @param <T> 转换成的 List<Map<String,?>> 类型
+     * @return List<Map<String,?>
      */
     public static <T> List<Map<String, T>> json2ListMap(String jsonStr) {
         checkGson();
@@ -86,7 +86,7 @@ public class GsonUtil {
      * 将对象转换成 string 数据
      *
      * @param obj
-     * @return
+     * @return string 数据
      */
     public static String obj2String(Object obj) {
         checkGson();

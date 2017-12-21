@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 
 /**
- * Toast工具类
+ * Toast 相关工具类
  */
-public class ToastUtil {
+public final class ToastUtil {
     /**
      * @param context
      * @param msg     提示内容

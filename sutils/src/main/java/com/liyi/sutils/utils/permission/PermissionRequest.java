@@ -20,10 +20,10 @@ public class PermissionRequest {
     }
 
     /**
-     * 添加权限请求的请求码
+     * 设置权限请求的请求码
      *
-     * @param requestCode
-     * @return
+     * @param requestCode 权限请求码
+     * @return {@link PermissionRequest}
      */
     public PermissionRequest requestCode(int requestCode) {
         this.mRequestCode = requestCode;
@@ -31,10 +31,10 @@ public class PermissionRequest {
     }
 
     /**
-     * 添加需要申请的权限
+     * 设置需要申请的权限
      *
-     * @param permissions
-     * @return
+     * @param permissions 需要申请的权限
+     * @return {@link PermissionRequest}
      */
     public PermissionRequest permissions(@NonNull String... permissions) {
         this.mPermissions = permissions;
@@ -42,10 +42,10 @@ public class PermissionRequest {
     }
 
     /**
-     * 添加权限请求的回调接口
+     * 设置权限请求的回调接口
      *
-     * @param listener
-     * @return
+     * @param listener 权限请求的回调接口
+     * @return {@link PermissionRequest}
      */
     public PermissionRequest callback(OnPermissionListener listener) {
         this.mListener = listener;
@@ -55,8 +55,8 @@ public class PermissionRequest {
     /**
      * 是否自动显示拒绝授权时的提示
      *
-     * @param isAutoShowTip
-     * @return
+     * @param isAutoShowTip {@code true}: 显示<br>{@code false}: 不显示
+     * @return {@link PermissionRequest}
      */
     public PermissionRequest autoShowTip(boolean isAutoShowTip) {
         this.isAutoShowTip = isAutoShowTip;
@@ -76,7 +76,7 @@ public class PermissionRequest {
                     mListener.onPermissionGranted(mRequestCode, mPermissions);
                 }
             }
-        }else {
+        } else {
             if (mListener != null) {
                 mListener.onPermissionGranted(mRequestCode, mPermissions);
             }
@@ -86,7 +86,7 @@ public class PermissionRequest {
     /**
      * 获取权限请求码
      *
-     * @return
+     * @return 权限请求码
      */
     public int getRequestCode() {
         return mRequestCode;
@@ -95,7 +95,7 @@ public class PermissionRequest {
     /**
      * 获取申请的权限
      *
-     * @return
+     * @return 申请的权限
      */
     public String[] getPermissions() {
         return mPermissions;
@@ -104,7 +104,7 @@ public class PermissionRequest {
     /**
      * 获取是否自动显示拒绝授权时的提示
      *
-     * @return
+     * @return {@code true}: 显示<br>{@code false}: 不显示
      */
     public boolean isAutoShowTip() {
         return isAutoShowTip;
@@ -113,7 +113,7 @@ public class PermissionRequest {
     /**
      * 获取权限请求的回调方法
      *
-     * @return
+     * @return 权限请求的回调
      */
     public OnPermissionListener getPermissionListener() {
         return mListener;

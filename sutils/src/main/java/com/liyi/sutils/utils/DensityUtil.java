@@ -3,7 +3,7 @@ package com.liyi.sutils.utils;
 /**
  * 单位转换工具类
  */
-public class DensityUtil {
+public final class DensityUtil {
 
     private DensityUtil() {
         throw new UnsupportedOperationException("cannot be instantiated");

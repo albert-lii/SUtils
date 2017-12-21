@@ -22,7 +22,7 @@ import java.util.Enumeration;
 /**
  * 网络相关工具类
  */
-public class NetUtil {
+public final class NetUtil {
     private static final String TAG = NetUtil.class.getClass().getSimpleName();
     private static final int NETWORK_TYPE_GSM      = 16;
     private static final int NETWORK_TYPE_TD_SCDMA = 17;

@@ -9,7 +9,7 @@ import android.provider.Settings;
 /**
  * 进入指定系统功能界面的相关工具类
  */
-public class SystemSettingUtil {
+public final class SystemSettingUtil {
 
     private SystemSettingUtil() {
         throw new UnsupportedOperationException("cannot be instantiated");

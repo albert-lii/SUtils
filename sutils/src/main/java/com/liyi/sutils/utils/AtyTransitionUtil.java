@@ -6,9 +6,9 @@ import android.support.annotation.NonNull;
 import com.liyi.sutils.R;
 
 /**
- * Activity过渡动画工具类
+ * Activity 过渡动画工具类
  */
-public class AtyTransitionUtil {
+public final class AtyTransitionUtil {
 
     private AtyTransitionUtil() {
         throw new UnsupportedOperationException("cannot be instantiated");

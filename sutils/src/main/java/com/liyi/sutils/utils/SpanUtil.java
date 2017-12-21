@@ -3,17 +3,21 @@ package com.liyi.sutils.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.text.style.AbsoluteSizeSpan;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ClickableSpan;
+import android.text.style.DynamicDrawableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.StrikethroughSpan;
@@ -22,81 +26,117 @@ import android.text.style.URLSpan;
 import android.view.View;
 import android.widget.TextView;
 
-import com.liyi.sutils.utils.log.LogUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.text.style.DynamicDrawableSpan.ALIGN_BOTTOM;
 
 /**
- * SpannableString工具类
+ * SpannableString 相关工具类
  */
 public class SpanUtil {
     private final String TAG = this.getClass().getSimpleName();
-    /**
-     * Spannable.SPAN_EXCLUSIVE_EXCLUSIVE :
-     * 前后不包括在内，也就是说，在前面和后面插入的新字符不会应用新样式
-     * <p>
-     * Spannable.SPAN_EXCLUSIVE_INCLUSIVE :
-     * 不包括前面，但是包括后面，在后面插入的新字符会应用新样式
-     * <p>
-     * Spannable.SPAN_INCLUSIVE_EXCLUSIVE :
-     * 包括前面，不包括后面
-     * <p>
-     * Spannable.SPAN_INCLUSIVE_INCLUSIVE :
-     * 同时包括前面和后面
-     */
+    /* 默认标识 */
     private final int DEF_SPAN_FLAG = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE;
     private int mSpanFlag;
     private SpannableStringBuilder mBuilder;
     private Context mContext;
-    private TextView textView;
 
-    private SpanUtil(TextView textView) {
+    private SpanUtil() {
         super();
-        init(textView);
-    }
-
-    private void init(TextView tv) {
         mSpanFlag = DEF_SPAN_FLAG;
         mBuilder = new SpannableStringBuilder();
-        textView = tv;
-        if (textView != null) {
-            mContext = textView.getContext();
-        }
+        mContext = SUtils.getApp().getApplicationContext();
     }
 
     /**
-     * 绑定需要使用SpannableString效果的textview
+     * 创建一个 SpanUtil 实例
      *
-     * @param textView textview
-     * @return SpanUtil 类
+     * @return {@link SpanUtil}
      */
-    public static SpanUtil bind(TextView textView) {
-        return new SpanUtil(textView);
+    public static SpanUtil newInstance() {
+        return new SpanUtil();
     }
 
     /**
-     * 设置SpannableString类型
+     * 设置标识
      *
-     * @param flag
-     * @return
+     * @param flag <ul>
+     *             <li>{@link Spannable#SPAN_INCLUSIVE_EXCLUSIVE}:
+     *             <p>前后不包括在内，也就是说，在前面和后面插入的新字符不会应用新样式</p>
+     *             </li>
+     *             <li>{@link Spannable#SPAN_EXCLUSIVE_INCLUSIVE}:
+     *             <p>不包括前面，但是包括后面，在后面插入的新字符会应用新样式</p>
+     *             </li>
+     *             <li>{@link Spannable#SPAN_INCLUSIVE_EXCLUSIVE}:
+     *             <p>包括前面，不包括后面</p>
+     *             </li>
+     *             <li>{@link Spannable#SPAN_INCLUSIVE_INCLUSIVE}:
+     *             <p>同时包括前面和后面</p>
+     *             </li>
+     *             </ul>
+     * @return {@link SpanUtil}
      */
-    public SpanUtil setSpanFlag(int flag) {
+    public SpanUtil setFlag(int flag) {
         this.mSpanFlag = flag;
         return this;
     }
 
     /**
-     * 添加SpannableString的内容
+     * 添加文本内容
      *
-     * @param text
-     * @return
+     * @param text 文本内容
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addContent(CharSequence text) {
+    public SpanUtil appendText(CharSequence text) {
         mBuilder.append(text);
         return this;
     }
+
+    /**
+     * 设置字体大小
+     *
+     * @param size  字体大小
+     * @param start 起始位置
+     * @param end   结束位置
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setFontSize(int size, int start, int end) {
+        mBuilder.setSpan(new AbsoluteSizeSpan(size), start, end, mSpanFlag);
+        return this;
+    }
+
+    /**
+     * 设置字体大小
+     *
+     * @param size 字体大小
+     * @param key  关键字
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setFontSizeByKey(int size, String key) {
+        List<int[]> list = searchAllIndex(key);
+        for (int[] item : list) {
+            setFontSize(size, item[0], item[1]);
+        }
+        return this;
+    }
+
+    /**
+     * 设置字体大小
+     *
+     * @param size  字体大小
+     * @param key   关键字
+     * @param index 如果关键字有多个，选择指定 index 下标的关键字（从 0 开始）
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setFontSizeByKey(int size, String key, int index) {
+        List<int[]> list = searchAllIndex(key);
+        if (index >= 0 && index < list.size()) {
+            setFontSize(size, list.get(index)[0], list.get(index)[1]);
+        }
+        return this;
+    }
+
 
     /**
      * 设置文字颜色
@@ -104,9 +144,9 @@ public class SpanUtil {
      * @param color 文字颜色
      * @param start 文字颜色的起始位置
      * @param end   文字颜色结束位置
-     * @return
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addFontColor(@ColorInt int color, int start, int end) {
+    public SpanUtil setFontColor(@ColorInt int color, int start, int end) {
         mBuilder.setSpan(new ForegroundColorSpan(color), start, end, mSpanFlag);
         return this;
     }
@@ -115,13 +155,13 @@ public class SpanUtil {
      * 设置文字颜色
      *
      * @param color 文字颜色
-     * @param key   被设置颜色的文字
-     * @return
+     * @param key   关键字
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addFontColorByKey(@ColorInt int color, String key) {
+    public SpanUtil setFontColorByKey(@ColorInt int color, String key) {
         List<int[]> list = searchAllIndex(key);
-        for (int[] index : list) {
-            mBuilder.setSpan(new ForegroundColorSpan(color), index[0], index[1], mSpanFlag);
+        for (int[] item : list) {
+            setFontColor(color, item[0], item[1]);
         }
         return this;
     }
@@ -130,14 +170,14 @@ public class SpanUtil {
      * 设置文字颜色
      *
      * @param color 文字颜色
-     * @param key   被设置颜色的文字（即关键字）
-     * @param index 如果关键字有多个，选择指定index下标的关键字（从0开始）
-     * @return
+     * @param key   关键字
+     * @param index 如果关键字有多个，选择指定 index 下标的关键字（从 0 开始）
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addFontColorByKey(@ColorInt int color, String key, int index) {
+    public SpanUtil setFontColorByKey(@ColorInt int color, String key, int index) {
         List<int[]> list = searchAllIndex(key);
         if (index >= 0 && index < list.size()) {
-            mBuilder.setSpan(new ForegroundColorSpan(color), list.get(index)[0], list.get(index)[1], mSpanFlag);
+            setFontColor(color, list.get(index)[0], list.get(index)[1]);
         }
         return this;
     }
@@ -148,9 +188,9 @@ public class SpanUtil {
      * @param color 文字背景颜色
      * @param start 背景颜色的起始位置
      * @param end   背景颜色的结束位置
-     * @return
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addBgColor(@ColorInt int color, int start, int end) {
+    public SpanUtil setBgColor(@ColorInt int color, int start, int end) {
         mBuilder.setSpan(new BackgroundColorSpan(color), start, end, mSpanFlag);
         return this;
     }
@@ -160,56 +200,72 @@ public class SpanUtil {
      *
      * @param color 文字背景颜色
      * @param key   被设置背景颜色的文字
-     * @return
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addBgColorByKey(@ColorInt int color, String key) {
+    public SpanUtil setBgColorByKey(@ColorInt int color, String key) {
         List<int[]> list = searchAllIndex(key);
-        for (int[] index : list) {
-            mBuilder.setSpan(new BackgroundColorSpan(color), index[0], index[1], mSpanFlag);
-        }
-        return this;
-    }
-
-    public SpanUtil addBgColorByKey(@ColorInt int color, String key, int index) {
-        List<int[]> list = searchAllIndex(key);
-        if (index >= 0 && index < list.size()) {
-            mBuilder.setSpan(new BackgroundColorSpan(color), list.get(index)[0], list.get(index)[1], mSpanFlag);
+        for (int[] item : list) {
+            setBgColor(color, item[0], item[1]);
         }
         return this;
     }
 
     /**
-     * 对文字添加url链接
+     * 设置背景色
+     *
+     * @param color 文字背景颜色
+     * @param key   关键字
+     * @param index 如果关键字有多个，选择指定 index 下标的关键字（从 0 开始）
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setBgColorByKey(@ColorInt int color, String key, int index) {
+        List<int[]> list = searchAllIndex(key);
+        if (index >= 0 && index < list.size()) {
+            setBgColor(color, list.get(index)[0], list.get(index)[1]);
+        }
+        return this;
+    }
+
+    /**
+     * 对文字添加 URL 链接
      *
      * @param url   链接
      * @param start 被添加链接的文字的起始位置
      * @param end   被添加链接的文字的结束位置
-     * @return
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addURL(String url, int start, int end) {
+    public SpanUtil setURL(@Nullable String url, int start, int end) {
         mBuilder.setSpan(new URLSpan(url), start, end, mSpanFlag);
         return this;
     }
 
     /**
-     * 对文字添加url链接
+     * 对文字添加 URL 链接
      *
      * @param url 链接
-     * @param key 被添加链接的文字
-     * @return
+     * @param key 关键字
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addURLByKey(String url, String key) {
+    public SpanUtil setURLByKey(@Nullable String url, String key) {
         List<int[]> list = searchAllIndex(key);
-        for (int[] index : list) {
-            mBuilder.setSpan(new URLSpan(url), index[0], index[1], mSpanFlag);
+        for (int[] item : list) {
+            setURL(url, item[0], item[1]);
         }
         return this;
     }
 
-    public SpanUtil addURLByKey(String url, String key, int index) {
+    /**
+     * 对文字添加 URL 链接
+     *
+     * @param url   链接
+     * @param key   关键字
+     * @param index 如果关键字有多个，选择指定 index 下标的关键字（从 0 开始）
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setURLByKey(@Nullable String url, String key, int index) {
         List<int[]> list = searchAllIndex(key);
         if (index >= 0 && index < list.size()) {
-            mBuilder.setSpan(new URLSpan(url), list.get(index)[0], list.get(index)[1], mSpanFlag);
+            setURL(url, list.get(index)[0], list.get(index)[1]);
         }
         return this;
     }
@@ -217,12 +273,17 @@ public class SpanUtil {
     /**
      * 设置文字字体样式，例如斜体
      *
-     * @param style Typeface.NORMAL、 Typeface.BOLD、Typeface.ITALIC、Typeface.BOLD_ITALIC
+     * @param style 字体样式 <ul>
+     *              <li>{@link Typeface#NORMAL}</li>
+     *              <li>{@link Typeface#BOLD}</li>
+     *              <li>{@link Typeface#ITALIC}</li>
+     *              <li>{@link Typeface#BOLD_ITALIC}</li>
+     *              </ul>
      * @param start 被设置字体文字的起始位置
      * @param end   被设置字体文字的结束位置
-     * @return
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addTypeface(int style, int start, int end) {
+    public SpanUtil setTypeface(int style, int start, int end) {
         mBuilder.setSpan(new StyleSpan(style), start, end, mSpanFlag);
         return this;
     }
@@ -230,22 +291,40 @@ public class SpanUtil {
     /**
      * 设置文字字体样式，例如斜体
      *
-     * @param style 字体样式
-     * @param key   文字
-     * @return
+     * @param style 字体样式 <ul>
+     *              <li>{@link Typeface#NORMAL}</li>
+     *              <li>{@link Typeface#BOLD}</li>
+     *              <li>{@link Typeface#ITALIC}</li>
+     *              <li>{@link Typeface#BOLD_ITALIC}</li>
+     *              </ul>
+     * @param key   关键字
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addTypefaceByKey(int style, String key) {
+    public SpanUtil setTypefaceByKey(int style, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
-            mBuilder.setSpan(new StyleSpan(style), index[0], index[1], mSpanFlag);
+            setTypeface(style, index[0], index[1]);
         }
         return this;
     }
 
-    public SpanUtil addTypefaceByKey(int style, String key, int index) {
+    /**
+     * 设置文字字体样式，例如斜体
+     *
+     * @param style 字体样式 <ul>
+     *              <li>{@link Typeface#NORMAL}</li>
+     *              <li>{@link Typeface#BOLD}</li>
+     *              <li>{@link Typeface#ITALIC}</li>
+     *              <li>{@link Typeface#BOLD_ITALIC}</li>
+     *              </ul>
+     * @param key   关键字
+     * @param index 如果关键字有多个，选择指定 index 下标的关键字（从 0 开始）
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setTypefaceByKey(int style, String key, int index) {
         List<int[]> list = searchAllIndex(key);
         if (index >= 0 && index < list.size()) {
-            mBuilder.setSpan(new StyleSpan(style), list.get(index)[0], list.get(index)[1], mSpanFlag);
+            setTypeface(style, list.get(index)[0], list.get(index)[1]);
         }
         return this;
     }
@@ -255,9 +334,9 @@ public class SpanUtil {
      *
      * @param start 被添加删除线的文字的起始位置
      * @param end   被添加删除线的文字的结束位置
-     * @return
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addStrikethrough(int start, int end) {
+    public SpanUtil setStrikethrough(int start, int end) {
         mBuilder.setSpan(new StrikethroughSpan(), start, end, mSpanFlag);
         return this;
     }
@@ -265,21 +344,28 @@ public class SpanUtil {
     /**
      * 添加删除线
      *
-     * @param key 被添加删除线的文字的文字
-     * @return
+     * @param key 关键字
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addStrikethroughByKey(String key) {
+    public SpanUtil setStrikethroughByKey(String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
-            mBuilder.setSpan(new StrikethroughSpan(), index[0], index[1], mSpanFlag);
+            setStrikethrough(index[0], index[1]);
         }
         return this;
     }
 
-    public SpanUtil addStrikethroughByKey(String key, int index) {
+    /**
+     * 添加删除线
+     *
+     * @param key   关键字
+     * @param index 如果关键字有多个，选择指定 index 下标的关键字（从0开始）
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setStrikethroughByKey(String key, int index) {
         List<int[]> list = searchAllIndex(key);
         if (index >= 0 && index < list.size()) {
-            mBuilder.setSpan(new StrikethroughSpan(), list.get(index)[0], list.get(index)[1], mSpanFlag);
+            setStrikethrough(list.get(index)[0], list.get(index)[1]);
         }
         return this;
     }
@@ -290,9 +376,9 @@ public class SpanUtil {
      * @param span  替代文字的图片样式
      * @param start 起始位置
      * @param end   结束位置
-     * @return
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addImage(ImageSpan span, int start, int end) {
+    public SpanUtil setImage(ImageSpan span, int start, int end) {
         mBuilder.setSpan(span, start, end, mSpanFlag);
         return this;
     }
@@ -300,22 +386,14 @@ public class SpanUtil {
     /**
      * 用图片替代指定文字
      *
-     * @param span 起始位置
-     * @param key  结束位置
-     * @return
+     * @param span 替代文字的图片样式
+     * @param key  关键字
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addImageByKey(ImageSpan span, String key) {
+    public SpanUtil setImageByKey(ImageSpan span, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
-            mBuilder.setSpan(span, index[0], index[1], mSpanFlag);
-        }
-        return this;
-    }
-
-    public SpanUtil addImageByKey(ImageSpan span, String key, int index) {
-        List<int[]> list = searchAllIndex(key);
-        if (index >= 0 && index < list.size()) {
-            mBuilder.setSpan(span, list.get(index)[0], list.get(index)[1], mSpanFlag);
+            setImage(span, index[0], index[1]);
         }
         return this;
     }
@@ -323,14 +401,137 @@ public class SpanUtil {
     /**
      * 用图片替代指定文字
      *
-     * @param b                 替代文字的图片
+     * @param span  替代文字的图片样式
+     * @param key   关键字
+     * @param index 如果关键字有多个，选择指定 index 下标的关键字（从 0 开始）
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImageByKey(ImageSpan span, String key, int index) {
+        List<int[]> list = searchAllIndex(key);
+        if (index >= 0 && index < list.size()) {
+            setImage(span, list.get(index)[0], list.get(index)[1]);
+        }
+        return this;
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param bitmap 替代文字的图片
+     * @param start  起始位置
+     * @param end    结束位置
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImage(Bitmap bitmap, int start, int end) {
+        return setImage(bitmap, ALIGN_BOTTOM, start, end);
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param bitmap            替代文字的图片
+     * @param verticalAlignment 图片在文字中的对齐方式
+     *                          <ul>
+     *                          <li>{@link DynamicDrawableSpan#ALIGN_BOTTOM}: 默认</li>
+     *                          <li>{@link DynamicDrawableSpan#ALIGN_BASELINE}</li>
+     *                          </ul>
+     * @param start             起始位置
+     * @param end               结束位置
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImage(Bitmap bitmap, int verticalAlignment, int start, int end) {
+        ImageSpan span = new ImageSpan(mContext, bitmap, verticalAlignment);
+        mBuilder.setSpan(span, start, end, mSpanFlag);
+        return this;
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param bitmap 替代文字的图片
+     * @param key    关键字
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImageByKey(Bitmap bitmap, String key) {
+        return setImageByKey(bitmap, ALIGN_BOTTOM, key);
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param bitmap            替代文字的图片
+     * @param verticalAlignment 图片在文字中的对齐方式
+     *                          <ul>
+     *                          <li>{@link DynamicDrawableSpan#ALIGN_BOTTOM}: 默认</li>
+     *                          <li>{@link DynamicDrawableSpan#ALIGN_BASELINE}</li>
+     *                          </ul>
+     * @param key               关键字
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImageByKey(Bitmap bitmap, int verticalAlignment, String key) {
+        List<int[]> list = searchAllIndex(key);
+        for (int[] index : list) {
+            setImage(bitmap, verticalAlignment, index[0], index[1]);
+        }
+        return this;
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param bitmap 替代文字的图片
+     * @param key    关键字
+     * @param index  如果被替换的文字有相同的多个，通过 index 选择是当中第几个（从 0 开始）
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImageByKey(Bitmap bitmap, String key, int index) {
+        return setImageByKey(bitmap, ALIGN_BOTTOM, key, index);
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param bitmap            替代文字的图片
+     * @param verticalAlignment 图片在文字中的对齐方式
+     *                          <ul>
+     *                          <li>{@link DynamicDrawableSpan#ALIGN_BOTTOM}: 默认</li>
+     *                          <li>{@link DynamicDrawableSpan#ALIGN_BASELINE}</li>
+     *                          </ul>
+     * @param key               关键字
+     * @param index             如果被替换的文字有相同的多个，通过 index 选择是当中第几个（从 0 开始）
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImageByKey(Bitmap bitmap, int verticalAlignment, String key, int index) {
+        List<int[]> list = searchAllIndex(key);
+        if (index >= 0 && index < list.size()) {
+            setImage(bitmap, verticalAlignment, list.get(index)[0], list.get(index)[1]);
+        }
+        return this;
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param drawable 替代文字的图片
+     * @param start    起始位置
+     * @param end      结束位置
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImage(Drawable drawable, int start, int end) {
+        return setImage(drawable, ALIGN_BOTTOM, start, end);
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param drawable          替代文字的图片
      * @param verticalAlignment 图片在文字中的对齐方式
      * @param start             起始位置
      * @param end               结束位置
-     * @return
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addImage(Bitmap b, int verticalAlignment, int start, int end) {
-        ImageSpan span = new ImageSpan(mContext, b, verticalAlignment);
+    public SpanUtil setImage(Drawable drawable, int verticalAlignment, int start, int end) {
+        ImageSpan span = new ImageSpan(drawable, verticalAlignment);
         mBuilder.setSpan(span, start, end, mSpanFlag);
         return this;
     }
@@ -338,16 +539,14 @@ public class SpanUtil {
     /**
      * 用图片替代指定文字
      *
-     * @param b
-     * @param verticalAlignment 图片在文字中的对齐方式
-     * @param key               被替换的文字
-     * @return
+     * @param drawable 替代文字的图片
+     * @param key      关键字
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addImageByKey(Bitmap b, int verticalAlignment, String key) {
+    public SpanUtil setImageByKey(Drawable drawable, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
-            ImageSpan span = new ImageSpan(mContext, b, verticalAlignment);
-            mBuilder.setSpan(span, index[0], index[1], mSpanFlag);
+            setImage(drawable, ALIGN_BOTTOM, index[0], index[1]);
         }
         return this;
     }
@@ -355,59 +554,15 @@ public class SpanUtil {
     /**
      * 用图片替代指定文字
      *
-     * @param b
+     * @param drawable          替代文字的图片
      * @param verticalAlignment 图片在文字中的对齐方式
-     * @param key               被替换的文字
-     * @param index             如果被替换的文字有相同的多个，通过index选择是当中第几个（从0开始）
-     * @return
+     * @param key               关键字
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addImageByKey(Bitmap b, int verticalAlignment, String key, int index) {
-        List<int[]> list = searchAllIndex(key);
-        if (index >= 0 && index < list.size()) {
-            ImageSpan span = new ImageSpan(mContext, b, verticalAlignment);
-            mBuilder.setSpan(span, list.get(index)[0], list.get(index)[1], mSpanFlag);
-        }
-        return this;
-    }
-
-    /**
-     * 用图片替代指定文字
-     *
-     * @param d
-     * @param verticalAlignment 图片在文字中的对齐方式
-     * @param start
-     * @param end
-     * @return
-     */
-    public SpanUtil addImage(Drawable d, int verticalAlignment, int start, int end) {
-//        d.setBounds(0,0,d.getIntrinsicWidth(),d.getIntrinsicHeight());
-        ImageSpan span = new ImageSpan(d, verticalAlignment);
-        mBuilder.setSpan(span, start, end, mSpanFlag);
-        return this;
-    }
-
-    /**
-     * 用图片替代指定文字
-     *
-     * @param d
-     * @param verticalAlignment 图片在文字中的对齐方式
-     * @param key
-     * @return
-     */
-    public SpanUtil addImageByKey(Drawable d, int verticalAlignment, String key) {
+    public SpanUtil setImageByKey(Drawable drawable, int verticalAlignment, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
-            ImageSpan span = new ImageSpan(d, verticalAlignment);
-            mBuilder.setSpan(span, index[0], index[1], mSpanFlag);
-        }
-        return this;
-    }
-
-    public SpanUtil addImageByKey(Drawable d, int verticalAlignment, String key, int index) {
-        List<int[]> list = searchAllIndex(key);
-        if (index >= 0 && index < list.size()) {
-            ImageSpan span = new ImageSpan(d, verticalAlignment);
-            mBuilder.setSpan(span, list.get(index)[0], list.get(index)[1], mSpanFlag);
+            setImage(drawable, verticalAlignment, index[0], index[1]);
         }
         return this;
     }
@@ -415,13 +570,54 @@ public class SpanUtil {
     /**
      * 用图片替代指定文字
      *
-     * @param resourceId
-     * @param verticalAlignment 图片在文字中的对齐方式
-     * @param start
-     * @param end
-     * @return
+     * @param drawable 替代文字的图片
+     * @param key      关键字
+     * @param index    如果被替换的文字有相同的多个，通过 index 选择是当中第几个（从 0 开始）
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addImage(@DrawableRes int resourceId, int verticalAlignment, int start, int end) {
+    public SpanUtil setImageByKey(Drawable drawable, String key, int index) {
+        return setImageByKey(drawable, ALIGN_BOTTOM, key, index);
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param drawable          替代文字的图片
+     * @param verticalAlignment 图片在文字中的对齐方式
+     * @param key               关键字
+     * @param index             如果被替换的文字有相同的多个，通过 index 选择是当中第几个（从 0 开始）
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImageByKey(Drawable drawable, int verticalAlignment, String key, int index) {
+        List<int[]> list = searchAllIndex(key);
+        if (index >= 0 && index < list.size()) {
+            setImage(drawable, verticalAlignment, list.get(index)[0], list.get(index)[1]);
+        }
+        return this;
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param resourceId 替代文字的图片
+     * @param start      起始位置
+     * @param end        结束位置
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImage(@DrawableRes int resourceId, int start, int end) {
+        return setImage(resourceId, ALIGN_BOTTOM, start, end);
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param resourceId        替代文字的图片
+     * @param verticalAlignment 图片在文字中的对齐方式
+     * @param start             起始位置
+     * @param end               结束位置
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImage(@DrawableRes int resourceId, int verticalAlignment, int start, int end) {
         ImageSpan span = new ImageSpan(mContext, resourceId, verticalAlignment);
         mBuilder.setSpan(span, start, end, mSpanFlag);
         return this;
@@ -430,25 +626,26 @@ public class SpanUtil {
     /**
      * 用图片替代指定文字
      *
-     * @param resourceId
-     * @param verticalAlignment 图片在文字中的对齐方式
-     * @param key
-     * @return
+     * @param resourceId 替代文字的图片
+     * @param key        关键字
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addImageByKey(@DrawableRes int resourceId, int verticalAlignment, String key) {
-        List<int[]> list = searchAllIndex(key);
-        for (int[] index : list) {
-            ImageSpan span = new ImageSpan(mContext, resourceId, verticalAlignment);
-            mBuilder.setSpan(span, index[0], index[1], mSpanFlag);
-        }
-        return this;
+    public SpanUtil setImageByKey(@DrawableRes int resourceId, String key) {
+        return setImageByKey(resourceId, ALIGN_BOTTOM, key);
     }
 
-    public SpanUtil addImageByKey(@DrawableRes int resourceId, int verticalAlignment, String key, int index) {
+    /**
+     * 用图片替代指定文字
+     *
+     * @param resourceId        替代文字的图片
+     * @param verticalAlignment 图片在文字中的对齐方式
+     * @param key               关键字
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImageByKey(@DrawableRes int resourceId, int verticalAlignment, String key) {
         List<int[]> list = searchAllIndex(key);
-        if (index >= 0 && index < list.size()) {
-            ImageSpan span = new ImageSpan(mContext, resourceId, verticalAlignment);
-            mBuilder.setSpan(span, list.get(index)[0], list.get(index)[1], mSpanFlag);
+        for (int[] index : list) {
+            setImage(resourceId, verticalAlignment, index[0], index[1]);
         }
         return this;
     }
@@ -456,13 +653,54 @@ public class SpanUtil {
     /**
      * 用图片替代指定文字
      *
-     * @param uri
-     * @param verticalAlignment 图片在文字中的对齐方式
-     * @param start
-     * @param end
-     * @return
+     * @param resourceId 替代文字的图片
+     * @param key        关键字
+     * @param index      如果被替换的文字有相同的多个，通过 index 选择是当中第几个（从 0 开始）
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addImage(Uri uri, int verticalAlignment, int start, int end) {
+    public SpanUtil setImageByKey(@DrawableRes int resourceId, String key, int index) {
+        return setImageByKey(resourceId, ALIGN_BOTTOM, key, index);
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param resourceId        替代文字的图片
+     * @param verticalAlignment 图片在文字中的对齐方式
+     * @param key               关键字
+     * @param index             如果被替换的文字有相同的多个，通过 index 选择是当中第几个（从 0 开始）
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImageByKey(@DrawableRes int resourceId, int verticalAlignment, String key, int index) {
+        List<int[]> list = searchAllIndex(key);
+        if (index >= 0 && index < list.size()) {
+            setImage(resourceId, verticalAlignment, list.get(index)[0], list.get(index)[1]);
+        }
+        return this;
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param uri   替代文字的图片
+     * @param start 起始位置
+     * @param end   结束位置
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImage(Uri uri, int start, int end) {
+        return setImage(uri, ALIGN_BOTTOM, start, end);
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param uri               替代文字的图片
+     * @param verticalAlignment 图片在文字中的对齐方式
+     * @param start             起始位置
+     * @param end               结束位置
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImage(Uri uri, int verticalAlignment, int start, int end) {
         ImageSpan span = new ImageSpan(mContext, uri, verticalAlignment);
         mBuilder.setSpan(span, start, end, mSpanFlag);
         return this;
@@ -471,21 +709,52 @@ public class SpanUtil {
     /**
      * 用图片替代指定文字
      *
-     * @param uri
-     * @param verticalAlignment 图片在文字中的对齐方式
-     * @param key
-     * @return
+     * @param uri 替代文字的图片
+     * @param key 关键字
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addImageByKey(Uri uri, int verticalAlignment, String key) {
+    public SpanUtil setImageByKey(Uri uri, String key) {
+        return setImageByKey(uri, ALIGN_BOTTOM, key);
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param uri               替代文字的图片
+     * @param verticalAlignment 图片在文字中的对齐方式
+     * @param key               关键字
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImageByKey(Uri uri, int verticalAlignment, String key) {
         List<int[]> list = searchAllIndex(key);
         for (int[] index : list) {
-            ImageSpan span = new ImageSpan(mContext, uri, verticalAlignment);
-            mBuilder.setSpan(span, index[0], index[1], mSpanFlag);
+            setImage(uri, verticalAlignment, index[0], index[1]);
         }
         return this;
     }
 
-    public SpanUtil addImageByKey(Uri uri, int verticalAlignment, String key, int index) {
+    /**
+     * 用图片替代指定文字
+     *
+     * @param uri   替代文字的图片
+     * @param key   关键字
+     * @param index 如果被替换的文字有相同的多个，通过 index 选择是当中第几个（从 0 开始）
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImageByKey(Uri uri, String key, int index) {
+        return setImageByKey(uri, ALIGN_BOTTOM, key, index);
+    }
+
+    /**
+     * 用图片替代指定文字
+     *
+     * @param uri               替代文字的图片
+     * @param verticalAlignment 图片在文字中的对齐方式
+     * @param key               关键字
+     * @param index             如果被替换的文字有相同的多个，通过 index 选择是当中第几个（从 0 开始）
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setImageByKey(Uri uri, int verticalAlignment, String key, int index) {
         List<int[]> list = searchAllIndex(key);
         if (index >= 0 && index < list.size()) {
             ImageSpan span = new ImageSpan(mContext, uri, verticalAlignment);
@@ -497,18 +766,74 @@ public class SpanUtil {
     /**
      * 为指定文字添加点击事件
      *
-     * @param isNeedUnderLine 文字是否需要添加下划线
-     * @param start
-     * @param end
-     * @return
+     * @param start    起始位置
+     * @param end      结束位置
+     * @param listener 文字的点击事件
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addClick(final OnTextClickListener listener, final boolean isNeedUnderLine, int start, int end) {
+    public SpanUtil setClick(int start, int end, final OnTextClickListener listener) {
+        return setClick(start, end, true, listener);
+    }
+
+    /**
+     * 为指定文字添加点击事件
+     *
+     * @param start           起始位置
+     * @param end             结束位置
+     * @param isNeedUnderLine 文字是否需要添加下划线
+     * @param listener        文字的点击事件
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setClick(int start, int end, final boolean isNeedUnderLine, final OnTextClickListener listener) {
         mBuilder.setSpan(new ClickableSpan() {
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-                if (!isNeedUnderLine) {
-                    ds.setUnderlineText(false);
+                ds.setUnderlineText(isNeedUnderLine);
+            }
+
+            @Override
+            public void onClick(View widget) {
+                if (listener != null) {
+                    listener.onTextClick(-1, widget);
+                }
+            }
+        }, start, end, mSpanFlag);
+        return this;
+    }
+
+
+    /**
+     * 为指定文字添加点击事件
+     *
+     * @param start     起始位置
+     * @param end       结束位置
+     * @param lineColor 下划线颜色
+     * @param listener  文字的点击事件
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setClick(int start, int end, @ColorInt final int lineColor, final OnTextClickListener listener) {
+        return setClick(start, end, true, lineColor, listener);
+    }
+
+    /**
+     * 为指定文字添加点击事件
+     *
+     * @param start           起始位置
+     * @param end             结束位置
+     * @param isNeedUnderLine 文字是否需要添加下划线
+     * @param lineColor       下划线颜色
+     * @param listener        文字的点击事件
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setClick(int start, int end, final boolean isNeedUnderLine, @ColorInt final int lineColor, final OnTextClickListener listener) {
+        mBuilder.setSpan(new ClickableSpan() {
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(isNeedUnderLine);
+                if (isNeedUnderLine) {
+                    ds.setColor(lineColor);
                 }
             }
 
@@ -525,12 +850,12 @@ public class SpanUtil {
     /**
      * 为指定文字添加点击事件
      *
-     * @param listener
+     * @param key             关键字
      * @param isNeedUnderLine 文字是否需要添加下划线
-     * @param key
-     * @return
+     * @param listener        文字的点击事件
+     * @return {@link SpanUtil}
      */
-    public SpanUtil addClickByKey(final OnTextClickListener listener, final boolean isNeedUnderLine, String key) {
+    public SpanUtil setClickByKey(String key, final boolean isNeedUnderLine, final OnTextClickListener listener) {
         List<int[]> list = searchAllIndex(key);
         for (int i = 0; i < list.size(); i++) {
             final int finalI = i;
@@ -538,8 +863,52 @@ public class SpanUtil {
                 @Override
                 public void updateDrawState(TextPaint ds) {
                     super.updateDrawState(ds);
-                    if (!isNeedUnderLine) {
-                        ds.setUnderlineText(false);
+                    ds.setUnderlineText(isNeedUnderLine);
+                }
+
+                @Override
+                public void onClick(View widget) {
+                    if (listener != null) {
+                        listener.onTextClick(finalI, widget);
+                    }
+                }
+            }, list.get(i)[0], list.get(i)[1], mSpanFlag);
+        }
+        return this;
+    }
+
+    /**
+     * 为指定文字添加点击事件
+     *
+     * @param key       关键字
+     * @param lineColor 下划线颜色
+     * @param listener  文字的点击事件
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setClickByKey(String key, @ColorInt final int lineColor, final OnTextClickListener listener) {
+        return setClickByKey(key, true, lineColor, listener);
+    }
+
+    /**
+     * 为指定文字添加点击事件
+     *
+     * @param key             关键字
+     * @param isNeedUnderLine 文字是否需要添加下划线
+     * @param lineColor       下划线颜色
+     * @param listener        文字的点击事件
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setClickByKey(String key, final boolean isNeedUnderLine, @ColorInt final int lineColor, final OnTextClickListener listener) {
+        List<int[]> list = searchAllIndex(key);
+        for (int i = 0; i < list.size(); i++) {
+            final int finalI = i;
+            mBuilder.setSpan(new ClickableSpan() {
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                    ds.setUnderlineText(isNeedUnderLine);
+                    if (isNeedUnderLine) {
+                        ds.setColor(lineColor);
                     }
                 }
 
@@ -549,20 +918,74 @@ public class SpanUtil {
                         listener.onTextClick(finalI, widget);
                     }
                 }
-            }, list.get(finalI)[0], list.get(finalI)[1], mSpanFlag);
+            }, list.get(i)[0], list.get(i)[1], mSpanFlag);
         }
         return this;
     }
 
-    public SpanUtil addClickByKey(final OnTextClickListener listener, final boolean isNeedUnderLine, String key, final int index) {
+    /**
+     * 为指定文字添加点击事件
+     *
+     * @param key             关键字
+     * @param index           如果被替换的文字有相同的多个，通过 index 选择是当中第几个（从 0 开始）
+     * @param isNeedUnderLine 文字是否需要添加下划线
+     * @param listener        文字的点击事件
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setClickByKey(String key, final int index, final boolean isNeedUnderLine, final OnTextClickListener listener) {
         List<int[]> list = searchAllIndex(key);
         if (index >= 0 && index < list.size()) {
             mBuilder.setSpan(new ClickableSpan() {
                 @Override
                 public void updateDrawState(TextPaint ds) {
                     super.updateDrawState(ds);
-                    if (!isNeedUnderLine) {
-                        ds.setUnderlineText(false);
+                    ds.setUnderlineText(isNeedUnderLine);
+                }
+
+                @Override
+                public void onClick(View widget) {
+                    if (listener != null) {
+                        listener.onTextClick(index, widget);
+                    }
+                }
+            }, list.get(index)[0], list.get(index)[1], mSpanFlag);
+        }
+        return this;
+    }
+
+    /**
+     * 为指定文字添加点击事件
+     *
+     * @param key       关键字
+     * @param index     如果被替换的文字有相同的多个，通过 index 选择是当中第几个（从 0 开始）
+     * @param lineColor 下划线颜色
+     * @param listener  文字的点击事件
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setClickByKey(String key, final int index, @ColorInt final int lineColor, final OnTextClickListener listener) {
+        return setClickByKey(key, index, true, lineColor, listener);
+    }
+
+    /**
+     * 为指定文字添加点击事件
+     *
+     * @param key             关键字
+     * @param index           如果被替换的文字有相同的多个，通过 index 选择是当中第几个（从 0 开始）
+     * @param isNeedUnderLine 文字是否需要添加下划线
+     * @param lineColor       下划线颜色
+     * @param listener        文字的点击事件
+     * @return {@link SpanUtil}
+     */
+    public SpanUtil setClickByKey(String key, final int index, final boolean isNeedUnderLine, @ColorInt final int lineColor, final OnTextClickListener listener) {
+        List<int[]> list = searchAllIndex(key);
+        if (index >= 0 && index < list.size()) {
+            mBuilder.setSpan(new ClickableSpan() {
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                    ds.setUnderlineText(isNeedUnderLine);
+                    if (isNeedUnderLine) {
+                        ds.setColor(lineColor);
                     }
                 }
 
@@ -579,35 +1002,31 @@ public class SpanUtil {
 
     /**
      * 执行
+     *
+     * @param textView textview 对象
      */
-    public void build() {
+    public void build(TextView textView) {
         if (textView != null) {
             textView.setText(mBuilder);
             textView.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }
 
-    public SpannableStringBuilder getSpanBuilder() {
-        if (mBuilder == null) {
-            LogUtil.e(TAG, "error ========> The SpannableStringBuilder in SpanUtil is empty");
-            return null;
-        }
+    /**
+     * 获取 SpannableStringBuilder
+     *
+     * @return SpannableStringBuilder 对象
+     */
+    public SpannableStringBuilder getBuilder() {
+        if (mBuilder == null) return null;
         return mBuilder;
     }
 
-    public TextView getTextView() {
-        if (textView == null) {
-            LogUtil.e(TAG, "error ========> The textview in SpanUtil is empty");
-            return null;
-        }
-        return textView;
-    }
-
     /**
-     * 查询字符串中的所有关键字
+     * 查询字符串中的所有关键字的位置
      *
-     * @param key
-     * @return
+     * @param key 关键字
+     * @return 关键字位置的集合
      */
     public List<int[]> searchAllIndex(String key) {
         List<int[]> indexList = new ArrayList<int[]>();
@@ -625,12 +1044,12 @@ public class SpanUtil {
     }
 
     /**
-     * 部分文字点击事件监听器
+     * 文字点击事件监听器
      */
     public interface OnTextClickListener {
         /**
-         * @param position
-         * @param v
+         * @param position 点击文字在字符串中的位置
+         * @param v        view 对象
          */
         void onTextClick(int position, View v);
     }

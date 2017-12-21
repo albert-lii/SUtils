@@ -13,6 +13,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.liyi.sutils.utils.SUtils;
 import com.liyi.sutils.utils.log.LogUtil;
@@ -55,7 +56,9 @@ public class FileUtil {
      **********************************************************************************************/
 
     /**
-     * 判断是否有SD卡
+     * 判断是否有 SD 卡
+     *
+     * @return {@code true}: 有<br>{@code false}: 沒有
      */
     public static boolean isHasSdCard() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -65,7 +68,9 @@ public class FileUtil {
     }
 
     /**
-     * 获取SD卡路径
+     * 获取 SD 卡路径
+     *
+     * @return SD 卡路径
      */
     public static String getSdCardPath() {
         return Environment.getExternalStorageDirectory().toString();
@@ -77,7 +82,7 @@ public class FileUtil {
      * @param dirPath 文件路径
      * @return {@code true}: 是<br>{@code false}: 否
      */
-    public static boolean isDir(@Nullable String dirPath) {
+    public static boolean isDir(String dirPath) {
         return isDir(new File(dirPath));
     }
 
@@ -100,7 +105,7 @@ public class FileUtil {
      * @param filePath 文件路径
      * @return {@code true}: 是<br>{@code false}: 否
      */
-    public static boolean isFile(@Nullable String filePath) {
+    public static boolean isFile(String filePath) {
         return isFile(new File(filePath));
     }
 
@@ -125,8 +130,10 @@ public class FileUtil {
      * 创建文件夹 （你必须先创建文件夹，才能创建文件，否则会报“找不到路径”）
      *
      * @param path 创建的文件夹的路径
+     * @return {@code true}: 创建成功<br>{@code false}: 创建失败
      */
-    public boolean createDir(@NonNull String path) {
+    public boolean createDir(String path) {
+        if (TextUtils.isEmpty(path)) return false;
         boolean isSuccess;
         File file = new File(path);
         if (!file.exists()) {
@@ -142,14 +149,15 @@ public class FileUtil {
      * 创建文件
      *
      * @param path 创建的文件的路径
-     * @return
+     * @return {@code true}: 创建成功<br>{@code false}: 创建失败
      */
-    public boolean createFile(@NonNull String path) {
+    public boolean createFile(String path) {
+        if (TextUtils.isEmpty(path)) return false;
         boolean isSuccess = false;
         File file = new File(path);
         if (!file.exists()) {
             try {
-                // 如果文件已经存在执行此方法会返回false
+                // 如果文件已经存在执行此方法会返回 false
                 isSuccess = file.createNewFile();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -172,7 +180,7 @@ public class FileUtil {
      * @param value 保存的 String 数据
      * @throws IOException
      */
-    public void put(@Nullable String key, String value) {
+    public void put(String key, String value) {
         File file = new File(key);
         BufferedWriter out = null;
         try {
@@ -198,7 +206,7 @@ public class FileUtil {
      * @param key 保存 String 数据的文件的路径
      * @return 保存的 String 数据
      */
-    public String getAsString(@Nullable String key) {
+    public String getAsString(String key) {
         File file = new File(key);
         if (!file.exists()) {
             return null;
@@ -232,7 +240,7 @@ public class FileUtil {
      * @param key   保存 byte[] 数据的文件的路径
      * @param value 保存的 byte[] 数据
      */
-    public void put(@Nullable String key, byte[] value) {
+    public void put(String key, byte[] value) {
         File file = new File(key);
         FileOutputStream out = null;
         try {
@@ -260,7 +268,7 @@ public class FileUtil {
      * @param key 保存 byte[] 数据的文件的路径
      * @return 保存的 byte[] 数据
      */
-    public byte[] getAsBinary(@Nullable String key) {
+    public byte[] getAsBinary(String key) {
         File file = new File(key);
         if (!file.exists()) {
             return null;
@@ -302,7 +310,7 @@ public class FileUtil {
      * @param key   保存序列化对象数据的文件的路径
      * @param value 保存的序列化对象数据
      */
-    public void put(@Nullable String key, Serializable value) {
+    public void put(String key, Serializable value) {
         ByteArrayOutputStream baos = null;
         ObjectOutputStream oos = null;
         try {
@@ -337,7 +345,7 @@ public class FileUtil {
      * @param key 保存序列化对象数据的文件的路径
      * @return 保存的序列化对象数据
      */
-    public Object getAsObject(@Nullable String key) {
+    public Object getAsObject(String key) {
         ByteArrayInputStream bais = null;
         ObjectInputStream ois = null;
         try {
@@ -376,7 +384,7 @@ public class FileUtil {
      * @param key   保存 bitmap 数据的文件的路径
      * @param value 保存的 bitmap 数据
      */
-    public void put(@Nullable String key, Bitmap value) {
+    public void put(String key, Bitmap value) {
         put(key, bitmap2Byte(value));
     }
 
@@ -387,16 +395,12 @@ public class FileUtil {
      * @return 保存的 bitmap 数据
      */
     public Bitmap getAsBitmap(@Nullable String key) {
-        if (getAsBinary(key) == null) {
-            return null;
-        }
+        if (getAsBinary(key) == null) return null;
         return byte2Bitmap(getAsBinary(key));
     }
 
-    private byte[] bitmap2Byte(@NonNull Bitmap bmp) {
-        if (bmp == null) {
-            return null;
-        }
+    private byte[] bitmap2Byte(Bitmap bmp) {
+        if (bmp == null) return null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         return baos.toByteArray();
@@ -520,9 +524,10 @@ public class FileUtil {
      *
      * @param dir   指定文件夹路径
      * @param isAll {@code true}: 获取所有的文件数量<br>{@code false}: 只获取第一级的文件数量
-     * @return
+     * @return 文件的数量
      */
-    public int getFileCount(@NonNull String dir, boolean isAll) {
+    public int getFileCount(String dir, boolean isAll) {
+        if (TextUtils.isEmpty(dir)) return 0;
         int count = 0;
         if (!dir.endsWith(File.separator)) {
             dir = dir + File.separator;
@@ -551,16 +556,27 @@ public class FileUtil {
     /**
      * 删除文件或文件夹
      *
-     * @param path 被刪除的文件或文件夾的路径
+     * @param path 文件或文件夹的路径
+     * @return {@code true}: 删除失败<br>{@code false}: 删除成功
      */
-    public boolean delete(@NonNull String path) {
+    public boolean delete(String path) {
+        return TextUtils.isEmpty(path) ? true : delete(new File(path));
+    }
+
+    /**
+     * 删除文件或文件夹
+     *
+     * @param file 文件或文件夹
+     * @return {@code true}: 删除失败<br>{@code false}: 删除成功
+     */
+    public boolean delete(File file) {
+        if (file == null) return true;
         try {
-            File file = new File(path);
             if (file.exists()) {
                 if (file.isFile()) {
-                    return deleteFile(path);
+                    return deleteFile(file);
                 } else {
-                    return deleteDir(path);
+                    return deleteDir(file);
                 }
             }
         } catch (Exception e) {
@@ -573,50 +589,67 @@ public class FileUtil {
     /**
      * 删除单个文件
      *
-     * @param path 被删除的文件的路径
-     * @return
+     * @param path 文件的路径
+     * @return {@code true}: 删除失败<br>{@code false}: 删除成功
      */
-    public boolean deleteFile(@NonNull String path) {
-        File file = new File(path);
-        if (file.exists() && file.isFile()) {
+    public boolean deleteFile(String path) {
+        return TextUtils.isEmpty(path) ? true : deleteFile(new File(path));
+    }
+
+    /**
+     * 删除单个文件
+     *
+     * @param file 文件
+     * @return {@code true}: 删除失败<br>{@code false}: 删除成功
+     */
+    public boolean deleteFile(File file) {
+        if (file != null && file.exists() && file.isFile()) {
             return file.delete();
+        } else {
+            return true;
         }
-        return false;
     }
 
     /**
      * 删除文件夹
      *
-     * @param dir 被删除的文件夹的路径
-     * @return
+     * @param dir 文件夹的路径
+     * @return {@code true}: 删除失败<br>{@code false}: 删除成功
      */
-    public boolean deleteDir(@NonNull String dir) {
+    public boolean deleteDir(String dir) {
+        if (TextUtils.isEmpty(dir)) return true;
         // 如果文件夹路径不是以文件分隔符结尾，则在路径末尾自动添加文件分隔符
         if (!dir.endsWith(File.separator)) {
             dir = dir + File.separator;
         }
-        File fileDir = new File(dir);
-        if (!fileDir.exists() || !fileDir.isDirectory()) {
-            return false;
+        return deleteDir(new File(dir));
+    }
+
+    /**
+     * 删除文件夹
+     *
+     * @param fileDir 文件夹
+     * @return {@code true}: 删除失败<br>{@code false}: 删除成功
+     */
+    public boolean deleteDir(File fileDir) {
+        if (fileDir == null || !fileDir.exists() || !fileDir.isDirectory()) {
+            return true;
         }
         boolean isSuccess = true;
         File[] files = fileDir.listFiles();
         for (int i = 0; i < files.length; i++) {
+            // 如果遍历到的是文件，则删除文件
             if (files[i].isFile()) {
-                isSuccess = deleteFile(files[i].getAbsolutePath());
-                if (!isSuccess) {
-                    break;
-                }
-            } else if (files[i].isDirectory()) {
-                isSuccess = deleteDir(files[i].getAbsolutePath());
-                if (!isSuccess) {
-                    break;
-                }
+                isSuccess = deleteFile(files[i]);
+                if (!isSuccess) break;
+            }
+            // 如果遍历到的是文件夹，则调用删除文件夹方法，递归
+            else if (files[i].isDirectory()) {
+                isSuccess = deleteDir(files[i]);
+                if (!isSuccess) break;
             }
         }
-        if (!isSuccess) {
-            return false;
-        }
+        if (!isSuccess) return false;
         return fileDir.delete();
     }
 
@@ -630,10 +663,20 @@ public class FileUtil {
      * @param path 文件或文件夹的路径
      * @return 文件或文件夹的字节数
      */
-    public long getFileSize(@NonNull String path) {
+    public long getFileSize(String path) {
+        return TextUtils.isEmpty(path) ? 0 : getFileSize(new File(path));
+    }
+
+    /**
+     * 获取指定文件或者文件夹的大小
+     *
+     * @param file 文件或文件夹
+     * @return 文件或文件夹的字节数
+     */
+    public long getFileSize(File file) {
+        if (file == null) return 0;
         long size = 0;
         try {
-            File file = new File(path);
             if (file.exists()) {
                 if (file.isFile()) {
                     size += getSingleFileSize(file);
@@ -651,11 +694,22 @@ public class FileUtil {
     /**
      * 获取单个文件的大小
      *
-     * @param file 文件的路径
+     * @param path 文件的路径
+     * @return 文件的字节数
+     */
+    public long getSingleFileSize(String path) {
+        return TextUtils.isEmpty(path) ? 0 : getSingleFileSize(new File(path));
+    }
+
+    /**
+     * 获取单个文件的大小
+     *
+     * @param file 文件
      * @return 文件的字节数
      * @throws Exception
      */
-    public long getSingleFileSize(@NonNull File file) {
+    public long getSingleFileSize(File file) {
+        if (file == null) return 0;
         long size = 0;
         try {
             if (file.exists()) {
@@ -673,9 +727,19 @@ public class FileUtil {
      *
      * @param dir 文件夹的路径
      * @return 文件夹的字节数
-     * @throws Exception
      */
-    public long getFileDirSize(@NonNull File dir) {
+    public long getFileDirSize(String dir) {
+        return TextUtils.isEmpty(dir) ? 0 : getFileDirSize(new File(dir));
+    }
+
+    /**
+     * 获取指定文件夹的大小
+     *
+     * @param dir 文件夹
+     * @return 文件夹的字节数
+     */
+    public long getFileDirSize(File dir) {
+        if (dir == null) return 0;
         long size = 0;
         File flist[] = dir.listFiles();
         for (int i = 0; i < flist.length; i++) {
@@ -687,7 +751,6 @@ public class FileUtil {
         }
         return size;
     }
-
 
     /***********************************************************************************************
      ****  获取文件的真实路径

@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
 /**
  * assets 工具类
  */
-public class AssetUtil {
+public final class AssetUtil {
 
     /**
      * 获取 assets 目录下的文件

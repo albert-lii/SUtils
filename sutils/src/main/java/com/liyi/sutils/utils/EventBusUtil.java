@@ -10,7 +10,7 @@ import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
 /**
  * EventBus 3.0 工具类
  */
-public class EventBusUtil {
+public final class EventBusUtil {
     private static final String TAG = EventBusUtil.class.getSimpleName();
 
     /**

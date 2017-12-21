@@ -51,8 +51,8 @@ public class SPUtil {
     /**
      * 保存单个数据
      *
-     * @param key
-     * @param object
+     * @param key    键值
+     * @param object 存储的内容
      */
     public void put(String key, Object object) {
         if (object instanceof String) {
@@ -74,7 +74,7 @@ public class SPUtil {
     /**
      * 同时保存多条数据
      *
-     * @param map
+     * @param map 存储的数据
      */
     public void add(Map<String, Object> map) {
         Set<String> set = map.keySet();
@@ -100,9 +100,9 @@ public class SPUtil {
     /**
      * 获取存储的数据
      *
-     * @param key
-     * @param object
-     * @return
+     * @param key    键值
+     * @param object 默认返回值
+     * @return 存储的内容
      */
     public Object get(String key, Object object) {
         if (object instanceof String) {
@@ -122,7 +122,7 @@ public class SPUtil {
     /**
      * 根据 key 删除数据
      *
-     * @param key
+     * @param key 键值
      */
     public void delete(String key) {
         mEditor.remove(key);

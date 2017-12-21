@@ -18,7 +18,7 @@ import android.widget.FrameLayout;
  * <p>仅在 SDK >= 4.4 时有效</p>
  */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-public class SystemBarUtil {
+public final class SystemBarUtil {
     private static final String TAG_STATUS_BAR = "StatusBar";
     private static final String TAG_NAVIGATION_BAR = "NavigationBar";
     /* 无效的颜色值 */
@@ -35,9 +35,9 @@ public class SystemBarUtil {
     /**
      * 设置状态栏和底部导航栏的显示方式
      *
-     * @param activity
+     * @param activity        activity
      * @param fitSystemWindow {@code true}: 内容不会显示到状态栏和导航栏上<br>{@code false}: 内容显示到状态栏和导航栏上
-     * @param clipToPadding
+     * @param clipToPadding   {@code true}: 裁剪 padding 区域，padding 区域不可使用<br>{@code false}: 不裁剪 padding 区域，padding 区域可使用
      */
     public static void setDisplayOption(@NonNull Activity activity, boolean fitSystemWindow, boolean clipToPadding) {
         // 获取根布局
@@ -211,7 +211,7 @@ public class SystemBarUtil {
     /**
      * 设置底部导航栏的显示和隐藏
      *
-     * @param activity
+     * @param activity activity
      * @param isShow   {@code true}: 显示<br>{@code false}: 隐藏
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)

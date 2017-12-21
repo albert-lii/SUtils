@@ -6,7 +6,7 @@ import android.graphics.drawable.GradientDrawable;
 /**
  * Shape 工具类
  */
-public class ShapeUtil {
+public final class ShapeUtil {
 
     /**
      * 绘制圆角矩形 drawable

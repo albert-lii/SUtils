@@ -38,9 +38,9 @@ import java.io.InputStream;
 
 
 /**
- * Image相关工具类
+ * Image 相关工具类
  */
-public class ImageUtil {
+public final class ImageUtil {
     private static final String TAG = ImageUtil.class.getSimpleName();
 
     private ImageUtil() {

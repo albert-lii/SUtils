@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
 /**
  * 屏幕相关工具类
  */
-public class ScreenUtil {
+public final class ScreenUtil {
     /* 获取屏幕休眠时长的错误码 */
     public final static int GET_SLEEPTIME_ERROR = -123;
 
@@ -41,6 +41,22 @@ public class ScreenUtil {
     }
 
     /**
+     * 获取屏幕的物理尺寸（单位：英寸）
+     *
+     * @return 物理尺寸
+     */
+    public static float getScreenSizeOfDevice() {
+        DisplayMetrics metrics = SUtils.getApp().getResources().getDisplayMetrics();
+        float xdpi = metrics.xdpi;
+        float ydpi = metrics.ydpi;
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        float w = (width / xdpi) * (width / xdpi);
+        float h = (height / ydpi) * (width / xdpi);
+        return (float) Math.sqrt(w + h);
+    }
+
+    /**
      * 获取屏幕高和宽的比
      *
      * @return 屏幕高和宽的比
@@ -53,7 +69,8 @@ public class ScreenUtil {
     }
 
     /**
-     * 获取屏幕密度
+     * 获取屏幕密度（指每平方英寸中的像素数）
+     * <p>例如：0.75 / 1 / 1.5 / ...（dpi/160 可得）</p>
      *
      * @return 屏幕密度
      */
@@ -62,10 +79,10 @@ public class ScreenUtil {
     }
 
     /**
-     * 获取屏幕密度 dpi
+     * 获取屏幕像素密度 dpi （指每英寸中的像素数）
      * <p>例如：120 / 160 / 240 /...</p>
      *
-     * @return 屏幕密度 dpi
+     * @return 像素密度 dpi
      */
     public static int getDensityDpi() {
         return SUtils.getApp().getResources().getDisplayMetrics().densityDpi;

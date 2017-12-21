@@ -13,7 +13,7 @@ import java.io.IOException;
  * <p>
  * 参考链接：http://www.cnblogs.com/whoislcj/p/5887859.html
  */
-public class Base64Util {
+public final class Base64Util {
 
     private Base64Util() {
         throw new UnsupportedOperationException("cannot be instantiated");

@@ -2,7 +2,7 @@ package com.liyi.sutils.utils;
 
 import android.support.annotation.NonNull;
 
-import com.liyi.sutils.constants.RegexCst;
+import com.liyi.sutils.constant.RegexCst;
 
 import java.util.ArrayList;
 import java.util.List;

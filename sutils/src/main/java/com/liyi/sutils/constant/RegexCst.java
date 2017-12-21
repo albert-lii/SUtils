@@ -1,10 +1,10 @@
-package com.liyi.sutils.constants;
+package com.liyi.sutils.constant;
 
 
 /**
  * 常用正则表达式
  */
-public class RegexCst {
+public final class RegexCst {
     /**
      * 正则：手机号（简单）
      */

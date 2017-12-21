@@ -52,10 +52,10 @@ public class OrientationUtil {
      *
      * @param rate 传感器的等级
      *             <ul>
-     *             <li>SensorManager.SENSOR_DELAY_FASTEST: 0</li>
-     *             <li>SensorManager.SENSOR_DELAY_GAME: 1</li>
-     *             <li>SensorManager.SENSOR_DELAY_UI: 2</li>
-     *             <li>SensorManager.SENSOR_DELAY_NORMAL: 3</li>
+     *             <li>{@link SensorManager#SENSOR_DELAY_FASTEST}: 0</li>
+     *             <li>{@link SensorManager#SENSOR_DELAY_GAME}: 1</li>
+     *             <li>{@link SensorManager#SENSOR_DELAY_UI}: 2</li>
+     *             <li>{@link SensorManager#SENSOR_DELAY_NORMAL}: 3</li>
      *             </ul>
      * @return OrientationUtil 类
      */

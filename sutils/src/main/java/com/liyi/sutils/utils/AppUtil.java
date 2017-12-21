@@ -35,7 +35,7 @@ import java.util.Locale;
 /**
  * App 相关工具类
  */
-public class AppUtil {
+public final class AppUtil {
     private static final String TAG = AppUtil.class.getSimpleName();
     /**
      * App 的运行状态
@@ -366,6 +366,60 @@ public class AppUtil {
         int versionCode = pi.versionCode;
         boolean isSystemApp = (ApplicationInfo.FLAG_SYSTEM & ai.flags) != 0;
         return new AppInfo(name, icon, packageName, packagePath, versionName, versionCode, isSystemApp);
+    }
+
+    /**
+     * 获取 uid
+     * <p>uid 是应用在安装时系统分配给应用的唯一标识，一个应用只有一个 uid，但是可以有多个 pid，
+     * 在应用卸载重装后，系统重新给应用分配 uid</p>
+     * <p>注：应用覆盖安装升级时，是不会改变 uid 的，在应用升级时，新应用会读取旧应用的 uid</p>
+     *
+     * @return uid
+     */
+    public static int getUid() {
+        return android.os.Process.myUid();
+    }
+
+    /**
+     * 根据应用包名获取 uid
+     *
+     * @param pkgName 应用程序包名
+     * @return uid
+     */
+    public static int getUid(String pkgName) {
+        try {
+            PackageManager pm = SUtils.getApp().getPackageManager();
+            @SuppressLint("WrongConstant")
+            ApplicationInfo ai = pm.getApplicationInfo(pkgName, PackageManager.GET_ACTIVITIES);
+            return ai.uid;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
+     * 获取所有已安装应用的 uid
+     *
+     * @return uid 列表
+     */
+    public static List getUids() {
+        List<Integer> uidList = new ArrayList<Integer>();
+        PackageManager pm = SUtils.getApp().getPackageManager();
+        List<PackageInfo> packinfos = pm.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES
+                | PackageManager.GET_PERMISSIONS);
+        for (PackageInfo info : packinfos) {
+            String[] premissions = info.requestedPermissions;
+            if (premissions != null && premissions.length > 0) {
+                for (String premission : premissions) {
+                    if ("android.permission.INTERNET".equals(premission)) {
+                        int uid = info.applicationInfo.uid;
+                        uidList.add(uid);
+                    }
+                }
+            }
+        }
+        return uidList;
     }
 
     /**

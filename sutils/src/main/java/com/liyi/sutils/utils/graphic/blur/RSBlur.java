@@ -16,7 +16,7 @@ import android.support.annotation.IntRange;
  * 调用 Android 自己的 RenderScript 实现图片模糊
  * 注：仅在 SDK >= 17 时有用
  */
-public class RSBlur {
+public final class RSBlur {
     /**
      * @param context       上下文对象
      * @param blurredBitmap 待模糊图片

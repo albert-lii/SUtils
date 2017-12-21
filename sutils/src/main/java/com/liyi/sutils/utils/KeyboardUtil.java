@@ -12,7 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 /**
  * 键盘相关工具类
  */
-public class KeyboardUtil {
+public final class KeyboardUtil {
 
     private KeyboardUtil() {
         throw new UnsupportedOperationException("cannot be instantiated");

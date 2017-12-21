@@ -4,9 +4,9 @@ import android.util.Log;
 
 
 /**
- * Log 工具类
+ * Log 相关工具类
  */
-public class LogUtil {
+public final class LogUtil {
     /* 可以用于release时，统一关闭log */
     public static boolean isLogEnabled = true;
 
