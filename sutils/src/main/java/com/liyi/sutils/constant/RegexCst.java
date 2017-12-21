@@ -43,6 +43,10 @@ public final class RegexCst {
      */
     public static final String REGEX_ZH = "^[\\u4e00-\\u9fa5]+$";
     /**
+     * 正则：英文和数字
+     */
+    public static final String REGEX_EN_NUM = "^[A-Za-z0-9]+$";
+    /**
      * 正则：用户名，取值范围为 a-z,A-Z,0-9,"_",汉字，不能以"_"结尾,用户名必须是 6-20 位
      */
     public static final String REGEX_USERNAME = "^[\\w\\u4e00-\\u9fa5]{6,20}(?<!_)$";
@@ -75,6 +79,10 @@ public final class RegexCst {
      * 正则：中国邮政编码
      */
     public static final String REGEX_ZIP_CODE = "[1-9]\\d{5}(?!\\d)";
+    /**
+     * 正则：数字
+     */
+    public static final String REGEX_NUMBER = "^[0-9]*$";
     /**
      * 正则：正整数
      */
