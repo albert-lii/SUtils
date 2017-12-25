@@ -2,13 +2,15 @@ package com.liyi.sutils.utils;
 
 import android.text.TextUtils;
 
+import com.liyi.sutils.constant.RegexCst;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * String 相关工具类
  */
-public class StringUtil {
+public final class StringUtil {
 
     private StringUtil() {
         throw new UnsupportedOperationException("cannot be instantiated");
@@ -52,8 +54,8 @@ public class StringUtil {
      * @param s 字符串
      * @return {@code true}: 是<br>{@code false}: 否
      */
-    public boolean isNumeric(String s) {
-        Pattern pattern = Pattern.compile("[0-9]*");
+    public static boolean isNumeric(String s) {
+        Pattern pattern = Pattern.compile(RegexCst.REGEX_NUMBER);
         Matcher isNum = pattern.matcher(s);
         if (!isNum.matches()) {
             return false;

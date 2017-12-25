@@ -18,9 +18,9 @@ import java.nio.charset.Charset;
  * <p>
  * SDK 最低版本为 14
  */
-@RequiresApi(Build.VERSION_CODES.GINGERBREAD_MR1)
+@RequiresApi(api = Build.VERSION_CODES.GINGERBREAD_MR1)
 public class NfcUtil {
-    private final String TAG = this.getClass().getSimpleName();
+    /* NFC 适配器 */
     private NfcAdapter mAdapter;
     /* NDEF 标签读取监听 */
     private OnReadFromNdefListener mReadNdefListener;
@@ -47,10 +47,7 @@ public class NfcUtil {
      * @return {@code true}: 支持<br>{@code false}: 不支持
      */
     public boolean isSupportNfc() {
-        if (mAdapter != null) {
-            return true;
-        }
-        return false;
+        return mAdapter != null ? true : false;
     }
 
     /**
@@ -108,7 +105,7 @@ public class NfcUtil {
      * @param tag
      * @return 读取到的标签信息
      */
-    private String readFromNdef(Tag tag) {
+    public String readFromNdef(Tag tag) {
         try {
             if (tag != null) {
                 // 解析 Tag 获取到 NDEF 实例
@@ -204,7 +201,7 @@ public class NfcUtil {
      *
      * @param tag
      */
-    private void deleteNdef(Tag tag) {
+    public void deleteNdef(Tag tag) {
         try {
             if (tag != null) {
                 // 新建一个里面无任何信息的 NdefRecord 实例
@@ -268,7 +265,7 @@ public class NfcUtil {
     /**
      * 清除信息
      */
-    public void clear(){
+    public void clear() {
         setReadNdefListener(null);
         setWriteNdefListener(null);
         setDeleteNdefListener(null);

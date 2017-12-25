@@ -2,15 +2,15 @@ package com.liyi.sutils.view.base;
 
 
 import android.app.Dialog;
+import android.support.annotation.FloatRange;
 import android.support.v4.app.DialogFragment;
 import android.util.DisplayMetrics;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
 /**
- * DialogFragment的基类
+ * DialogFragment 的基类
  */
 public abstract class BaseDialogFragment extends DialogFragment {
     private final float DEF_VISIBLE_ALPHA = 0.5f;
@@ -20,16 +20,12 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
     /* 显示时的屏幕背景透明度 */
     private float mVisibleAlpha = DEF_VISIBLE_ALPHA;
-    /* 对话框宽所占屏幕的百分比0-1 */
+    /* 对话框宽所占屏幕的百分比 */
     private float mWidhtPer = DEF_WIDTH_PER;
-    /* 对话框高所占屏幕的百分比0-1 */
+    /* 对话框高所占屏幕的百分比 */
     private float mHeightPer = DEF_HEIGHT_PER;
     /* 是否使用对话框宽高占屏百分比 */
     private boolean isUseSizePer = DEF_USE_SIZE_PER;
-
-    public <T> T $(int resId, View parent) {
-        return (T) parent.findViewById(resId);
-    }
 
     @Override
     public void onStart() {
@@ -43,8 +39,8 @@ public abstract class BaseDialogFragment extends DialogFragment {
     /**
      * 设置弹框显示消失动画
      *
-     * @param dialog
-     * @param animStyle
+     * @param dialog    dialog
+     * @param animStyle 动画样式
      */
     public void setWindowAnim(Dialog dialog, int animStyle) {
         Window window = dialog.getWindow();
@@ -52,67 +48,39 @@ public abstract class BaseDialogFragment extends DialogFragment {
     }
 
     /**
-     * 设置屏幕的背景透明度
-     *
-     * @param alpha
-     */
-    public void setVisibleAlpha(float alpha) {
-        this.mVisibleAlpha = alpha;
-    }
-
-    /**
      * 设置是否使用对话框的宽高占屏百分比
      *
-     * @param use
+     * @param enable {@code true}: 使用<br>{@code false}: 不使用
      */
-    public void setUseSizePer(boolean use) {
-        this.isUseSizePer = use;
+    public void setUseSizePerEnabled(boolean enable) {
+        this.isUseSizePer = enable;
     }
 
     /**
      * 设置对话框的宽度占屏百分比
      *
-     * @param per
+     * @param per 宽度占屏百分比
      */
-    public void setWidthPer(float per) {
+    public void setWidthPer(@FloatRange(from = 0.0) float per) {
         mWidhtPer = per;
     }
 
     /**
      * 设置对话框的高度占屏百分比
      *
-     * @param per
+     * @param per 高度占屏百分比
      */
-    public void setHeightPer(float per) {
+    public void setHeightPer(@FloatRange(from = 0.0) float per) {
         mHeightPer = per;
-    }
-
-    /**
-     * 设置屏幕的背景透明度
-     *
-     * @param bgAlpha 0-1（0：屏幕完全透明，1：背景最暗）
-     */
-    private void setBgAlpha(float bgAlpha) {
-        if (bgAlpha < 0) {
-            bgAlpha = 0;
-        }
-        if (bgAlpha > 1) {
-            bgAlpha = 1;
-        }
-        Window window = getDialog().getWindow();
-        WindowManager.LayoutParams lp = window.getAttributes();
-        lp.dimAmount = bgAlpha;
-        lp.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        window.setAttributes(lp);
     }
 
     /**
      * 设置dialog宽高的占屏比
      *
-     * @param wp dialog的宽的占屏比
-     * @param hp dialog的高的占屏比
+     * @param wp dialog 的宽的占屏比
+     * @param hp dialog 的高的占屏比
      */
-    public void setSizePercent(float wp, float hp) {
+    private void setSizePercent(@FloatRange(from = 0.0) float wp, @FloatRange(from = 0.0) float hp) {
         Dialog dialog = getDialog();
         if (dialog != null) {
             DisplayMetrics dm = new DisplayMetrics();
@@ -127,5 +95,33 @@ public abstract class BaseDialogFragment extends DialogFragment {
                     wp == ViewGroup.LayoutParams.WRAP_CONTENT ? ViewGroup.LayoutParams.WRAP_CONTENT : (int) (dm.widthPixels * wp),
                     hp == ViewGroup.LayoutParams.WRAP_CONTENT ? ViewGroup.LayoutParams.WRAP_CONTENT : (int) (dm.heightPixels * hp));
         }
+    }
+
+    /**
+     * 设置屏幕的背景透明度
+     *
+     * @param alpha 透明度
+     */
+    public void setVisibleAlpha(@FloatRange(from = 0.0, to = 1.0) float alpha) {
+        this.mVisibleAlpha = alpha;
+    }
+
+    /**
+     * 设置屏幕的背景透明度
+     *
+     * @param bgAlpha 0-1（0：屏幕完全透明，1：背景最暗）
+     */
+    private void setBgAlpha(@FloatRange(from = 0.0, to = 1.0) float bgAlpha) {
+        if (bgAlpha < 0) {
+            bgAlpha = 0;
+        }
+        if (bgAlpha > 1) {
+            bgAlpha = 1;
+        }
+        Window window = getDialog().getWindow();
+        WindowManager.LayoutParams lp = window.getAttributes();
+        lp.dimAmount = bgAlpha;
+        lp.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(lp);
     }
 }

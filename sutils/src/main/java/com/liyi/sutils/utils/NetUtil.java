@@ -21,12 +21,20 @@ import java.util.Enumeration;
 
 /**
  * 网络相关工具类
+ * <p>
+ * 需添加的权限：
+ * {@code <uses-permission android:name="android.permission.INTERNET"/>}
+ * {@code <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>}
+ * {@code <uses-permission android:name="android.permission.MODIFY_PHONE_STATE"/>}
+ * {@code <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>}
+ * {@code <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>}
+ * </p>
  */
 public final class NetUtil {
     private static final String TAG = NetUtil.class.getClass().getSimpleName();
-    private static final int NETWORK_TYPE_GSM      = 16;
+    private static final int NETWORK_TYPE_GSM = 16;
     private static final int NETWORK_TYPE_TD_SCDMA = 17;
-    private static final int NETWORK_TYPE_IWLAN    = 18;
+    private static final int NETWORK_TYPE_IWLAN = 18;
 
     private NetUtil() {
         throw new UnsupportedOperationException("cannot be instantiated");

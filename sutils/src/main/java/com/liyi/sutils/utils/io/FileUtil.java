@@ -43,14 +43,6 @@ public class FileUtil {
     private FileUtil() {
     }
 
-    public static FileUtil getInstance() {
-        return SFileUtilHolder.INSTANCE;
-    }
-
-    private static class SFileUtilHolder {
-        private static final FileUtil INSTANCE = new FileUtil();
-    }
-
     /***********************************************************************************************
      ****  公用方法
      **********************************************************************************************/
@@ -125,6 +117,14 @@ public class FileUtil {
     /***********************************************************************************************
      ****  单例操作
      **********************************************************************************************/
+
+    public static FileUtil getInstance() {
+        return SFileUtilHolder.INSTANCE;
+    }
+
+    private static class SFileUtilHolder {
+        private static final FileUtil INSTANCE = new FileUtil();
+    }
 
     /**
      * 创建文件夹 （你必须先创建文件夹，才能创建文件，否则会报“找不到路径”）

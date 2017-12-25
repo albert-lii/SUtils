@@ -40,6 +40,10 @@ import java.util.Map;
  */
 public final class QRCodeUtil {
 
+    private QRCodeUtil() {
+        throw new UnsupportedOperationException("cannot be instantiated");
+    }
+
     /***********************************************************************************************
      *****  生成二维码
      **********************************************************************************************/

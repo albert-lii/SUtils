@@ -9,15 +9,13 @@ import android.view.OrientationEventListener;
  * 屏幕方向监听工具类
  */
 public class OrientationUtil {
-    /* OrientationUtil 单例 */
-    private volatile static OrientationUtil INSTANCE;
     /* 方向事件监听器 */
     private OrientationEventListener mOrientationEventListener;
     /* 监测屏幕方向的监听器 */
     private OnOrientationListener mOrientationListener;
-    private Context mContext;
     /* 传感器等级 */
     private int mRate;
+    private Context mContext;
 
     private OrientationUtil() {
         this.mContext = SUtils.getApp().getApplicationContext();
@@ -25,12 +23,11 @@ public class OrientationUtil {
     }
 
     public static OrientationUtil getInstance() {
-        if (INSTANCE == null) {
-            synchronized (OrientationUtil.class) {
-                INSTANCE = new OrientationUtil();
-            }
-        }
-        return INSTANCE;
+        return OrientationUtilHolder.INSTANCE;
+    }
+
+    private static final class OrientationUtilHolder {
+        private static final OrientationUtil INSTANCE = new OrientationUtil();
     }
 
     /**
@@ -57,7 +54,7 @@ public class OrientationUtil {
      *             <li>{@link SensorManager#SENSOR_DELAY_UI}: 2</li>
      *             <li>{@link SensorManager#SENSOR_DELAY_NORMAL}: 3</li>
      *             </ul>
-     * @return OrientationUtil 类
+     * @return {@link OrientationUtil}
      */
     public OrientationUtil rate(int rate) {
         this.mRate = rate;
@@ -68,7 +65,7 @@ public class OrientationUtil {
      * 设置屏幕方向监听方法
      *
      * @param listener
-     * @return OrientationUtil 类
+     * @return {@link OrientationUtil}
      */
     public OrientationUtil callback(OnOrientationListener listener) {
         this.mOrientationListener = listener;
@@ -96,6 +93,7 @@ public class OrientationUtil {
         if (mOrientationEventListener != null) {
             mOrientationEventListener.disable();
         }
+        mOrientationListener = null;
     }
 
     /**

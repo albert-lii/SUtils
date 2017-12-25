@@ -89,7 +89,7 @@ public final class AtyTransitionUtil {
     /**
      * 启动过渡动画
      *
-     * @param activity
+     * @param activity   activity
      * @param enterStyle activity 的进场效果样式
      * @param outStyle   activity的退场效果样式
      */

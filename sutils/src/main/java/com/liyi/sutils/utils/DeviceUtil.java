@@ -14,11 +14,8 @@ import com.liyi.sutils.utils.log.LogUtil;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -26,14 +23,16 @@ import java.util.UUID;
 
 /**
  * 设备相关工具类
+ * <p>
+ * 需添的加权限：
+ * {@code <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>}
+ * {@code <uses-permission android:name="android.permission.INTERNET"/>}
+ * </p>
  */
 public final class DeviceUtil {
     private static final String TAG = DeviceUtil.class.getSimpleName();
     private static final String PREFS_FILE = "device_id.xml";
     private static final String PREFS_DEVICE_ID = "device_id";
-
-    /* 获取 MAC 地址错误码 */
-    public final static String GET_MAC_ERROR = "-1";
 
     private DeviceUtil() {
         throw new UnsupportedOperationException("cannot be instantiated");
@@ -114,11 +113,23 @@ public final class DeviceUtil {
      * 获取设备的 DeviceId（即IMEI）
      * <p>只支持有通话功能的手机，平板不支持，且有些厂家的实现有 bug，返回一些不可用的数据</p>
      *
-     * @return deviceId
+     * @return DeviceId
      */
+    @SuppressLint("HardwareIds")
     public static String getDeviceId() {
         TelephonyManager telephonyManager = (TelephonyManager) SUtils.getApp().getSystemService(Context.TELEPHONY_SERVICE);
-        return telephonyManager.getDeviceId();
+        return telephonyManager != null ? telephonyManager.getDeviceId() : null;
+    }
+
+    /**
+     * 获取 IMSI 码
+     *
+     * @return IMSI 码
+     */
+    @SuppressLint("HardwareIds")
+    public static String getIMSI() {
+        TelephonyManager telephonyManager = (TelephonyManager) SUtils.getApp().getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyManager != null ? telephonyManager.getSubscriberId() : null;
     }
 
     /**
@@ -141,8 +152,7 @@ public final class DeviceUtil {
     }
 
     /**
-     * 获取设备android系统定制商
-     * <p>如 Xiaomi</p>
+     * 获取设备 android 系统定制商
      *
      * @return 设备android系统定制商
      */
@@ -203,7 +213,7 @@ public final class DeviceUtil {
             return macAddress;
         }
         LogUtil.d(TAG, "MacAddress ========> please open wifi");
-        return GET_MAC_ERROR;
+        return "-1";
     }
 
     /**

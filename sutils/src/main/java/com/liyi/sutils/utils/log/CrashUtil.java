@@ -172,7 +172,7 @@ public class CrashUtil implements Thread.UncaughtExceptionHandler {
             @Override
             public void run() {
                 Looper.prepare();
-                ToastUtil.show(mContext, "很抱歉,程序出现异常,即将退出");
+                ToastUtil.show("很抱歉,程序出现异常,即将退出");
                 Looper.loop();
             }
         }.start();

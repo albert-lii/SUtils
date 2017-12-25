@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">sutil</string>
+    <string name="app_name">sutils</string>
 
     <!-- 网络访问提示 -->
     <string name="network_not_connected">网络开小差，请确认网络是否连接成功:-)</string>

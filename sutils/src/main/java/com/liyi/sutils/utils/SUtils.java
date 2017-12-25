@@ -8,6 +8,7 @@ import android.app.Application;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
@@ -109,7 +110,7 @@ public class SUtils {
      *
      * @return Activity
      */
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public static Activity getTopActivity() {
         if (mTopActivityWeakRef != null || mTopActivityWeakRef.get() != null) {
             return mTopActivityWeakRef.get();
@@ -122,7 +123,7 @@ public class SUtils {
      *
      * @return List<Activity>
      */
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public static List<Activity> getActivityList() {
         return mActivityList;
     }

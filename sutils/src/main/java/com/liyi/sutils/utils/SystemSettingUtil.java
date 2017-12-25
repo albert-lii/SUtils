@@ -24,7 +24,7 @@ public final class SystemSettingUtil {
     }
 
     /**
-     * 跳转到Wifi列表设置界面
+     * 跳转到 Wifi 列表设置界面
      */
     public static void openWifiSettings() {
         final Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);

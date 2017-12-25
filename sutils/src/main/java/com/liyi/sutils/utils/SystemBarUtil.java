@@ -1,6 +1,5 @@
 package com.liyi.sutils.utils;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
@@ -146,7 +145,6 @@ public final class SystemBarUtil {
      * @param activity
      * @param color    底部导航栏的颜色
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     public static void setupNavBar(@NonNull Activity activity, int color) {
         if (ScreenUtil.hasNavigationBar()) {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -214,7 +212,6 @@ public final class SystemBarUtil {
      * @param activity activity
      * @param isShow   {@code true}: 显示<br>{@code false}: 隐藏
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static void showNavBar(@NonNull Activity activity, boolean isShow) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             if (ScreenUtil.hasNavigationBar()) {
