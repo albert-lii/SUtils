@@ -34,6 +34,10 @@ public class SPUtil {
         return getInstance(DEF_FILENAME, DEF_MODE);
     }
 
+    public static SPUtil getInstance(@NonNull String fileName) {
+        return getInstance(fileName, DEF_MODE);
+    }
+
     public static SPUtil getInstance(@NonNull String fileName, @NonNull int mode) {
         if (mInstanceMap == null) {
             mInstanceMap = new HashMap<String, SPUtil>();
