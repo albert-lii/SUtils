@@ -17,11 +17,11 @@ Step 1:
   
 Step 2:
       dependencies {
-          compile 'com.github.albert-lii:SUtils:1.2.0'
+          compile 'com.github.albert-lii:SUtils:2.0.0'
       }
 ```
 
-## 项目内容
+## 项目内容（源码中附有详细注释，因时间关系，下列目录内容还未及时更新，请直接至项目中查看最新目录）
 ### 目录
 #### APP相关
 - [PermissionUtil](#PermissionUtil) Android6.0后权限管理类
