@@ -112,7 +112,7 @@ public final class ToastUtil {
      *
      * @param text 文本
      */
-    public static void show(@Nullable CharSequence text) {
+    public static void show(CharSequence text) {
         show(text, Toast.LENGTH_SHORT);
     }
 
@@ -239,7 +239,7 @@ public final class ToastUtil {
      * @param text     消息文本
      * @param duration 显示时间
      */
-    private static void show(final CharSequence text, final int duration) {
+    public static void show(final CharSequence text, final int duration) {
         HANDLER.post(new Runnable() {
             @Override
             public void run() {
