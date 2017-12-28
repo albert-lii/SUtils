@@ -39,7 +39,7 @@ dependencies {
     })
     testImplementation 'junit:junit:4.12'
     implementation 'com.android.support:appcompat-v7:' + support_version
-    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation files('libs/core-3.2.1.jar')
 }

@@ -9,6 +9,7 @@ import android.net.wifi.WifiManager;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 
+import com.liyi.sutils.constant.NetworkType;
 import com.liyi.sutils.utils.log.LogUtil;
 
 import java.lang.reflect.Method;
@@ -38,18 +39,6 @@ public final class NetUtil {
 
     private NetUtil() {
         throw new UnsupportedOperationException("cannot be instantiated");
-    }
-
-    /**
-     * 网络类型
-     */
-    public enum NetworkType {
-        NETWORK_WIFI,
-        NETWORK_4G,
-        NETWORK_3G,
-        NETWORK_2G,
-        NETWORK_UNKNOWN,
-        NETWORK_NO
     }
 
     /**

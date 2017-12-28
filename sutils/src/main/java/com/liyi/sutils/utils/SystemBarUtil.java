@@ -3,6 +3,8 @@ package com.liyi.sutils.utils;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.ColorInt;
+import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.view.Gravity;
@@ -51,7 +53,7 @@ public final class SystemBarUtil {
      * @param activity
      * @param color    设置顶部状态栏的颜色
      */
-    public static void setupStatusBar(@NonNull Activity activity, int color) {
+    public static void setupStatusBar(@NonNull Activity activity, @ColorInt int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             int statusHeight = ScreenUtil.getStatusBarHeight();
             int statusColor = DEFAULT_STATUS_COLOR;
@@ -79,7 +81,7 @@ public final class SystemBarUtil {
      * @param statusColor  绘制的矩形的颜色
      * @return 绘制的矩形 View
      */
-    private static View createStatusBarView(@NonNull Activity activity, int statusHeight, int statusColor) {
+    private static View createStatusBarView(@NonNull Activity activity, int statusHeight, @ColorInt int statusColor) {
         View statusBarView = new View(activity);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, statusHeight);
         params.gravity = Gravity.TOP;
@@ -107,7 +109,7 @@ public final class SystemBarUtil {
      * @param activity
      * @param alpha    透明度（0-1）
      */
-    public static void setStatusBarAlpha(@NonNull Activity activity, float alpha) {
+    public static void setStatusBarAlpha(@NonNull Activity activity, @FloatRange(from = 0, to = 1) float alpha) {
         ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         View statusView = decorView.findViewWithTag(TAG_STATUS_BAR);
         if (statusView != null) {
@@ -145,7 +147,7 @@ public final class SystemBarUtil {
      * @param activity
      * @param color    底部导航栏的颜色
      */
-    public static void setupNavBar(@NonNull Activity activity, int color) {
+    public static void setupNavBar(@NonNull Activity activity, @ColorInt int color) {
         if (ScreenUtil.hasNavigationBar()) {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             int navHeight = ScreenUtil.getNavBarHeight();
@@ -168,7 +170,7 @@ public final class SystemBarUtil {
      * @param navColor  绘制的矩形的颜色
      * @return 绘制的矩形 View
      */
-    private static View createNavBarView(@NonNull Activity activity, int navHeight, int navColor) {
+    private static View createNavBarView(@NonNull Activity activity, int navHeight, @ColorInt int navColor) {
         View navBarView = new View(activity);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, navHeight);
         params.gravity = Gravity.BOTTOM;
@@ -196,7 +198,7 @@ public final class SystemBarUtil {
      * @param activity
      * @param alpha    透明度（0-1）
      */
-    public static void setNavBarAlpha(@NonNull Activity activity, float alpha) {
+    public static void setNavBarAlpha(@NonNull Activity activity, @FloatRange(from = 0, to = 1) float alpha) {
         if (ScreenUtil.hasNavigationBar()) {
             ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
             View navBarView = decorView.findViewWithTag(TAG_NAVIGATION_BAR);

@@ -9,7 +9,7 @@ import java.util.Map;
 
 
 /**
- * gson工具类
+ * gson 工具类
  */
 public class GsonUtil {
     private static Gson mGson;
@@ -20,22 +20,15 @@ public class GsonUtil {
         }
     }
 
-    private static void checkGson() {
-        if (mGson == null) {
-            mGson = new Gson();
-        }
-    }
-
     /**
      * 将 json 数据转化为 bean
      *
      * @param jsonStr json 字符串
-     * @param cls 转换成的 bean 类型
-     * @param <T> 返回的 bean 类型
+     * @param cls     转换成的 bean 类型
+     * @param <T>     返回的 bean 类型
      * @return bean
      */
     public static <T> T json2Bean(String jsonStr, Class<T> cls) {
-        checkGson();
         T t = mGson.fromJson(jsonStr, cls);
         return t;
     }
@@ -44,12 +37,11 @@ public class GsonUtil {
      * 将 json 数据转换为 list
      *
      * @param jsonStr json 字符串
-     * @param type 转换成的对象类型
-     * @param <T> 返回的类型
+     * @param type    转换成的对象类型
+     * @param <T>     返回的类型
      * @return List<?>
      */
     public static <T> List<T> json2List(String jsonStr, Type type) {
-        checkGson();
         List<T> list = mGson.fromJson(jsonStr, type);
         return list;
     }
@@ -58,11 +50,10 @@ public class GsonUtil {
      * 将 json 数据转化为 map
      *
      * @param jsonStr json 字符串
-     * @param <T> 转换成的 Map<String,?> 类型
+     * @param <T>     转换成的 Map<String,?> 类型
      * @return Map<String,?>
      */
     public static <T> Map<String, T> json2Map(String jsonStr) {
-        checkGson();
         Map<String, T> map = mGson.fromJson(jsonStr, new TypeToken<Map<String, T>>() {
         }.getType());
         return map;
@@ -72,11 +63,10 @@ public class GsonUtil {
      * 将 json 数据转化为 map 元素的 list
      *
      * @param jsonStr json 字符串
-     * @param <T> 转换成的 List<Map<String,?>> 类型
+     * @param <T>     转换成的 List<Map<String,?>> 类型
      * @return List<Map<String,?>
      */
     public static <T> List<Map<String, T>> json2ListMap(String jsonStr) {
-        checkGson();
         List<Map<String, T>> list = mGson.fromJson(jsonStr, new TypeToken<List<Map<String, T>>>() {
         }.getType());
         return list;
@@ -89,7 +79,6 @@ public class GsonUtil {
      * @return string 数据
      */
     public static String obj2String(Object obj) {
-        checkGson();
         return mGson.toJson(obj);
     }
 }
