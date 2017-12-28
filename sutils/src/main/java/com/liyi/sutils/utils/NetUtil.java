@@ -196,12 +196,12 @@ public final class NetUtil {
      *
      * @return 网络类型
      * <ul>
-     * <li>{@link NetUtil.NetworkType#NETWORK_WIFI   } </li>
-     * <li>{@link NetUtil.NetworkType#NETWORK_4G     } </li>
-     * <li>{@link NetUtil.NetworkType#NETWORK_3G     } </li>
-     * <li>{@link NetUtil.NetworkType#NETWORK_2G     } </li>
-     * <li>{@link NetUtil.NetworkType#NETWORK_UNKNOWN} </li>
-     * <li>{@link NetUtil.NetworkType#NETWORK_NO     } </li>
+     * <li>{@link NetworkType#NETWORK_WIFI   } </li>
+     * <li>{@link NetworkType#NETWORK_4G     } </li>
+     * <li>{@link NetworkType#NETWORK_3G     } </li>
+     * <li>{@link NetworkType#NETWORK_2G     } </li>
+     * <li>{@link NetworkType#NETWORK_UNKNOWN} </li>
+     * <li>{@link NetworkType#NETWORK_NO     } </li>
      * </ul>
      */
     public static NetworkType getNetworkType() {
