@@ -78,6 +78,7 @@ public class SUtils {
     public static void initialize(@NonNull final Application app) {
         mApplication = app;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            if (mActivityList == null) mActivityList = new LinkedList<Activity>();
             app.registerActivityLifecycleCallbacks(mLifecycleCallback);
         }
     }
@@ -126,5 +127,15 @@ public class SUtils {
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public static List<Activity> getActivityList() {
         return mActivityList;
+    }
+
+    /**
+     * 移除指定的 Activity
+     *
+     * @param activity
+     */
+    @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    public static void remove(Activity activity) {
+        if (mActivityList != null) mActivityList.remove(activity);
     }
 }
