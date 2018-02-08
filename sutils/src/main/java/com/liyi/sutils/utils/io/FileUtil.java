@@ -350,6 +350,7 @@ public class FileUtil {
         ObjectInputStream ois = null;
         try {
             byte[] data = getAsBinary(key);
+            if (data == null || data.length == 0) return null;
             bais = new ByteArrayInputStream(data);
             ois = new ObjectInputStream(bais);
             Object obj = ois.readObject();

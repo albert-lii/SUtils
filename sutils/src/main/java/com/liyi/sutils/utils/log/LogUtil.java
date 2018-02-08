@@ -7,7 +7,7 @@ import android.util.Log;
  * Log 相关工具类
  */
 public final class LogUtil {
-    /* 可以用于release时，统一关闭log */
+    /* 可以用于 release 时，统一关闭 Log */
     public static boolean isLogEnabled = true;
 
     /**

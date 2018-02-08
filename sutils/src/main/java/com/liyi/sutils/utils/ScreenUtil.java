@@ -32,6 +32,7 @@ public final class ScreenUtil {
 
     /**
      * 获取屏幕的宽度和高度（单位：px）
+     * <p>android 从 3.2 版本开始获取屏幕区域高度会自动减去状态栏高度</p>
      *
      * @return Point
      */

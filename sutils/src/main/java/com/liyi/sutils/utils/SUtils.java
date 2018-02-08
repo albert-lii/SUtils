@@ -101,7 +101,7 @@ public class SUtils {
      * @param activity
      */
     private static void setTopActivityWeakRef(Activity activity) {
-        if (mTopActivityWeakRef == null || !mTopActivityWeakRef.get().equals(activity)) {
+        if (mTopActivityWeakRef == null || mTopActivityWeakRef.get() == null || !mTopActivityWeakRef.get().equals(activity)) {
             mTopActivityWeakRef = new WeakReference<>(activity);
         }
     }
@@ -135,7 +135,7 @@ public class SUtils {
      * @param activity
      */
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    public static void remove(Activity activity) {
+    public static void removeActivity(Activity activity) {
         if (mActivityList != null) mActivityList.remove(activity);
     }
 }

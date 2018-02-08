@@ -24,7 +24,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-#eventbus3.0
+# eventbus3.0
 -keepattributes *Annotation*
 -keepclassmembers class ** {
     @org.greenrobot.eventbus.Subscribe <methods>;
@@ -34,22 +34,3 @@
 -keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
     <init>(java.lang.Throwable);
 }
-
-#glide4.x
--keep public class * implements com.bumptech.glide.module.GlideModule
--keep public class * extends com.bumptech.glide.AppGlideModule
--keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
-    **[] $VALUES;
-    public *;
-}
-# for DexGuard only
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
-
-#nohttp
--dontwarn com.yanzhenjie.nohttp.**
--keep class com.yanzhenjie.nohttp.**{*;}
-#okhttp
--dontwarn okhttp3.**
--keep class okhttp3.** {*;}
--dontwarn okio.**
--keep class okio.** {*;}

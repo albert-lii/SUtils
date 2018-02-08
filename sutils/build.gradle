@@ -1,14 +1,20 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-group = 'com.github.albert-lii'
+apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.github.dcendents.android-maven'
+//group = 'com.github.albert-lii'
 
 def comiple_sdk_version = 25
 def build_tool_version = "25.0.3"
 def support_version = "25.3.1"
 def min_sdk_version = 9
 def target_sdk_version = 22
-def version_code = 17
-def version_name = "2.0.2"
+def version_code = 18
+def version_name = "2.0.3"
+
+def bintrayRepoName = "android-maven"
+def bintrayName = "albertlii"
+def bintrayGroupId = "com.liyi"
+def bintrayLicences = ['Apache-2.0']
 
 android {
     compileSdkVersion comiple_sdk_version
@@ -30,6 +36,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -43,6 +53,32 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation files('libs/core-3.2.1.jar')
 }
+
+publish {
+    // bintray 用户名
+    userOrg = bintrayName
+    // 要传到的 maven 的名字。你可能有多个 maven，要传哪个写哪个。
+    repoName = bintrayRepoName
+    // jcenter 上的路径
+    groupId = bintrayGroupId
+    // 项目名称
+    artifactId = 'sutils'
+    // 版本号
+    publishVersion = version_name
+    // 描述，不重要
+    desc = 'sutils'
+    // 网站，不重要；尽量模拟 github 上的地址
+    website = 'https://github.com/albert-lii/SUtils'
+    licences  = bintrayLicences
+}
+
+//tasks.withType(Javadoc) {
+//    options{
+//        encoding "UTF-8"
+//        charSet 'UTF-8'
+//        links "http://docs.oracle.com/javase/7/docs/api"
+//    }
+//}
 
 // 指定编码
 tasks.withType(JavaCompile) {

@@ -53,6 +53,8 @@ public final class ToastUtil {
     private static int mBgResource = INVALID_VALUE;
     /* Toast 的文字颜色 */
     private static int mTextColor = COLOR_DEFAULT;
+    /* Toast 的文字大小 */
+    private static int mTextSize = INVALID_VALUE;
 
     private ToastUtil() {
         throw new UnsupportedOperationException("cannot be instantiated");
@@ -105,6 +107,15 @@ public final class ToastUtil {
      */
     public static void setTextColor(@ColorInt int textColor) {
         ToastUtil.mTextColor = textColor;
+    }
+
+    /**
+     * 设置文字大小
+     *
+     * @param textSize 文字大小
+     */
+    public static void setTextSize(int textSize) {
+        ToastUtil.mTextSize = textSize;
     }
 
     /**
@@ -222,7 +233,6 @@ public final class ToastUtil {
         return view;
     }
 
-
     /**
      * 取消 Toast 显示
      */
@@ -248,8 +258,11 @@ public final class ToastUtil {
                 TextView tvMessage = (TextView) mToast.getView().findViewById(android.R.id.message);
                 TextViewCompat.setTextAppearance(tvMessage, android.R.style.TextAppearance);
                 tvMessage.setTextColor(mTextColor);
+                if (mTextSize != INVALID_VALUE) {
+                    tvMessage.setTextSize(mTextSize);
+                }
                 mToast.setGravity(mGravity, xOffset, yOffset);
-                setBg(tvMessage);
+                setDefBg(tvMessage);
                 mToast.show();
             }
         });
@@ -270,7 +283,7 @@ public final class ToastUtil {
                 mToast.setView(view);
                 mToast.setDuration(duration);
                 mToast.setGravity(mGravity, xOffset, yOffset);
-                setBg();
+                setCusBg();
                 mToast.show();
             }
         });
@@ -282,7 +295,7 @@ public final class ToastUtil {
      *
      * @param tvMessage Toast 默认布局中的 textview
      */
-    private static void setBg(TextView tvMessage) {
+    private static void setDefBg(TextView tvMessage) {
         if (mToast == null) return;
         View toastView = mToast.getView();
         if (mBgResource != INVALID_VALUE) {
@@ -308,7 +321,7 @@ public final class ToastUtil {
      * 设置背景
      * <p>Toast 使用的是自定义布局</p>
      */
-    private static void setBg() {
+    private static void setCusBg() {
         if (mToast == null) return;
         View toastView = mToast.getView();
         if (mBgResource != INVALID_VALUE) {
