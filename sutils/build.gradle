@@ -11,9 +11,12 @@ def target_sdk_version = 22
 def version_code = 18
 def version_name = "2.0.3"
 
-def bintrayRepoName = "android-maven"
 def bintrayName = "albertlii"
+def bintrayRepoName = "android-maven"
 def bintrayGroupId = "com.liyi"
+def bintrayArtifactId = "sutils"
+def bintrayDesc = "sutils"
+def bintrayWebSite = "https://github.com/albert-lii/SUtils"
 def bintrayLicences = ['Apache-2.0']
 
 android {
@@ -62,23 +65,15 @@ publish {
     // jcenter 上的路径
     groupId = bintrayGroupId
     // 项目名称
-    artifactId = 'sutils'
+    artifactId = bintrayArtifactId
     // 版本号
     publishVersion = version_name
     // 描述，不重要
-    desc = 'sutils'
+    desc = bintrayDesc
     // 网站，不重要；尽量模拟 github 上的地址
-    website = 'https://github.com/albert-lii/SUtils'
-    licences  = bintrayLicences
+    website = bintrayWebSite
+    licences = bintrayLicences
 }
-
-//tasks.withType(Javadoc) {
-//    options{
-//        encoding "UTF-8"
-//        charSet 'UTF-8'
-//        links "http://docs.oracle.com/javase/7/docs/api"
-//    }
-//}
 
 // 指定编码
 tasks.withType(JavaCompile) {
