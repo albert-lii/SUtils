@@ -4,24 +4,12 @@
 ## 关于
 SUtils是一款轻量级Android工具类库，集成了众多平时开发中常用到的工具类，将一直持续更新！
 
-## 联系方式
-> **电子邮箱：albertlii@163.com**
 
 ## 添加依赖
 ```Java
-Step 1:
-
-      allprojects {
-          repositories {
-              ...
-              maven { url 'https://jitpack.io' }
-          }
-      }
-  
-Step 2:
-      dependencies {
-          compile 'com.github.albert-lii:SUtils:2.0.2'
-      }
+   dependencies {
+       compile 'com.liyi:sutils:2.0.3'
+   }
 ```
 
 ## 项目内容（源码中附有详细注释，因时间关系，下列目录内容还未及时更新，请直接至项目中查看最新目录）
