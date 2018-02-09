@@ -1,24 +1,15 @@
 # SUtils
-> 轻量级Android工具类库，集成了众多平时开发用到的工具类，将一直持续更新！
 
-## 联系方式
-> **电子邮箱：albertlii@163.com**
+![jcentersvg] ![releasesvg] ![apisvg] [![license][licensesvg]][license] 
+## 关于
+SUtils是一款轻量级Android工具类库，集成了众多平时开发中常用到的工具类，将一直持续更新！
+
 
 ## 添加依赖
 ```Java
-Step 1:
-
-      allprojects {
-          repositories {
-              ...
-              maven { url 'https://jitpack.io' }
-          }
-      }
-  
-Step 2:
-      dependencies {
-          compile 'com.github.albert-lii:SUtils:2.0.2'
-      }
+   dependencies {
+       compile 'com.liyi:sutils:2.0.3'
+   }
 ```
 
 ## 项目内容（源码中附有详细注释，因时间关系，下列目录内容还未及时更新，请直接至项目中查看最新目录）
@@ -946,7 +937,7 @@ CountdownUtil.newInstance()
 ```
 
 ## 赞赏
-如果你感觉 `SUtils` 帮助到了你，可以点右上角 "Star" 支持一下 谢谢！ ^_^
+如果你感觉 `SUtils` 帮助到了你，可以点右上角 "Star" 支持一下 谢谢！:blush:
 
 ## LICENSE
 Copyright 2017 liyi
@@ -962,3 +953,11 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+
+[jcentersvg]: https://img.shields.io/badge/Jcenter-2.0.3-brightgreen.svg
+[releasesvg]: https://img.shields.io/badge/release-v2.0.3-0f80c1.svg
+[apisvg]: https://img.shields.io/badge/API-9+-brightgreen.svg
+[licensesvg]: https://img.shields.io/badge/License-Apache--2.0-0f80c1.svg
+[license]:http://www.apache.org/licenses/LICENSE-2.0
+[statussvg]:https://img.shields.io/librariesio/github/phoenixframework/phoenix.svg
