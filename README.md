@@ -28,9 +28,9 @@ SUtils是一款轻量级Android工具类库，集成了众多平时开发中常�
 | [ShapeUtil][ShapeUtil] | shape 相关工具类 |
 | **io 相关** |
 | [ACache][ACache] | 轻量级缓存工具类 |
-| [AssetUtil][AssetUtil] | assets相关工具类 |
-| [FileUtil][FileUtil] | file相关工具类 |
-| [GsonUtil][GsonUtil] | gson相关工具类 |
+| [AssetUtil][AssetUtil] | assets 相关工具类 |
+| [FileUtil][FileUtil] | file 相关工具类 |
+| [GsonUtil][GsonUtil] | gson 相关工具类 |
 | [SPUtil][SPUtil] | sharedpreferences 相关类 |
 | **log 相关** |
 | [CrashUtil][CrashUtil] | 崩溃处理相关工具类 |
@@ -156,7 +156,7 @@ limitations under the License.
 [CrashUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/log/CrashUtil.java 
 [LogUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/log/LogUtil.java  
 
-[PermissionUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/permission/PermissionUtil.java
+[PermissionUtil]:https://github.com/albertlii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/permission/PermissionUtil.java
 
 [CountdownUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/time/CountdownUtil.java 
 [TimeUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/time/TimeUtil.java
@@ -166,7 +166,7 @@ limitations under the License.
 [AtyTransitionUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/AtyTransitionUtil.java 
 [CleanUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/CleanUtil.java  
 [ClipboardUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/ClipboardUtil.java  
-[DensityUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/DensityUtil.java  
+[DensityUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/DensityUtil.java
 [DeviceUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/DeviceUtil.java
 [EmptyUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/EmptyUtil.java  
 [EventBusUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/EventBusUtil.java 
