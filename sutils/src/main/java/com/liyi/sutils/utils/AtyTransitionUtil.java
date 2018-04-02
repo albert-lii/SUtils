@@ -20,7 +20,7 @@ public final class AtyTransitionUtil {
      * @param activity
      */
     public static void enterFromLeft(@NonNull Activity activity) {
-        startTransition(activity, R.anim.activity_from_left, R.anim.activity_to_right);
+        startTransition(activity, R.anim.sutils_left_in, R.anim.sutils_right_out);
     }
 
     /**
@@ -29,7 +29,7 @@ public final class AtyTransitionUtil {
      * @param activity
      */
     public static void exitToLeft(@NonNull Activity activity) {
-        startTransition(activity, R.anim.activity_from_right, R.anim.activity_to_left);
+        startTransition(activity, R.anim.sutils_right_in, R.anim.sutils_left_out);
     }
 
     /**
@@ -38,7 +38,7 @@ public final class AtyTransitionUtil {
      * @param activity
      */
     public static void enterFromRight(@NonNull Activity activity) {
-        startTransition(activity, R.anim.activity_from_right, R.anim.activity_to_left);
+        startTransition(activity, R.anim.sutils_right_in, R.anim.sutils_left_out);
     }
 
     /**
@@ -47,7 +47,7 @@ public final class AtyTransitionUtil {
      * @param activity
      */
     public static void exitToRight(@NonNull Activity activity) {
-        startTransition(activity, R.anim.activity_from_left, R.anim.activity_to_right);
+        startTransition(activity, R.anim.sutils_left_in, R.anim.sutils_right_out);
     }
 
     /**
@@ -56,7 +56,7 @@ public final class AtyTransitionUtil {
      * @param activity
      */
     public static void enterFromTop(@NonNull Activity activity) {
-        startTransition(activity, R.anim.activity_from_top, R.anim.activity_stay_still);
+        startTransition(activity, R.anim.sutils_top_in, R.anim.sutils_unchanged);
     }
 
     /**
@@ -65,7 +65,7 @@ public final class AtyTransitionUtil {
      * @param activity
      */
     public static void exitToTop(@NonNull Activity activity) {
-        startTransition(activity, R.anim.activity_stay_still, R.anim.activity_to_top);
+        startTransition(activity, R.anim.sutils_unchanged, R.anim.sutils_top_out);
     }
 
     /**
@@ -74,7 +74,7 @@ public final class AtyTransitionUtil {
      * @param activity
      */
     public static void enterFromBottom(@NonNull Activity activity) {
-        startTransition(activity, R.anim.activity_from_bottom, R.anim.activity_stay_still);
+        startTransition(activity, R.anim.sutils_bottom_in, R.anim.sutils_unchanged);
     }
 
     /**
@@ -83,7 +83,7 @@ public final class AtyTransitionUtil {
      * @param activity
      */
     public static void exitToBottom(@NonNull Activity activity) {
-        startTransition(activity, R.anim.activity_stay_still, R.anim.activity_to_bottom);
+        startTransition(activity, R.anim.sutils_unchanged, R.anim.sutils_bottom_out);
     }
 
     /**

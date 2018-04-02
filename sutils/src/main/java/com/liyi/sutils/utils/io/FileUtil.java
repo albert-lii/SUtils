@@ -395,7 +395,7 @@ public class FileUtil {
      * @param key 保存 bitmap 数据的文件的路径
      * @return 保存的 bitmap 数据
      */
-    public Bitmap getAsBitmap(@Nullable String key) {
+    public Bitmap getAsBitmap(String key) {
         if (getAsBinary(key) == null) return null;
         return byte2Bitmap(getAsBinary(key));
     }

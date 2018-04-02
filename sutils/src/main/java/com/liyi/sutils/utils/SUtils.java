@@ -113,8 +113,10 @@ public class SUtils {
      */
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public static Activity getTopActivity() {
-        if (mTopActivityWeakRef != null || mTopActivityWeakRef.get() != null) {
+        if (mTopActivityWeakRef != null && mTopActivityWeakRef.get() != null) {
             return mTopActivityWeakRef.get();
+        } else if (mActivityList != null && mActivityList.size() > 0) {
+            return mActivityList.get(mActivityList.size() - 1);
         }
         return null;
     }
@@ -136,6 +138,32 @@ public class SUtils {
      */
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public static void removeActivity(Activity activity) {
-        if (mActivityList != null) mActivityList.remove(activity);
+        if (mActivityList != null) {
+            if (activity != null && !activity.isFinishing()) {
+                activity.finish();
+            }
+            mActivityList.remove(activity);
+        }
+    }
+
+    /**
+     * 移除指定的 Activity
+     *
+     * @param cls
+     */
+    @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    public static void removeActivity(Class<?> cls) {
+        if (mActivityList != null) {
+            for (int i = 0, size = mActivityList.size(); i < size; i++) {
+                Activity activity = mActivityList.get(i);
+                if (activity.getClass().getName().equals(cls.getName())) {
+                    if (!activity.isFinishing()) {
+                        activity.finish();
+                    }
+                    mActivityList.remove(i);
+                    break;
+                }
+            }
+        }
     }
 }
