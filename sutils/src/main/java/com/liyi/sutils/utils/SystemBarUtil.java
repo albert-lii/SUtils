@@ -10,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
@@ -17,6 +18,7 @@ import android.widget.FrameLayout;
 /**
  * 系统状态栏与底部导航栏相关工具类
  * <p>仅在 SDK >= 4.4 时有效</p>
+ * <p>本工具类共分两种模式：着色模式{@link #setDisplayOption} 和 全透明模式{@link #fullTransparentBar}</p>
  */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public final class SystemBarUtil {
@@ -33,6 +35,9 @@ public final class SystemBarUtil {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
+    /***********************************************************************************************
+     ****  沉浸式系统栏（状态栏与导航栏），着色模式，不可全透明（sdk >= 4.4）
+     **********************************************************************************************/
     /**
      * 设置状态栏和底部导航栏的显示方式
      *
@@ -54,23 +59,21 @@ public final class SystemBarUtil {
      * @param color    设置顶部状态栏的颜色
      */
     public static void setupStatusBar(@NonNull Activity activity, @ColorInt int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            int statusHeight = ScreenUtil.getStatusBarHeight();
-            int statusColor = DEFAULT_STATUS_COLOR;
-            if (color != INVALID_VAL) {
-                statusColor = color;
-            }
-            // 设置状态栏透明
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-            // 防止重复添加 statusBarView
-            removeStatusBarView(decorView);
-            // 绘制一个和状态栏一样高的矩形 View
-            View statusBarView = createStatusBarView(activity, statusHeight, statusColor);
-            // 添加 statusBarView 到整个Window的最顶层布局中,这里的 statusBarView 只是作为状态栏的背景，
-            // 它的 visible 不能影响到状态栏的 visible
-            decorView.addView(statusBarView);
+        int statusHeight = ScreenUtil.getStatusBarHeight();
+        int statusColor = DEFAULT_STATUS_COLOR;
+        if (color != INVALID_VAL) {
+            statusColor = color;
         }
+        // 设置状态栏透明
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+        // 防止重复添加 statusBarView
+        removeStatusBarView(decorView);
+        // 绘制一个和状态栏一样高的矩形 View
+        View statusBarView = createStatusBarView(activity, statusHeight, statusColor);
+        // 添加 statusBarView 到整个Window的最顶层布局中,这里的 statusBarView 只是作为状态栏的背景，
+        // 它的 visible 不能影响到状态栏的 visible
+        decorView.addView(statusBarView);
     }
 
     /**
@@ -124,20 +127,18 @@ public final class SystemBarUtil {
      * @param isShow   {@code true}: 显示<br>{@code false}: 隐藏
      */
     public static void showStatusBar(@NonNull Activity activity, boolean isShow) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-            View statusView = decorView.findViewWithTag(TAG_STATUS_BAR);
-            if (isShow) {
-                if (statusView != null) {
-                    statusView.setVisibility(View.VISIBLE);
-                }
-                activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            } else {
-                if (statusView != null) {
-                    statusView.setVisibility(View.GONE);
-                }
-                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+        View statusView = decorView.findViewWithTag(TAG_STATUS_BAR);
+        if (isShow) {
+            if (statusView != null) {
+                statusView.setVisibility(View.VISIBLE);
             }
+            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            if (statusView != null) {
+                statusView.setVisibility(View.GONE);
+            }
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
 
@@ -215,24 +216,61 @@ public final class SystemBarUtil {
      * @param isShow   {@code true}: 显示<br>{@code false}: 隐藏
      */
     public static void showNavBar(@NonNull Activity activity, boolean isShow) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            if (ScreenUtil.hasNavigationBar()) {
-                View decorView = activity.getWindow().getDecorView();
-                if (isShow) {
-                    decorView.setSystemUiVisibility(
-                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-                } else {
-                    decorView.setSystemUiVisibility(
-                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-                }
+        if (ScreenUtil.hasNavigationBar()) {
+            View decorView = activity.getWindow().getDecorView();
+            if (isShow) {
+                decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            } else {
+                decorView.setSystemUiVisibility(View.INVISIBLE);
             }
+        }
+    }
+
+    /***********************************************************************************************
+     ****  沉浸式系统栏（状态栏与导航栏），全透明模式，（sdk >= 5.0）
+     **********************************************************************************************/
+    /**
+     * 设置系统栏全透明
+     *
+     * @param activity
+     * @param statusBar 状态栏是否全透明
+     * @param navBar    导航栏是否全透明
+     */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public static void fullTransparentBar(Activity activity, boolean statusBar, boolean navBar) {
+        Window window = activity.getWindow();
+        window.clearFlags(
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                        | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        if (statusBar && navBar) {
+            window.getDecorView().setSystemUiVisibility(
+                    // 全屏显示，但状态栏不会被隐藏覆盖，状态栏依然可见，Activity 顶端布局部分会被状态遮住
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            // 隐藏导航栏
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            // 防止系统栏隐藏时内容区域大小发生变化
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.setNavigationBarColor(Color.TRANSPARENT);
+        } else if (statusBar && !navBar) {
+            window.getDecorView().setSystemUiVisibility(
+                    // 全屏显示，但状态栏不会被隐藏覆盖，状态栏依然可见，Activity 顶端布局部分会被状态遮住
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            // 防止系统栏隐藏时内容区域大小发生变化
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        } else if (!statusBar && navBar) {
+            window.getDecorView().setSystemUiVisibility(
+                    // 全屏显示，但状态栏不会被隐藏覆盖，状态栏依然可见，Activity 顶端布局部分会被状态遮住
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            // 隐藏导航栏
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            // 防止系统栏隐藏时内容区域大小发生变化
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setNavigationBarColor(Color.TRANSPARENT);
         }
     }
 }
