@@ -1,15 +1,27 @@
 # SUtils
 
-![jcentersvg] ![releasesvg] ![apisvg] [![license][licensesvg]][license] 
+![releasesvg] ![apisvg] [![license][licensesvg]][license]
 
 ## 关于
 SUtils是一款轻量级Android工具类库，集成了众多平时开发中常用到的工具类，将一直持续更新！
 
 ## 添加依赖
+
+- **Gradle**
 ```Java
    dependencies {
-       compile 'com.liyi:sutils:2.0.3'
+       compile 'com.liyi:sutils:2.0.5'
    }
+```
+
+- **Maven**
+```Java
+   <dependency>
+     <groupId>com.liyi</groupId>
+     <artifactId>sutils</artifactId>
+     <version>2.0.5</version>
+     <type>pom</type>
+   </dependency>
 ```
 
 ## 目录（源码中附有详细注释，如不知使用方法，请留言）
@@ -128,11 +140,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-
-[jcentersvg]: https://img.shields.io/badge/Jcenter-2.0.3-brightgreen.svg
-[releasesvg]: https://img.shields.io/badge/release-v2.0.3-0f80c1.svg
+[releasesvg]: https://img.shields.io/badge/release-v2.0.5-brightgreen.svg
 [apisvg]: https://img.shields.io/badge/API-9+-brightgreen.svg
-[licensesvg]: https://img.shields.io/badge/License-Apache--2.0-0f80c1.svg
+[licensesvg]: https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg
 [license]:http://www.apache.org/licenses/LICENSE-2.0
 [statussvg]:https://img.shields.io/librariesio/github/phoenixframework/phoenix.svg
 
