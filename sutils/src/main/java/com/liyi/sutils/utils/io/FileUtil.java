@@ -12,7 +12,6 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.liyi.sutils.utils.SUtils;
@@ -119,10 +118,10 @@ public class FileUtil {
      **********************************************************************************************/
 
     public static FileUtil getInstance() {
-        return SFileUtilHolder.INSTANCE;
+        return FileUtilHolder.INSTANCE;
     }
 
-    private static class SFileUtilHolder {
+    private static class FileUtilHolder {
         private static final FileUtil INSTANCE = new FileUtil();
     }
 

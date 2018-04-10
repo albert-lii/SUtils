@@ -8,12 +8,12 @@ def build_tool_version = "25.0.3"
 def support_version = "25.3.1"
 def min_sdk_version = 9
 def target_sdk_version = 22
-def version_code = 21
-def version_name = "2.0.5"
+def version_code = 22
+def version_name = "2.0.6"
 
 def bintrayName = "albertlii"
 def bintrayRepoName = "android-maven"
-def bintrayGroupId = "com.liyi"
+def bintrayGroupId = "com.liyi.sutils"
 def bintrayArtifactId = "sutils"
 def bintrayDesc = "sutils"
 def bintrayWebSite = "https://github.com/albert-lii/SUtils"
@@ -22,7 +22,6 @@ def bintrayLicences = ['Apache-2.0']
 android {
     compileSdkVersion comiple_sdk_version
     buildToolsVersion build_tool_version
-
 
     defaultConfig {
         minSdkVersion min_sdk_version
