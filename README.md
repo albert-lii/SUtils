@@ -140,9 +140,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-[releasesvg]: https://img.shields.io/badge/Release-2.0.6-brightgreen.svg
-[apisvg]: https://img.shields.io/badge/API-9+-brightgreen.svg
-[licensesvg]: https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg
+[releasesvg]: https://img.shields.io/badge/version-2.0.6-brightgreen.svg
+[apisvg]: https://img.shields.io/badge/sdk-9+-brightgreen.svg
+[licensesvg]: https://img.shields.io/badge/license-Apache--2.0-brightgreen.svg
 [license]:http://www.apache.org/licenses/LICENSE-2.0
 [statussvg]:https://img.shields.io/librariesio/github/phoenixframework/phoenix.svg
 
