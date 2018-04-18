@@ -10,16 +10,16 @@ SUtils是一款轻量级Android工具类库，集成了众多平时开发中常�
 - **Gradle**
 ```Java
    dependencies {
-       compile 'com.liyi:sutils:2.0.5'
+       compile 'com.liyi.sutils:sutils:2.0.6'
    }
 ```
 
 - **Maven**
 ```Java
    <dependency>
-     <groupId>com.liyi</groupId>
+     <groupId>com.liyi.sutils</groupId>
      <artifactId>sutils</artifactId>
-     <version>2.0.5</version>
+     <version>2.0.6</version>
      <type>pom</type>
    </dependency>
 ```
