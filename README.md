@@ -10,16 +10,16 @@ SUtils是一款轻量级Android工具类库，集成了众多平时开发中常�
 - **Gradle**
 ```Java
    dependencies {
-       compile 'com.liyi:sutils:2.0.5'
+       compile 'com.liyi.sutils:sutils:2.0.6'
    }
 ```
 
 - **Maven**
 ```Java
    <dependency>
-     <groupId>com.liyi</groupId>
+     <groupId>com.liyi.sutils</groupId>
      <artifactId>sutils</artifactId>
-     <version>2.0.5</version>
+     <version>2.0.6</version>
      <type>pom</type>
    </dependency>
 ```
@@ -140,9 +140,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-[releasesvg]: https://img.shields.io/badge/Release-v2.0.5-brightgreen.svg
-[apisvg]: https://img.shields.io/badge/API-9+-brightgreen.svg
-[licensesvg]: https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg
+[releasesvg]: https://img.shields.io/badge/version-2.0.6-brightgreen.svg
+[apisvg]: https://img.shields.io/badge/sdk-9+-brightgreen.svg
+[licensesvg]: https://img.shields.io/badge/license-Apache--2.0-blue.svg
 [license]:http://www.apache.org/licenses/LICENSE-2.0
 [statussvg]:https://img.shields.io/librariesio/github/phoenixframework/phoenix.svg
 
@@ -203,5 +203,3 @@ limitations under the License.
 [ToastUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/ToastUtil.java
 [ZipUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/ZipUtil.java  
 [SUtils]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/SUtils.java
-
-
