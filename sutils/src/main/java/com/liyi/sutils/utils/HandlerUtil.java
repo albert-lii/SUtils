@@ -71,9 +71,18 @@ public class HandlerUtil {
      * @param listener 收到消息回调接口
      */
     public void unregister(OnReceiveMessageListener listener) {
-        if (mReceiveMsgListenerList != null) {
+        if (mReceiveMsgListenerList != null && listener != null) {
             mReceiveMsgListenerList.remove(listener);
         }
+    }
+
+    /**
+     * 获取 Handler 对象
+     *
+     * @return
+     */
+    public Handler getHandler() {
+        return mHandler;
     }
 
     /**
