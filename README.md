@@ -73,7 +73,7 @@ SUtils是一款轻量级Android工具类库，集成了众多平时开发中常�
 | [QRCodeUtil][QRCodeUtil] | 二维码、条形码相关工具类 |
 | [ReflectUtil][ReflectUtil] | 反射相关工具类 |
 | [RegexUtil][RegexUtil] | 正则相关工具类 |
-| [ResourseUtil][ResourseUtil] | 资源相关工具类 |
+| [ResourceUtil][ResourceUtil] | 资源相关工具类 |
 | [ScreenUtil][ScreenUtil] | 屏幕相关工具类 |
 | [ServiceUtil][ServiceUtil] | service 相关工具类 |
 | [ShellUtil][ShellUtil] | shell 相关工具类 |
@@ -192,7 +192,7 @@ limitations under the License.
 [QRCodeUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/QRCodeUtil.java  
 [ReflectUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/ReflectUtil.java 
 [RegexUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/RegexUtil.java  
-[ResourseUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/ResourseUtil.java  
+[ResourceUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/ResourceUtil.java  
 [ScreenUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/ScreenUtil.java  
 [ServiceUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/ServiceUtil.java  
 [ShellUtil]:https://github.com/albert-lii/SUtils/blob/master/sutils/src/main/java/com/liyi/sutils/utils/ShellUtil.java 
